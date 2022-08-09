@@ -4,6 +4,8 @@ description:        Data Scientist • Algorithm Developer • Computational Che
 author:             Victor Murcia
 baseurl:            ""
 url:                "https://victormurcia.github.io"
+tag_page_layout: tag
+tag_page_dir: blog/tags
 
 # Social Profiles
 twitter_username:   

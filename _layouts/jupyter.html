@@ -21,6 +21,7 @@ layout: jupyter_default
               <a href="#">{% if page.author %}{{ page.author }}{% else %}{{ site.author }}{% endif %}</a>
               on {{ page.date | date: '%B %d, %Y' }} &middot; {% include read_time.html
               content=page.content %}
+
             </span>
           </div>
         </div>
@@ -30,7 +31,11 @@ layout: jupyter_default
 
   <div class="container">
     <div class="row">
-
+      {% for tag in page.tags %}
+        {% capture tag_name %}{{ tag }}{% endcapture %}
+        <a href="/tag/{{ tag_name }}"><code class="highligher-rouge"><nobr>{{ tag_name }}</nobr></code>&nbsp;</a>
+      {% endfor %}
+      
         {{ content }}
 
         <hr>

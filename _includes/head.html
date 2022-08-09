@@ -7,6 +7,10 @@
     {% if page.title %}{{ page.title | escape }} - {{ site.title | escape }}
     {% else %}{{ site.title | escape }}{% endif %}
   </title>
+  
+  {% if site.tags != "" %}
+    {% include collecttags.html %}
+  {% endif %}
 
   <meta name="description" content="{{ page.excerpt | default: site.description | strip_html | normalize_whitespace | truncate: 160 | escape }}">
 
