@@ -1,14 +1,14 @@
 ---
-layout: jupyter
-title:  "Training Machine Learning Models to Predict Solubility of Molecules"
+layout: post
+title: "Training Machine Learning Models to Predict Solubility of Molecules"
 subtitle: "Tutorial and showcase of regressor utilization"
-date:   2022-08-07 11:13:25 +0000
-background: '/img/posts/bgp3.jpg'
-tags: machine_learning python data_science jupyter_notebook
-categories:
-  - data
+date: 2022-08-08 03:15:13 -0400
+tags: jekyll blog github-page
+background: '/img/posts/bgp1.jpg'
 ---
 
+<!DOCTYPE html>
+<html>
 <head><meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -18469,7 +18469,23 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
     </script>
     <!-- End of mathjax configuration --></head>
 <body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
+<div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.core.display</span> <span class="kn">import</span> <span class="n">HTML</span>
+</pre></div>
 
+     </div>
+</div>
+</div>
+</div>
+
+</div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -18480,14 +18496,14 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <p><p>This notebook shows how a machine learning model can be built in python</p></p>
 <p><p>The steps to accomplish this consist of:</p></p>
 <ol>
-    <li>Get/choose data! --> (Via Toy datasets or through own personal collection)</li>
-    <li>Load data onto notebook through pandas and import desired regressor models</li>
-    <li>Assign dependent and indenpendent variables from dataset</li>
-    <li>Split the data into a training set and a test set</li>
-    <li>Build the model (linear regression, random forest or something else)</li>
-    <li>Determine the model performance (statistics like MSE and R2)</li>
-    <li>Compare against other regressors?</li>
-    <li>Visualize results</li>
+<li>Get/choose data! --&gt; (Via Toy datasets or through own personal collection)</li>
+<li>Load data onto notebook through pandas and import desired regressor models</li>
+<li>Assign dependent and indenpendent variables from dataset</li>
+<li>Split the data into a training set and a test set</li>
+<li>Build the model (linear regression, random forest or something else)</li>
+<li>Determine the model performance (statistics like MSE and R2)</li>
+<li>Compare against other regressors?</li>
+<li>Visualize results</li>
 </ol>
 </div>
 </div>
@@ -18501,19 +18517,19 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p><p>The following modules are commonly used in machine learning (ML) applications.</p></p>
 <ul>
-    <li> pandas  : Used to load, process, analyze, operate and export dataframes</li>
-    <li> sklearn : Contains a variety of modeling and statistical tools useful for ML</li>
-    <li> matplotlib.pyplot :Used for plotting/visualizing our results</li>
-    <li> seaborn : A powerful plotting utility built off matplotlib</li>
-    <li> numpy   : Used to perform computations on array data</li>
+<li> pandas  : Used to load, process, analyze, operate and export dataframes</li>
+<li> sklearn : Contains a variety of modeling and statistical tools useful for ML</li>
+<li> matplotlib.pyplot :Used for plotting/visualizing our results</li>
+<li> seaborn : A powerful plotting utility built off matplotlib</li>
+<li> numpy   : Used to perform computations on array data</li>
 </ul>
 <p>The API documentation for each of these modules can be found here:</p>
 <ul>
-    <li><a href="https://pandas.pydata.org/docs/reference/index.html">https://pandas.pydata.org/docs/reference/index.html</a></li>
-    <li><a href= "https://scikit-learn.org/stable/modules/classes.html">https://scikit-learn.org/stable/modules/classes.html</a></li>
-    <li><a href= "https://matplotlib.org/stable/api/index.html">https://matplotlib.org/stable/api/index.html</a></li>
-    <li><a href= "https://numpy.org/doc/stable/reference/index.html#reference">https://numpy.org/doc/stable/reference/index.html#reference</a></li>
-    <li><a href= "https://seaborn.pydata.org/api.html">https://seaborn.pydata.org/api.html</a></li>
+<li><a href="https://pandas.pydata.org/docs/reference/index.html">https://pandas.pydata.org/docs/reference/index.html</a></li>
+<li><a href="https://scikit-learn.org/stable/modules/classes.html">https://scikit-learn.org/stable/modules/classes.html</a></li>
+<li><a href="https://matplotlib.org/stable/api/index.html">https://matplotlib.org/stable/api/index.html</a></li>
+<li><a href="https://numpy.org/doc/stable/reference/index.html#reference">https://numpy.org/doc/stable/reference/index.html#reference</a></li>
+<li><a href="https://seaborn.pydata.org/api.html">https://seaborn.pydata.org/api.html</a></li>
 </ul>
 </div>
 </div>
@@ -18711,8 +18727,8 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p><h3>Inspecting and understanding the loaded data with pandas</h3></p>
-<p>I used the '.head()' method to visualize the first 5 rows on the resulting dataframe. You can visualize the first and last 5 rows in your dataframe by simply entering the name of your dataframe. You can also visualize the first 'N' rows in your dataframe by passing an integer value onto .head().</p><p>Our dataframe has 5 columns that contain the following information for each molecule:</p><p>The $\log P$ value --> $\log P$  is  the logarithm of the partition coefficient and represents the ratio of concentrations of a compound in a mixture of two immiscible solvents at equilibrium.</p><p style="text-align:center;">$\log P = \log\left ( \frac{[A]_{solute, organic}}{[A]_{solute, aqueous}} \right ) = \log K_{D}$</p><p>In the equation above, $[A]$ represents the concentration of compound A in one of the layers of interest. The ratio of concentrations in two different layers is also known as the partition constant $K_{D}$. The partition coefficient is a quantity regularly used in chemistry to characterize the extent of hydrophilicity of chemical compounds. This quantity is unitless.</p><p>The image below shows a density column made up of 5 different liquid compounds. The liquids separate because they have dismilar solubilities between one another.</p>  
-<p style="text-align:center;"><img src = "https://i.pinimg.com/236x/10/84/d0/1084d0f11208f8ba4bd67e8b9c568fd1.jpg"></p><p>The MolWt --> This corresponds to the molecular weight which is the sum of the weights of the atoms that make up a molecule. This is typically reported in units of grams/mole [g/mol]</p><p>The number of rotatable bonds --> Atoms in molecules are connected via chemical bonds. Bonds come in a variety of different types but the ones we are concerned here are single, double and triple. Single bonds can freely rotate in space while double and triple bonds are rigid. Therefore, this column represents the number of single bonds in the molecule that are not within a ring structure.</p><p>The aromatic proportion --> This is the ratio of the number of aromatic atoms in a molecule and the number of heavy atoms in a molecule.</p><p>The $\log S$  value --> This is the logarithm of the solubility coefficient (S).  In Delaney's study he was interested in determining the solubility of a variety of compounds in aqueous solutions (i.e., water). The more positive this value, the more soluble the compound will be.</p><p>It's important to understand the data we are working with since this will aid us as we move forward with any necessary processing, analysis, and subsequent interpretations of said analysis.</p><p>Let's find out how many molecules this dataset contains using the '.shape' method in pandas.</p>
+<p>I used the '.head()' method to visualize the first 5 rows on the resulting dataframe. You can visualize the first and last 5 rows in your dataframe by simply entering the name of your dataframe. You can also visualize the first 'N' rows in your dataframe by passing an integer value onto .head().</p><p>Our dataframe has 5 columns that contain the following information for each molecule:</p><p>The $\log P$ value --&gt; $\log P$  is  the logarithm of the partition coefficient and represents the ratio of concentrations of a compound in a mixture of two immiscible solvents at equilibrium.</p><p style="text-align:center;">$\log P = \log\left ( \frac{[A]_{solute, organic}}{[A]_{solute, aqueous}} \right ) = \log K_{D}$</p><p>In the equation above, $[A]$ represents the concentration of compound A in one of the layers of interest. The ratio of concentrations in two different layers is also known as the partition constant $K_{D}$. The partition coefficient is a quantity regularly used in chemistry to characterize the extent of hydrophilicity of chemical compounds. This quantity is unitless.</p><p>The image below shows a density column made up of 5 different liquid compounds. The liquids separate because they have dismilar solubilities between one another.</p>
+<p style="text-align:center;"><img src="https://i.pinimg.com/236x/10/84/d0/1084d0f11208f8ba4bd67e8b9c568fd1.jpg"/></p><p>The MolWt --&gt; This corresponds to the molecular weight which is the sum of the weights of the atoms that make up a molecule. This is typically reported in units of grams/mole [g/mol]</p><p>The number of rotatable bonds --&gt; Atoms in molecules are connected via chemical bonds. Bonds come in a variety of different types but the ones we are concerned here are single, double and triple. Single bonds can freely rotate in space while double and triple bonds are rigid. Therefore, this column represents the number of single bonds in the molecule that are not within a ring structure.</p><p>The aromatic proportion --&gt; This is the ratio of the number of aromatic atoms in a molecule and the number of heavy atoms in a molecule.</p><p>The $\log S$  value --&gt; This is the logarithm of the solubility coefficient (S).  In Delaney's study he was interested in determining the solubility of a variety of compounds in aqueous solutions (i.e., water). The more positive this value, the more soluble the compound will be.</p><p>It's important to understand the data we are working with since this will aid us as we move forward with any necessary processing, analysis, and subsequent interpretations of said analysis.</p><p>Let's find out how many molecules this dataset contains using the '.shape' method in pandas.</p>
 </div>
 </div>
 </div>
@@ -18951,13 +18967,12 @@ jp-needs-light-background
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>From the results above we can tell the following:</p>
 <ul>
-    <li> The partition coefficients span values between -7.57 to 10.39. The median value is 2.34 and the average value is 2.45. The distribution appears unimodal from the KDE.</li>    
-    <li> The molecular weights span values between 16.04 to 780.95 g/mol. The median value is 183.59 g/mol and the average value is 102.62 g/mol. The distribution appears approximately bimodal from the KDE.</li>   
-    <li> The number of rotatable bonds spans values between 0 to 23. The median value is 1  and the average value is 2.63. The distribution appears approximately skewed unimodal from the KDE.</li>    
-    <li> The aromatic proportions span values between 0 to 1. The median value is 0.38 and the average value is 0.34. The distribution appears bimodal from the KDE.</li>
-    <li> The solubility coefficients span values between -11.6 to 1.58. The median value is -2.87  and the average value is -2.87.  The distribution appears bimodal from the KDE.</li>
+<li> The partition coefficients span values between -7.57 to 10.39. The median value is 2.34 and the average value is 2.45. The distribution appears unimodal from the KDE.</li>
+<li> The molecular weights span values between 16.04 to 780.95 g/mol. The median value is 183.59 g/mol and the average value is 102.62 g/mol. The distribution appears approximately bimodal from the KDE.</li>
+<li> The number of rotatable bonds spans values between 0 to 23. The median value is 1  and the average value is 2.63. The distribution appears approximately skewed unimodal from the KDE.</li>
+<li> The aromatic proportions span values between 0 to 1. The median value is 0.38 and the average value is 0.34. The distribution appears bimodal from the KDE.</li>
+<li> The solubility coefficients span values between -11.6 to 1.58. The median value is -2.87  and the average value is -2.87.  The distribution appears bimodal from the KDE.</li>
 </ul>
-
 <p>We can also look at the bivariate distribution between the partition coefficient and the solubility coefficient as shown below.</p>
 </div>
 </div>
@@ -19476,8 +19491,8 @@ jp-needs-light-background
 </div>
 
 </div>
-</div></div>
-<div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
@@ -19543,13 +19558,12 @@ Name: logS, Length: 1144, dtype: float64</pre>
 <p><h3> Splitting the data for model development</h3></p>
 <p>Now that we have defined our dependent and independent variables, we can split our data into a training set and a test set. 
 
-<p>A <strong>training set</strong> is a dataset used during the learning process and is used to fit the parameters</p><p>A <strong>test set</strong> is a set of examples used only to assess the performance of the model.</p><p>The splitting of the data is an extremely important element of the model building process.</p><p> When trying to determine the splitting of the data there are two competing concerns that one needs to consider:</p>
+<p>A <strong>training set</strong> is a dataset used during the learning process and is used to fit the parameters</p></p><p>A <strong>test set</strong> is a set of examples used only to assess the performance of the model.</p><p>The splitting of the data is an extremely important element of the model building process.</p><p> When trying to determine the splitting of the data there are two competing concerns that one needs to consider:</p>
 <ul>
-    <li>As the proportion of training data decreases the parameter estimates will exhibit increased variance.</li>
-    <li>As the proportion of testing data decreases the assesment of the model performance statistics will have greater variance.</li>
+<li>As the proportion of training data decreases the parameter estimates will exhibit increased variance.</li>
+<li>As the proportion of testing data decreases the assesment of the model performance statistics will have greater variance.</li>
 </ul>
-
-<p>Therefore, when choosing how to split the data we are seeking to <strong>minimize</strong> the variance associated with each of those concerns. The best splitting ultimately depends on the size of your dataset. The exact splitting of the dataset matters less when the you have a large dataset. At that point, the splitting can allow for smaller training sets to be used in order to expedite computationally intensive processes.</p><p>For the work shown here I'll make use of the commonly employed 80/20 rule (also known as the Pareto principle or Pareto splitting). The 80/20 rule basically states that 80% of effects come from 20% of the causes. The 80/20 rule is generally a good starting point for data splitting.</p><p>If the 80/20 rule does not seem to produce good predictions on your data then exploring other splittings could be beneficial. This could be done by systematically adjusting the splits and checking the resulting variances in the model or by making use of something like a <a href = "https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.33.1337&rep=rep1&type=pdf">scaling law</a>.</p><p>We split our model using train_test_split function from scikit-learn.</p><p>&emsp;1) X_train - This contains all independent variables which will be used to train the model. In the example here, I've specified the test_size = 0.2, this means 80% of observations from the total/complete data will be used to train/fit the model and remaining 20% will be used to test the model.</p><p>&emsp;2) X_test - This is the remaining 20% portion of the independent variables from the data that will not be used in the training phase. These values will be used to test the accuracy of the model.</p><p>&emsp;3) y_train - This is the dependent variable which needs to be predicted by our model. This includes category labels against your independent variables, we need to specify our dependent variable while training/fitting the model.</p><p>&emsp;4) y_test - This data has category labels for the test data which will be used to test the accuracy between the actual and predicted values.</p>
+<p>Therefore, when choosing how to split the data we are seeking to <strong>minimize</strong> the variance associated with each of those concerns. The best splitting ultimately depends on the size of your dataset. The exact splitting of the dataset matters less when the you have a large dataset. At that point, the splitting can allow for smaller training sets to be used in order to expedite computationally intensive processes.</p><p>For the work shown here I'll make use of the commonly employed 80/20 rule (also known as the Pareto principle or Pareto splitting). The 80/20 rule basically states that 80% of effects come from 20% of the causes. The 80/20 rule is generally a good starting point for data splitting.</p><p>If the 80/20 rule does not seem to produce good predictions on your data then exploring other splittings could be beneficial. This could be done by systematically adjusting the splits and checking the resulting variances in the model or by making use of something like a <a href="https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.33.1337&amp;rep=rep1&amp;type=pdf">scaling law</a>.</p><p>We split our model using train_test_split function from scikit-learn.</p><p> 1) X_train - This contains all independent variables which will be used to train the model. In the example here, I've specified the test_size = 0.2, this means 80% of observations from the total/complete data will be used to train/fit the model and remaining 20% will be used to test the model.</p><p> 2) X_test - This is the remaining 20% portion of the independent variables from the data that will not be used in the training phase. These values will be used to test the accuracy of the model.</p><p> 3) y_train - This is the dependent variable which needs to be predicted by our model. This includes category labels against your independent variables, we need to specify our dependent variable while training/fitting the model.</p><p> 4) y_test - This data has category labels for the test data which will be used to test the accuracy between the actual and predicted values.</p>
 </div>
 </div>
 </div>
@@ -19582,26 +19596,26 @@ Name: logS, Length: 1144, dtype: float64</pre>
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p><h3>Different Types of Regressor Models</h3></p>
 <p>Regressor models fall into the following categories:</p><ul>
-    <li>Ensemble Methods</li>
-    <li>Classical/Linear Methods</li>
-    <li>Gaussian Process Methods</li>
-    <li>Bayesian Methods</li>
-    <li>Variable Selection Methods</li>
-    <li>Outlier-robust Methods</li>
-    <li>Generalized linear models Methods</li>
-    <li>Miscellaneous Methods</li>
-    <li>Nearest Neighbors Methods</li>
-    <li>Neural Networks Methods</li>
-    <li>Decision Tree Methods</li>
-    <li>Composite Estimator Methods</li>
-    <li>Cross decomposition Methods</li>
+<li>Ensemble Methods</li>
+<li>Classical/Linear Methods</li>
+<li>Gaussian Process Methods</li>
+<li>Bayesian Methods</li>
+<li>Variable Selection Methods</li>
+<li>Outlier-robust Methods</li>
+<li>Generalized linear models Methods</li>
+<li>Miscellaneous Methods</li>
+<li>Nearest Neighbors Methods</li>
+<li>Neural Networks Methods</li>
+<li>Decision Tree Methods</li>
+<li>Composite Estimator Methods</li>
+<li>Cross decomposition Methods</li>
 </ul><p>In this document I'll explore models trained via 6 different methods to see how well they predict the solubility from the Delaney data. The methods I'll explore are: </p><ul>
-    <li>Linear Method (Linear Regression)</li>
-    <li>Ensemble Method (Random Forest)</li>
-    <li>Gaussian Process (Gaussian Process)</li>
-    <li>Outlier-robust (Huber Regressor)</li>
-    <li>Nearest Neighbors (K-Nearest Neighbors)</li>
-    <li>Neural Network (MLP)</li>
+<li>Linear Method (Linear Regression)</li>
+<li>Ensemble Method (Random Forest)</li>
+<li>Gaussian Process (Gaussian Process)</li>
+<li>Outlier-robust (Huber Regressor)</li>
+<li>Nearest Neighbors (K-Nearest Neighbors)</li>
+<li>Neural Network (MLP)</li>
 </ul><p>For each of these models I'll provide a brief description and introduction as to how they work. Then, I'll show how the model is set up for training followed by an assessment of their performance using the $r^{2}$ score and the mean squared error (MSE) obtained by comparing the solubility values that we partitioned into the training set and the solubility values that our regression model predicted.</p>
 </div>
 </div>
@@ -19768,8 +19782,7 @@ The MSE for the test set is:
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>The results of the model are summarized above. </p><p>The $r^{2}$ is 0.77. For a 'perfect; fit, $r^{2}$ = 1 and indicates that the dependent and independent  variables are highly correlated. An $r^{2}$ above 0.9 is generally desired. The $r^{2}$  obtained is rather low and suggests that the linear regression model is not fitting/representing the data too well.</p><p> The MSE of the training set is 1.01. The MSE is a quantity that needs to be minimized. For a 'perfect' model, there would be no errors between the data and the model and the MSE would be 0. Notice how the MSE of the training set is HIGHER than the MSE of the test set. This is not a good sign because the point of the training set is to optimize for a low MSE whereas your test set MSE is calculated over data unseen during the optimization.</p><p><h3>  Initiating and Running a Random Forest</h3></p>
-<div>Random Forest is a supervised learning algorithm based on ensemble learning method and decision trees. All calculations are run in parallel which means that there is no interaction between the decision trees as they are built. Random forest is often used to solve classification and regression problems.</div> <br></br>
-
+<div>Random Forest is a supervised learning algorithm based on ensemble learning method and decision trees. All calculations are run in parallel which means that there is no interaction between the decision trees as they are built. Random forest is often used to solve classification and regression problems.</div> <br/>
 <div>The setup for a random forest regression is essentially identical to setting up a linear regression. The main difference is that for the random forest model, we need to specify the 'max_depth' parameter which indicates how deep into the decision tree to go.</div>
 </div>
 </div>
@@ -19876,8 +19889,7 @@ The MSE for the test set is:
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p><h3> Assessing the Performance of the Random Forest Model</h3></p>
 <div>We've succesfully ran the random forest regression model on our test and training sets derived from our data. In order to determine how well the models performed we'll once again use the MSE and $r^{2}$ coefficient.</div><p>The results of the model are summarized above. </p><p>The $r^{2}$ is 0.83. The $r^{2}$  obtained is still a bit low and suggests that the random forest regression model is still not fitting/representing the data too well.</p><p> The MSE of the training set  is 0.75. In this case, the MSE of the training set is lower than the MSE of the test set. Therefore, the random forest regressor is indeed improving the fit quality.</p><p><h3>Initiating and Running a Gaussian Process Regression</h3></p>
-<div> The Gaussian Process model is a probabilistic supervised machine learning framework that is widely used for regression and classification. A Gaussian processes regression (GPR) model can make predictions incorporating prior knowledge (kernels) and provide uncertainty measures over predictions</div> <br></br>
-
+<div> The Gaussian Process model is a probabilistic supervised machine learning framework that is widely used for regression and classification. A Gaussian processes regression (GPR) model can make predictions incorporating prior knowledge (kernels) and provide uncertainty measures over predictions</div> <br/>
 <div>The setup for a Gaussian Process regression is essentially identical to setting up a random forest.</div>
 </div>
 </div>
@@ -19984,7 +19996,7 @@ The MSE for the test set is:
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p><h3> Assessing the Performance of the Gaussian Process Model</h3></p>
 <div>We've succesfully ran the Gaussian Process regression model on our test and training sets derived from our data. In order to determine how well the models performed we'll once again use the MSE and $r^{2}$ coefficient.</div><p>The results of the model are summarized above. </p><p>The $r^{2}$ is 1.00. The $r^{2}$  obtained indicates a perfect correlation between out variables and suggests that the Gaussian Process regression model is  fitting/representing the data really well. This is further evidenced by the massive difference in the MSE of the test set vs training set. Notice that the training set has a much lower MSE than the test MSE which means this regressor is doing a fantastic job! </p><p> The MSE of the training set is 0.02 and is SIGNIFICANTLY lower than the MSE of the test set. This means that this regressor results in an excellent fit.</p><p><h3> Initiating and Running a Huber Regressor</h3></p>
-<p><div>Huber Regressor is a regression technique that is robust to outliers. The idea is to use a loss function that has been modified from the standard least-squares method. The loss function used in Huber regression is identical to the least squares penalty for small residuals. However, when the residuals are large the penalty is lower and increases linearly rather than quadratically. This is what makes Huber Regression more forgiving of outliers in our data.</div> <br></br></p>
+<p><div>Huber Regressor is a regression technique that is robust to outliers. The idea is to use a loss function that has been modified from the standard least-squares method. The loss function used in Huber regression is identical to the least squares penalty for small residuals. However, when the residuals are large the penalty is lower and increases linearly rather than quadratically. This is what makes Huber Regression more forgiving of outliers in our data.</div> <br/></p>
 
 </div>
 </div>
@@ -20091,7 +20103,7 @@ The MSE for the test set is:
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p><h3> Assessing the Performance of the Huber Regressor Model</h3></p>
 <div>We've succesfully ran the Huber Regressor model on our test and training sets derived from our data. In order to determine how well the models performed we'll once again use the MSE and $r^{2}$ coefficient.</div><p>The results of the model are summarized above. </p><p>The $r^{2}$ is 0.77. The $r^{2}$  obtained is rather low and suggests that the Huber Regressor model is  not fitting/representing the data well. The training set has a slightly lower MSE than the test MSE but the difference is insignificant. </p><p><h3> Initiating and Running a Nearest Neighbors Regression</h3></p>
-<p><div> K-Nearest Neighbors is a non-parametric supervised learning method. The KNN algorithm uses ‘feature similarity’ to predict the values of any new data points. This means that the new point is assigned a value based on how closely it resembles the points in the training set. KNN algorithm can be used for both classification and regression problems.</div> <br></br></p>
+<p><div> K-Nearest Neighbors is a non-parametric supervised learning method. The KNN algorithm uses ‘feature similarity’ to predict the values of any new data points. This means that the new point is assigned a value based on how closely it resembles the points in the training set. KNN algorithm can be used for both classification and regression problems.</div> <br/></p>
 
 </div>
 </div>
@@ -20198,7 +20210,7 @@ The MSE for the test set is:
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p><h3> Assessing the Performance of the K-Nearest Neighbors Regressor Model</h3></p>
 <div>We've succesfully ran the Huber Regressor model on our test and training sets derived from our data. In order to determine how well the models performed we'll once again use the MSE and $r^{2}$ coefficient.</div><p>The results of the model are summarized above. </p><p>The $r^{2}$ is 0.99. The $r^{2}$  obtained is quite high and suggests that the K-Nearest Neighbors Regression model is  fitting/representing the data quite well. The training set a significantly lower MSE than the test MSE which means that the KNN is optimizing our model excellently. </p><p><h3> Initiating and Running a Neural network Regression</h3></p>
-<p><div>Neural Networks are one of the deep learning algorithms that simulate the workings of neurons in the human brain. The purpose of using Neural Networks for Regression is that these models can learn non-linear relationship betweens the features and the target and therefore can model more complex relationships. Neural Networks have the ability to learn the complex relationship between the features and target due to the presence of activation functions. </div> <br></br></p>
+<p><div>Neural Networks are one of the deep learning algorithms that simulate the workings of neurons in the human brain. The purpose of using Neural Networks for Regression is that these models can learn non-linear relationship betweens the features and the target and therefore can model more complex relationships. Neural Networks have the ability to learn the complex relationship between the features and target due to the presence of activation functions. </div> <br/></p>
 <p>Neural Networks consist of 3 main layers, namely an Input layer, a Hidden layer, and an Output layer. Each layer consists of $N$ neurons. Each layer will have an Activation Function associated with each of the neurons. The activation function is responsible for introducing non-linearity in the model. Each layer can also have regularizers which aid in the prevention of overfitting.</p>
 </div>
 </div>
@@ -20435,7 +20447,7 @@ The MSE for the test set is:
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><p>The results of the modeling from each of the regression methods are shown below.</p>
+<p><p></p>The results of the modeling from each of the regression methods are shown below.</p>
 
 </div>
 </div>
@@ -20541,17 +20553,17 @@ jp-needs-light-background
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <p>6 regression models were explored here, however, scikit-learn has a multitude of options for regression available, some of which are listed below:</p><p>List of regressors:</p>
 <ul>
-   <li>  sklearn.linear_model.Ridge</li> 
-   <li>  sklearn.linear_model.SGDRegressor</li>
-   <li>  sklearn.ensemble.ExtraTreesRegressor</li>
-   <li>  sklearn.ensemble.GradientBoostingRegressor</li>
-   <li> - sklearn.tree.DecisionTreeRegressor</li>
-   <li>  sklearn.tree.ExtraTreeRegressor</li>
-   <li>  sklearn.svm.LinearSVR</li>
-   <li>  sklearn.svm.SVR</li>
-</ul>    
-    <p>sklearn API Docs </p>
-    <a href = "https://scikit-learn.org/stable/modules/classes.html">https://scikit-learn.org/stable/modules/classes.html</a>
+<li>  sklearn.linear_model.Ridge</li>
+<li>  sklearn.linear_model.SGDRegressor</li>
+<li>  sklearn.ensemble.ExtraTreesRegressor</li>
+<li>  sklearn.ensemble.GradientBoostingRegressor</li>
+<li> - sklearn.tree.DecisionTreeRegressor</li>
+<li>  sklearn.tree.ExtraTreeRegressor</li>
+<li>  sklearn.svm.LinearSVR</li>
+<li>  sklearn.svm.SVR</li>
+</ul>
+<p>sklearn API Docs </p>
+<a href="https://scikit-learn.org/stable/modules/classes.html">https://scikit-learn.org/stable/modules/classes.html</a>
 <p> Comparing multiple models is really important when training machine learning models. In addition to that, exploring how different input parameters influences the fit quality is important to explore as well. If you are interested in ensemble learning, then creating a variety of models is necessary since that approach takes the results from each of those models and tries to make a better one from those results.</p>
 </div>
 </div>
@@ -21081,3 +21093,11 @@ The full routines for the work done here are shown below. The routines shown her
 </div>
 </div>
 </body>
+
+
+
+
+
+
+
+</html>

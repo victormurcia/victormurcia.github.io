@@ -1,0 +1,43 @@
+---
+layout: post
+title: "Importing Jupyter Lab Notebooks into Jekyll Site"
+subtitle: "Displaying my work with style"
+date: 2022-08-11 05:53:13 -0400
+tags: jekyll jupyter_notebook
+background: '/img/posts/bgp1.jpg'
+---
+
+<p>I'm finally content with how my Jupyter notebooks are formatted/displayed in my Jekyll site so i figured I'd share what I do in case someone is curious.</p>
+
+<p>All you'll need is the <code>nbconvert</code> package which can be installed by using either <code>pip</code> or <code>conda</code> as follows:
+    <ul>
+        <li><code>pip install --user nbconvert</code></li>
+        <li><code>conda install nbconvert</code></li>
+    </ul>
+<p>My procedure is as follows:</p>
+<ol>
+    <li>Save your Jupyter notebook into whatever directory you want.</li>
+    <li>Navigate to that direcrory using the command prompt.</li>
+    <li>Use the following code to convert your .ipynb to .html</li>
+    <code>jupyter nbconvert --to html yournotebook.ipynb</code><br>
+     That's the barebones conversion from .ipynb to .html. For my website, I'm also including the following flags to customize my output further:<br>
+    <code>jupyter nbconvert --to html yournotebook.ipynb --theme jupyterlab_miami_nights --template lab --embed-image</code><br>
+    The entry above is converting my .ipynb to .html, using the lab template (built-in feature of nbconvert), embedding images as base64 URLs in the HTML file, and 
+    using the custom notebook theme "jupyterlab_miami_nights" for the output.
+    <li>Place your HTML file into the <code>_posts</code> folder of your Jekyll website.</li>
+    <li>Add the standard <code>YYYY-MM-DD-</code> to the beginning of the file name of your html file. (i.e., if your html file was named <code>hi.html</code> and you want the post to 
+        correspond to <em>August 11,2022</em> then rename the file to <code>2022-08-08-hi.html</code></li>
+    <li>Add the standard .yaml header to the beginning of your html file.</li>
+    <code>---<br>
+        layout: post<br>
+        title: "Importing Jupyter Lab Notebooks into Jekyll Site"<br>
+        subtitle: "Displaying my work with style"<br>
+        date: 2022-08-08 05:53:13 -0400<br>
+        tags: jekyll jupyter_notebook<br>
+        background: '/img/posts/bgp1.jpg'<br>
+    ---</code><br>
+</ol>
+
+<p>You can see an example of the output using this method <a href = "">here</a></p>
+
+<p>Hopefully this is useful to you!</p>
