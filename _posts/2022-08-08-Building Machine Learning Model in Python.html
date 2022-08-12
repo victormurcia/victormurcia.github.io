@@ -18500,11 +18500,62 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 <li>Load data onto notebook through pandas and import desired regressor models</li>
 <li>Assign dependent and indenpendent variables from dataset</li>
 <li>Split the data into a training set and a test set</li>
-<li>Build the model (linear regression, random forest or something else)</li>
+<li>Choose a regressor (linear regression, random forest or something else)</li>
 <li>Determine the model performance (statistics like MSE and R2)</li>
 <li>Compare against other regressors?</li>
 <li>Visualize results</li>
-</ol>
+</ol><h2> Table of Contents </h2><ul>
+<li><a href="#Data_loading_and_inspection">Step 1: Data loading and inspection</a><ul>
+<li><a href="#loadingWithPandas">Loading data with pandas</a></li>
+<li><a href="#inspectingData">Inspecting and understanding the loaded data with pandas</a></li>
+<li><a href="#iniVis">Initial visualization of our data</a></li>
+</ul>
+</li>
+<li><a href="#gtts">Step 2: Generate Training and Test Sets</a><ul>
+<li><a href="#didv">Define the independent and dependent variables</a></li>
+<li><a href="#sdmd">Splitting the data for model development</a></li>
+<li><a href="#dtrm">Different Types of Regressor Models</a></li>
+</ul>
+</li>
+<li><a href="#rrm">Step 3: Running the Regressor Models</a><ul>
+<li><a href="#lrb">Linear Regression Basics</a><ul>
+<li><a href="#irlr">Initiating and Running a Linear Regression</a></li>
+<li><a href="#aplrm">Assessing the Performance of Linear Regression Model</a></li>
+</ul>
+</li>
+<li><a href="#rfb">Random Forest Basics</a><ul>
+<li><a href="#irrf">Initiating and Random Forest Regression</a></li>
+<li><a href="#aprfm">Assessing the Performance of Random Forest Model</a></li>
+</ul>
+</li>
+<li><a href="#gpb">Gaussian Process Basics</a><ul>
+<li><a href="#irgpr">Initiating and Running a Gaussian Process Regression</a></li>
+<li><a href="#apgprm">Assessing the Performance of Gaussian Process Regression Model</a></li>
+</ul>
+</li>
+<li><a href="#hrb">Huber Regression Basics</a><ul>
+<li><a href="#irhr">Initiating and Running a Huber Regression</a></li>
+<li><a href="#aphrm">Assessing the Performance of Huber Regression Model</a></li>
+</ul>
+</li>
+<li><a href="#knnb">K-Nearest Neighbors Basics</a><ul>
+<li><a href="#irknnr">Initiating and Running a K-Nearest Neighbors Regression</a></li>
+<li><a href="#apknnrm">Assessing the Performance of K-Nearest Neighbors Regression Model</a></li>
+</ul>
+</li>
+<li><a href="#mlpnnb">MLP Neural Network Basics</a><ul>
+<li><a href="#irnnr">Initiating and Running a MLP Neural Network Regression</a></li>
+<li><a href="#apnnrm">Assessing the Performance of MLP Neural Network Regression Model</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#crp">Step 4: Compare Regressor Performance</a></li>
+<li><a href="#vr">Step 5: Visualize Results</a></li>
+<li><a href="#fr">Full Routines</a></li>
+<li><a href="#conclusions">Conclusions</a></li>
+</ul>
+
 </div>
 </div>
 </div>
@@ -18581,8 +18632,8 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><h2>Step 1: Data loading and inspection</h2></p>
-<p>This section will delineate the basic steps of loading and preliminary inspection of our data using a few pandas methods. If you are faimiliar with pandas you can skip this section :)</p><p><h3> Loading data with pandas</h3></p>
+<p><h2>Step 1: Data loading and inspection<a class="anchor" id="Data_loading_and_inspection"></a></h2></p>
+<p>This section will delineate the basic steps of loading and preliminary inspection of our data using a few pandas methods. If you are faimiliar with pandas you can skip this section :)</p><p><h3> Loading data with pandas<a class="anchor" id="loadingWithPandas"></a></h3></p>
 <p>The first thing that needs to be done is load the data onto our jupyter notebook.There's a variety of methods to accomplish this.</p><p>In this case, a <strong>.csv</strong> file (Commma Separated Values) containing solubility data for a variety of molecules extracted from a study conducted by John S. Delaney (found here: <a href="https://pubs.acs.org/doi/10.1021/ci034243x">https://pubs.acs.org/doi/10.1021/ci034243x</a>) will be used.</p><p>Loading data from .csv files is accomplished via the  <strong>read_csv</strong> function in pandas.</p><p>Here I'll be naming the dataframe from our .csv file as <strong>df</strong></p>
 </div>
 </div>
@@ -18726,7 +18777,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><h3>Inspecting and understanding the loaded data with pandas</h3></p>
+<p><h3>Inspecting and understanding the loaded data with pandas<a class="anchor" id="inspectingData"></a></h3></p>
 <p>I used the '.head()' method to visualize the first 5 rows on the resulting dataframe. You can visualize the first and last 5 rows in your dataframe by simply entering the name of your dataframe. You can also visualize the first 'N' rows in your dataframe by passing an integer value onto .head().</p><p>Our dataframe has 5 columns that contain the following information for each molecule:</p><p>The $\log P$ value --&gt; $\log P$  is  the logarithm of the partition coefficient and represents the ratio of concentrations of a compound in a mixture of two immiscible solvents at equilibrium.</p><p style="text-align:center;">$\log P = \log\left ( \frac{[A]_{solute, organic}}{[A]_{solute, aqueous}} \right ) = \log K_{D}$</p><p>In the equation above, $[A]$ represents the concentration of compound A in one of the layers of interest. The ratio of concentrations in two different layers is also known as the partition constant $K_{D}$. The partition coefficient is a quantity regularly used in chemistry to characterize the extent of hydrophilicity of chemical compounds. This quantity is unitless.</p><p>The image below shows a density column made up of 5 different liquid compounds. The liquids separate because they have dismilar solubilities between one another.</p>
 <p style="text-align:center;"><img src="https://i.pinimg.com/236x/10/84/d0/1084d0f11208f8ba4bd67e8b9c568fd1.jpg"/></p><p>The MolWt --&gt; This corresponds to the molecular weight which is the sum of the weights of the atoms that make up a molecule. This is typically reported in units of grams/mole [g/mol]</p><p>The number of rotatable bonds --&gt; Atoms in molecules are connected via chemical bonds. Bonds come in a variety of different types but the ones we are concerned here are single, double and triple. Single bonds can freely rotate in space while double and triple bonds are rigid. Therefore, this column represents the number of single bonds in the molecule that are not within a ring structure.</p><p>The aromatic proportion --&gt; This is the ratio of the number of aromatic atoms in a molecule and the number of heavy atoms in a molecule.</p><p>The $\log S$  value --&gt; This is the logarithm of the solubility coefficient (S).  In Delaney's study he was interested in determining the solubility of a variety of compounds in aqueous solutions (i.e., water). The more positive this value, the more soluble the compound will be.</p><p>It's important to understand the data we are working with since this will aid us as we move forward with any necessary processing, analysis, and subsequent interpretations of said analysis.</p><p>Let's find out how many molecules this dataset contains using the '.shape' method in pandas.</p>
 </div>
@@ -18779,7 +18830,7 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3> Initial visualization of our data</h3><p>Now that we understand our data a bit better, let's start making some plots to help us visualize it! I'll start by looking at the distributions (using histograms and kernel density estimates) of the different parameters we have access to from our dataset.</p>
+<h3> Initial visualization of our data<a class="anchor" id="iniVis"></a></h3><p>Now that we understand our data a bit better, let's start making some plots to help us visualize it! I'll start by looking at the distributions (using histograms and kernel density estimates) of the different parameters we have access to from our dataset.</p>
 </div>
 </div>
 </div>
@@ -19341,7 +19392,7 @@ jp-needs-light-background
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2> Training the Model</h2><p>Now that we understand our data and have taken the time to visualize it, we can start training our machine learning model.</p><h3> Define the independent and dependent variables</h3><p>To accomplish this, we need to decide what variable we would like to predict (i.e. our dependent variable), and decide which of our other available parameter(s) will serve as our independent variable(s).</p><p>In this case, we will set our independent variable (y) to be logS and the remaining columns will serve as our dependent variables (x). </p>
+<h2>Step 2: Generate Training and Test Sets<a class="anchor" id="gtts"></a></h2><p>Now that we understand our data and have taken the time to visualize it, we can start training our machine learning model.</p><h3> Define the independent and dependent variables<a class="anchor" id="didv"></a></h3><p>To accomplish this, we need to decide what variable we would like to predict (i.e. our dependent variable), and decide which of our other available parameter(s) will serve as our independent variable(s).</p><p>In this case, we will set our independent variable (y) to be logS and the remaining columns will serve as our dependent variables (x). </p>
 </div>
 </div>
 </div>
@@ -19555,7 +19606,7 @@ Name: logS, Length: 1144, dtype: float64</pre>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><h3> Splitting the data for model development</h3></p>
+<p><h3> Splitting the data for model development<a class="anchor" id="sdmd"></a></h3></p>
 <p>Now that we have defined our dependent and independent variables, we can split our data into a training set and a test set. 
 
 <p>A <strong>training set</strong> is a dataset used during the learning process and is used to fit the parameters</p></p><p>A <strong>test set</strong> is a set of examples used only to assess the performance of the model.</p><p>The splitting of the data is an extremely important element of the model building process.</p><p> When trying to determine the splitting of the data there are two competing concerns that one needs to consider:</p>
@@ -19594,7 +19645,7 @@ Name: logS, Length: 1144, dtype: float64</pre>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><h3>Different Types of Regressor Models</h3></p>
+<p><h3>Different Types of Regressor Modelst<a class="anchor" id="dtrm"></a></h3></p>
 <p>Regressor models fall into the following categories:</p><ul>
 <li>Ensemble Methods</li>
 <li>Classical/Linear Methods</li>
@@ -19627,11 +19678,28 @@ Name: logS, Length: 1144, dtype: float64</pre>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><h3>  Initiating and Running a Linear Regression</h3></p>
-<p><div>Now that we have split the data into test and training sets, we can decide what model to use. In this example, a linear regression will be performed. Linear regression is the process of measuring the output from a set of inputs. The simplest linear regression model is a line expressed mathematically as:</div></p>
-<p><p style="text-align:center;"> $\hat{Y} = \hat{\beta}_{0} + \sum \limits _{j=1} ^{p} X_{j}\hat{\beta}_{j} $ </p>
-&lt;/div&gt; In this equation $\hat{\beta}_{0}$ and $\hat{\beta}_{j}$ are the fit parameters of the model (the y intercept and the slope of the line in this case).</p>
-
+<h2>Step 3: Running the Regressor Models<a class="anchor" id="rrm"></a></h2><p>The following sections will describe show the setup and performance assessment of each of the regression models to be utilized for solubility prediction.</p><h3>Linear Regression Basics<a class="anchor" id="lrb"></a></h3>
+<p>Now that we have split the data into test and training sets, we can decide what model to use. In this example, a linear regression will be performed. Linear regression is the process of measuring the output from a set of inputs. The simplest linear regression model is a line expressed mathematically as:</p>
+<p style="text-align:center;"> $\hat{Y} = \hat{\beta}_{0} + \sum \limits _{j=1} ^{p} X_{j}\hat{\beta}_{j} $ </p>
+<p>In this equation $\hat{\beta}_{0}$ and $\hat{\beta}_{j}$ are the fit parameters of the model (the y intercept and the slope of the line in this case).</p>
+<p>If our independent variable consists of a single input then this a simple linear regression. However, we are usually interested in the effect that many variables (i.e., inputs) have on our dependent variable. For this kind of analysis we need to use a technique like Ordinary Least Squares, Gradient Descent, or Regularization. Each of these techniques seeks to minimize a different quantity.</p>
+<p>In this example, we'll be using the Ordinary Sum of Squares (OSS). In OSS,  the residual sum of squares (RSS) is what is being minimized. The RSS is expressed as:</p>
+<p style="text-align:center;"> $RSS  = \sum_{i}^{N} \left (  y_{i} - f(x_{i})\right)^{2}$</p>
+<p>Here $y_{i}$ is the measured value and $f(x_{i})$ is the model value. The lower the RSS the more accurate the model. </p>
+<p>I also wanted to briefly talk about regularization methods. Regularization methods are useful because they aim to minimize the RSS while simultaneously reducing the complexity of the model (i.e, minimizing the potential of overfitting). The reduction in the complexity of a model is important to take into account because a model with an arbitrarily large number of parameters begins to suffer from the uniqueness problem (i.e., other parameter combinations can also produce good models/fits for our data).</p>
+<p>Two common ways to address the complexity/over-fitting concerns are via L1 and L2 regularization. These regularization techniques introduce a penalty term to the loss/cost function associated with the model. In L1 regularization the cost function (CF) looks like this:</p>
+<p style="text-align:center;"> $CF_{L2} = \sum_{i}^{N} (y_{i} - x_{ij}\beta_{j})^{2} +\lambda \sum_{j}^{N} \beta_{j}^{2}$</p>
+<p>Here $y_{i}$ are the observed values, $ x_{ij}\beta_{j}$ are the model values, $\beta_{j}$ is a weight term, and $\lambda$ is known as the regularization rate. </p>
+<p>In L2 regularization the cost function (CF) looks like this:</p>
+<p style="text-align:center;"> $CF_{L1} = \sum_{i}^{N} (y_{i} - x_{ij}\beta_{j}))^{2} +\lambda \sum_{j}^{N} \left | \beta_{j} \right |$</p>
+<p>As you can see, these two approaches are identical except for the second term which is known as the penalty term. These differences are summarized in the following points:</p>
+<ul>
+<li>L1 is robust to outliers</li>
+<li>L1 has built-in feature selection</li>
+<li>L1 is a sparse solution (i.e., regularizes has many 0 values)</li>
+<li>L1 penalizes the sum of the absolute weights</li>
+</ul>
+<h3>  Initiating and Running a Linear Regression<a class="anchor" id="irlr"></a></h3>
 </div>
 </div>
 </div>
@@ -19663,8 +19731,8 @@ Name: logS, Length: 1144, dtype: float64</pre>
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><h3> Assessing the Performance of Linear Regression Model</h3></p>
-<div>We've succesfully ran the linear regression model on our test and training sets derived from our data. In order to determine how well the models performed we'll use the mean squared error (MSE) and $r^{2}$ coefficient.</div>
+<p><h3> Assessing the Performance of Linear Regression Model<a class="anchor" id="aplrm"></a></h3></p>
+<div>We've succesfully ran the linear regression model on our test and training sets derived from our data. In order to determine how well the models performed we'll use the mean squared error (MSE) and $r^{2}$ coefficient (also known as the accuracy score).</div>
 </div>
 </div>
 </div>
@@ -19781,9 +19849,17 @@ The MSE for the test set is:
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>The results of the model are summarized above. </p><p>The $r^{2}$ is 0.77. For a 'perfect; fit, $r^{2}$ = 1 and indicates that the dependent and independent  variables are highly correlated. An $r^{2}$ above 0.9 is generally desired. The $r^{2}$  obtained is rather low and suggests that the linear regression model is not fitting/representing the data too well.</p><p> The MSE of the training set is 1.01. The MSE is a quantity that needs to be minimized. For a 'perfect' model, there would be no errors between the data and the model and the MSE would be 0. Notice how the MSE of the training set is HIGHER than the MSE of the test set. This is not a good sign because the point of the training set is to optimize for a low MSE whereas your test set MSE is calculated over data unseen during the optimization.</p><p><h3>  Initiating and Running a Random Forest</h3></p>
-<div>Random Forest is a supervised learning algorithm based on ensemble learning method and decision trees. All calculations are run in parallel which means that there is no interaction between the decision trees as they are built. Random forest is often used to solve classification and regression problems.</div> <br/>
-<div>The setup for a random forest regression is essentially identical to setting up a linear regression. The main difference is that for the random forest model, we need to specify the 'max_depth' parameter which indicates how deep into the decision tree to go.</div>
+<p>The results of the model are summarized above. </p><p>The $r^{2}$ is 0.77 which means this model has an accuracy score of 77%. For a 'perfect; fit, $r^{2}$ = 1 and indicates that the dependent and independent  variables are highly correlated. An $r^{2}$ above 0.9 is generally desired. The $r^{2}$  obtained is rather low and suggests that the linear regression model is not fitting/representing the data too well.</p><p> The MSE of the training set is 1.01. The MSE is a quantity that needs to be minimized. For a 'perfect' model, there would be no errors between the data and the model and the MSE would be 0. Notice how the MSE of the training set is HIGHER than the MSE of the test set. This is not a good sign because the point of the training set is to optimize for a low MSE whereas your test set MSE is calculated over data unseen during the optimization.</p><h3>Random Forest Basics<a class="anchor" id="rfb"></a></h3><p>Random Forest (RF) is a supervised learning algorithm based on ensemble learning method (i.e., combine predictions from multiple machine learning models) and decision trees.  All calculations are run in parallel which means that there is no interaction between the decision trees as they are built. RF is often used to solve classification and regression problems.</p><p>The schematic below shows how RF is structured</p><p style="text-align:center;"><img src="https://miro.medium.com/max/1400/1*ZFuMI_HrI3jt2Wlay73IUQ.png"/></p><p>The RF algorithm works as follows:</p>
+<ol>
+<li>Pick $k$ data points from the training set at random</li>
+<li>Build decision tree from those $k$ points </li>
+<li>Select number $N$ of decision trees to build</li>
+<li>[Optional] Select how deep into each forest to go</li>
+<li>Repeat steps 1 and 2</li>
+<li>Use each of the $N$ trees to predict the value of each data point and use the new data point to the average of all predicted values</li>
+</ol>
+<h3>  Initiating and Running a Random Forest<a class="anchor" id="irrf"></a></h3>
+<p>The code setup for a RF regression is essentially identical to setting up a linear regression. The main difference is that for the RF model, we can specify other parameters such as the 'max_depth' parameter which indicates how deep (i.e. how many 'splits') into the decision tree to go.</p>
 </div>
 </div>
 </div>
@@ -19887,10 +19963,8 @@ The MSE for the test set is:
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><h3> Assessing the Performance of the Random Forest Model</h3></p>
-<div>We've succesfully ran the random forest regression model on our test and training sets derived from our data. In order to determine how well the models performed we'll once again use the MSE and $r^{2}$ coefficient.</div><p>The results of the model are summarized above. </p><p>The $r^{2}$ is 0.83. The $r^{2}$  obtained is still a bit low and suggests that the random forest regression model is still not fitting/representing the data too well.</p><p> The MSE of the training set  is 0.75. In this case, the MSE of the training set is lower than the MSE of the test set. Therefore, the random forest regressor is indeed improving the fit quality.</p><p><h3>Initiating and Running a Gaussian Process Regression</h3></p>
-<div> The Gaussian Process model is a probabilistic supervised machine learning framework that is widely used for regression and classification. A Gaussian processes regression (GPR) model can make predictions incorporating prior knowledge (kernels) and provide uncertainty measures over predictions</div> <br/>
-<div>The setup for a Gaussian Process regression is essentially identical to setting up a random forest.</div>
+<h3> Assessing the Performance of the Random Forest Model<a class="anchor" id="aprfm"></a></h3><div>We've succesfully ran the random forest regression model on our test and training sets derived from our data. In order to determine how well the models performed we'll once again use the MSE and $r^{2}$ coefficient.</div><p>The results of the model are summarized above. </p><p>The $r^{2}$ is 0.83 which gives it an accuracy score of 83%. The $r^{2}$  obtained is still a bit low and suggests that the random forest regression model is still not fitting/representing the data too well.</p><p> The MSE of the training set  is 0.75. In this case, the MSE of the training set is lower than the MSE of the test set. Therefore, the random forest regressor is indeed improving the fit quality.</p><h3> Gaussian Process Basics<a class="anchor" id="gpb"></a></h3><p> The Gaussian Process model is a probabilistic supervised machine learning framework that is widely used for regression and classification. A Gaussian processes regression (GPR) model can make predictions incorporating prior knowledge (kernels) and provide uncertainty measures over predictions. <a href="https://arxiv.org/pdf/2009.10862.pdf">Here's</a> a wonderful article that covers Gaussian Processes in detail. I'll just be summarizing the key points here.</p><p>A random variable X is said to be Gaussian (aka normally distributed) via the following probability density function (PDF):</p><p style="text-align:center;">$P_{X}(x) = \frac{1}{\sqrt{2\pi}\sigma}e^{\frac{-({x-\mu})^{2}}{2\sigma^{2}}}$</p><p>Here, the mean is $\mu$ and the variance is $\sigma$. This distribution looks like the familiar "bell curve".</p><p style="text-align:center;"><img src="https://mathbitsnotebook.com/Algebra2/Statistics/normalturqa.jpg"/></p><p>Each of the points in a Gaussian distribution can be represented as a vector. However, for the univariate case described just now, the resulting functions are not smooth enough to be used for regression tasks. To aid in the smoothing of these functions a joint distribution is needed which can be obtained via 
+multivariate distribution theory and the usage of covariance functions. A special type of covariance functions are kernel functions. Kernel functions are defined by their usuage of inner products (i.e., a generalized form of the dot product). For Gaussian Processes the most commonly used kernel function is the squared exponential which looks like this:</p><p style="text-align:center;">$cov(x_{i},x_{j}) = e^{\frac{-({x_{i}-x_{j}})^{2}}{2}}$</p><p>Here $x_{i}$ and $x_{j}$ are values derived from the input vectors I mentioned earlier.</p><p>In a Gaussian Process model, we generate a probability distribution based on functions that fit a set of points. Since we have this probability distribution, we can also determine the means and variance of our resulting model at each iteration.</p><h3>Initiating and Running a Gaussian Process Regression<a class="anchor" id="irgpr"></a></h3><p>The code setup for a Gaussian Process regression is similar to what we've done before.</p>
 </div>
 </div>
 </div>
@@ -19994,10 +20068,14 @@ The MSE for the test set is:
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><h3> Assessing the Performance of the Gaussian Process Model</h3></p>
-<div>We've succesfully ran the Gaussian Process regression model on our test and training sets derived from our data. In order to determine how well the models performed we'll once again use the MSE and $r^{2}$ coefficient.</div><p>The results of the model are summarized above. </p><p>The $r^{2}$ is 1.00. The $r^{2}$  obtained indicates a perfect correlation between out variables and suggests that the Gaussian Process regression model is  fitting/representing the data really well. This is further evidenced by the massive difference in the MSE of the test set vs training set. Notice that the training set has a much lower MSE than the test MSE which means this regressor is doing a fantastic job! </p><p> The MSE of the training set is 0.02 and is SIGNIFICANTLY lower than the MSE of the test set. This means that this regressor results in an excellent fit.</p><p><h3> Initiating and Running a Huber Regressor</h3></p>
-<p><div>Huber Regressor is a regression technique that is robust to outliers. The idea is to use a loss function that has been modified from the standard least-squares method. The loss function used in Huber regression is identical to the least squares penalty for small residuals. However, when the residuals are large the penalty is lower and increases linearly rather than quadratically. This is what makes Huber Regression more forgiving of outliers in our data.</div> <br/></p>
-
+<h3> Assessing the Performance of the Gaussian Process Model<a class="anchor" id="apgprm"></a></h3><div>We've succesfully ran the Gaussian Process regression model on our test and training sets derived from our data. In order to determine how well the models performed we'll once again use the MSE and $r^{2}$ coefficient.</div><p>The results of the model are summarized above. </p><p>The $r^{2}$ is 1.00. The $r^{2}$  obtained indicates a perfect correlation between out variables and suggests that the Gaussian Process regression model is  fitting/representing the data really well. This is further evidenced by the massive difference in the MSE of the test set vs training set. Notice that the training set has a much lower MSE than the test MSE which means this regressor is doing a fantastic job! </p><p> The MSE of the training set is 0.02 and is SIGNIFICANTLY lower than the MSE of the test set. This means that this regressor results in an excellent fit.</p><h3> Huber Regression Basics<a class="anchor" id="hrb"></a></h3><p>Huber Regressor is a regression technique that is robust to outliers. The idea is to use a loss function that has been modified from the standard least-squares method. The loss function used in Huber regression is similar to the least squares penalty for small residuals. However, when the residuals are large the penalty is lower and increases linearly rather than quadratically. This is what makes Huber Regression more forgiving of outliers in our data. Whether a residual is considered small or large is based on a threshold value denoted as $\epsilon$</p><p>The cost function for the Huber method is defined as follows:</p><p style="text-align:center;">$CF_{HR} = \sum_{i=1}^{m} \phi(y_{i} -x_{i}^{T}\beta )$</p><p>The Huber function for the Huber method is defined as follows:</p><p style="text-align:center;"> 
+    $\phi = 
+    \begin{cases} 
+      u^{2} &amp; \left | u \right | \leq \epsilon\\
+      2\epsilon u -\epsilon ^{2} &amp; \left | u \right |  &gt;  \epsilon \\
+   \end{cases}
+$</p><p>The distinguishing factor of the Huber method is $\epsilon$. As $\epsilon$ gets smaller the HR method becomes more robust to outliers.</p><p>Reference: Huber, P. J. 1964. “Robust Estimation of a Location Parameter.” Annals of Mathematical Statistics 35 (1): 73–101.</p><p><h3> Initiating and Running a Huber Regressor<a class="anchor" id="irhr"></a></h3></p>
+<div>The code setup for a Huber Regressor is essentially identical to setting up a Linear Regressor. The main difference is that you can specify an epsilon value that controls the tolerance to outliers.</div>
 </div>
 </div>
 </div>
@@ -20101,9 +20179,8 @@ The MSE for the test set is:
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><h3> Assessing the Performance of the Huber Regressor Model</h3></p>
-<div>We've succesfully ran the Huber Regressor model on our test and training sets derived from our data. In order to determine how well the models performed we'll once again use the MSE and $r^{2}$ coefficient.</div><p>The results of the model are summarized above. </p><p>The $r^{2}$ is 0.77. The $r^{2}$  obtained is rather low and suggests that the Huber Regressor model is  not fitting/representing the data well. The training set has a slightly lower MSE than the test MSE but the difference is insignificant. </p><p><h3> Initiating and Running a Nearest Neighbors Regression</h3></p>
-<p><div> K-Nearest Neighbors is a non-parametric supervised learning method. The KNN algorithm uses ‘feature similarity’ to predict the values of any new data points. This means that the new point is assigned a value based on how closely it resembles the points in the training set. KNN algorithm can be used for both classification and regression problems.</div> <br/></p>
+<h3> Assessing the Performance of the Huber Regressor Model<a class="anchor" id="aphrm"></a></h3><div>We've succesfully ran the Huber Regressor model on our test and training sets derived from our data. In order to determine how well the models performed we'll once again use the MSE and $r^{2}$ coefficient.</div><p>The results of the model are summarized above. </p><p>The $r^{2}$ is 0.77. The $r^{2}$  obtained is rather low and suggests that the Huber Regressor model is  not fitting/representing the data well. The training set has a slightly lower MSE than the test MSE but the difference is insignificant. </p><h3>K-Nearest Neighbors Regression Basics<a class="anchor" id="knnb"></a></h3><p> K-Nearest Neighbors is a non-parametric supervised learning method. The KNN algorithm uses ‘feature similarity’ to predict the values of any new data points. This means that the new point is assigned a value based on how closely it resembles the points in the training set. KNN algorithm can be used for both classification and regression problems. Here's a nice animation I found that showcases the basic principles of KNN:</p><p style="text-align:center;"><img height="300" src="https://machinelearningknowledge.ai/wp-content/uploads/2018/08/KNN-Classification.gif" width="400"/></p><p><h3> Initiating and Running a Nearest Neighbors Regression<a class="anchor" id="irknnr"></a></h3>
+The code setup for a Nearest Neighbors Regressor is similar to the regressions we've already done. The main difference is that we can specify a 'n_neighbors' value that controls number of nearest neighbors to consider as part of the process.</p>
 
 </div>
 </div>
@@ -20208,10 +20285,12 @@ The MSE for the test set is:
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><h3> Assessing the Performance of the K-Nearest Neighbors Regressor Model</h3></p>
-<div>We've succesfully ran the Huber Regressor model on our test and training sets derived from our data. In order to determine how well the models performed we'll once again use the MSE and $r^{2}$ coefficient.</div><p>The results of the model are summarized above. </p><p>The $r^{2}$ is 0.99. The $r^{2}$  obtained is quite high and suggests that the K-Nearest Neighbors Regression model is  fitting/representing the data quite well. The training set a significantly lower MSE than the test MSE which means that the KNN is optimizing our model excellently. </p><p><h3> Initiating and Running a Neural network Regression</h3></p>
-<p><div>Neural Networks are one of the deep learning algorithms that simulate the workings of neurons in the human brain. The purpose of using Neural Networks for Regression is that these models can learn non-linear relationship betweens the features and the target and therefore can model more complex relationships. Neural Networks have the ability to learn the complex relationship between the features and target due to the presence of activation functions. </div> <br/></p>
-<p>Neural Networks consist of 3 main layers, namely an Input layer, a Hidden layer, and an Output layer. Each layer consists of $N$ neurons. Each layer will have an Activation Function associated with each of the neurons. The activation function is responsible for introducing non-linearity in the model. Each layer can also have regularizers which aid in the prevention of overfitting.</p>
+<h3> Assessing the Performance of K-Nearest Neighbors Regressor Model<a class="anchor" id="apknnrm"></a></h3>
+<p>We've succesfully ran the Huber Regressor model on our test and training sets derived from our data. In order to determine how well the models performed we'll once again use the MSE and $r^{2}$ coefficient.</p>
+<p>The results of the model are summarized above. </p>
+<p>The $r^{2}$ is 0.99. The $r^{2}$  obtained is quite high and suggests that the K-Nearest Neighbors Regression model is  fitting/representing the data quite well. The training set a significantly lower MSE than the test MSE which means that the KNN is optimizing our model excellently. </p>
+<h3> Neural Network Regression Basics<a class="anchor" id="mlpnnb"></a></h3><p>Neural Networks are one of the deep learning algorithms that simulate the workings of neurons in the human brain. The purpose of using Neural Networks for Regression is that these models can learn non-linear relationship betweens the features and the target and therefore can model more complex relationships. Neural Networks have the ability to learn the complex relationship between the features and target due to the presence of activation functions. </p><p>Neural Networks consist of 3 main layers, namely an Input layer, a Hidden layer, and an Output layer. Each layer consists of $N$ neurons. Each layer will have an Activation Function associated with each of the neurons. The activation function is responsible for introducing non-linearity in the model. Each layer can also have regularizers which aid in the prevention of overfitting.</p><p style="text-align:center;"><img src="https://editor.analyticsvidhya.com/uploads/28230600px-Neural_network.svg.png"/></p><p><h3> Initiating and Running a Neural network Regression<a class="anchor" id="irnnr"></a></h3></p>
+<p>The code setup for a Neural network Regressor is similar to the regressions we've already done. However, there are more parameters at our disposal that we can play with like the choice of solver, number of hidden layers, and the learning rate amongst others.</p>
 </div>
 </div>
 </div>
@@ -20316,7 +20395,8 @@ The MSE for the test set is:
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><h3> Comparing the Performance of the Different Models</h3></p>
+<p><h3> Assessing the Performance of MLP Neural Network Regressor Model<a class="anchor" id="apnnrm"></a></h3></p>
+<div>We've succesfully ran the Huber Regressor model on our test and training sets derived from our data. In order to determine how well the models performed we'll once again use the MSE and $r^{2}$ coefficient.</div><p>The results of the model are summarized above. </p><p>The $r^{2}$ is 0.99. The $r^{2}$  obtained is quite high and suggests that the K-Nearest Neighbors Regression model is  fitting/representing the data quite well. The training set a significantly lower MSE than the test MSE which means that the KNN is optimizing our model excellently. </p><p><h3> Comparing the Performance of the Different Models<a class="anchor" id="crp"></a></h3></p>
 <p>The performance results from all 6 models explored here are shown in the table below. The table has been soted so that the model with the highest $r^{2}$ value is at the top. As can be seen, the Gaussian Process and K-Nearest Neighbors  produced the models with the best $r^{2}$ values and lowest MSE. The linear regression and Huber regression models performed the worst.</p>
 </div>
 </div>
@@ -20447,6 +20527,7 @@ The MSE for the test set is:
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p><h3> Visualizing the Results from Different Regressor Models<a class="anchor" id="vr"></a></h3></p>
 <p><p></p>The results of the modeling from each of the regression methods are shown below.</p>
 
 </div>
@@ -20575,7 +20656,7 @@ jp-needs-light-background
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><h3>Full Routines</h3>
+<p><h3>Full Routines<a class="anchor" id="fr"></a></h3>
 The full routines for the work done here are shown below. The routines shown here can readily be modified to use other regression models and refactored as desired to control even more aspects of the modeling and use for subsequent/additional model comparisons. There's also a wrapper function that will allow the user to specify which regressors they want to run and produce the output I showed in the last section.</p>
 
 </div>
@@ -21086,7 +21167,8 @@ The full routines for the work done here are shown below. The routines shown her
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h6 id="-Conclusions"><h3> Conclusions</h3><a class="anchor-link" href="#-Conclusions">&#182;</a></h6><p>6 different regression models were explored and trained using the Delaney Solubility data in order to predict the solubility coefficient of 1144 molecules. The Gaussian Progression and K-Nearest Neighbors algorithms were found to produce the models that best represented the observed values.</p>
+<p><h3> Conclusions</h3><a class="anchor" id="conclusions"></a>
+6 different regression models were explored and trained using the Delaney Solubility data in order to predict the solubility coefficient of 1144 molecules. The Gaussian Progression and K-Nearest Neighbors algorithms were found to produce the models that best represented the observed values.</p>
 
 </div>
 </div>
