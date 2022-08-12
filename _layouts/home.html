@@ -23,25 +23,56 @@ layout: default
     </div>
   </header>
 
-  <div class="container">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto"> 
+          <h1 style = "text-align: center;">Featured Projects</h1>
+          {% for post in site.tags.featured %}
+          <article class="post-preview">
+              <a href="{{ post.url | prepend: site.baseurl | replace: '//', '/' }}">
+              <h2 class="post-title" style="color:#F2F4F3;text-align: center;">{{ post.title }}</h2>
+              {% if post.subtitle %}
+              <h3 class="post-subtitle" style="color:#A9927D;text-align: center;">{{ post.subtitle }}</h3>
+              {% else %}
+              <h3 class="post-subtitle" style="color:#22333B;text-align: center;">{{ post.excerpt | strip_html | truncatewords: 15 }}</h3>
+              {% endif %}
+            </a>
+            <p class="post-meta" style = "text-align: center;">Posted by
+              {% if post.author %}
+              {{ post.author }}
+              {% else %}
+              {{ site.author }}
+              {% endif %}
+              on
+              {{ post.date | date: '%B %d, %Y' }} &middot;          
+            </p>
+          </article>
+           {% endfor %}
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="container">
     <div class="row">
-      <div class="col-lg-8 col-md-10 mx-auto"> 
-
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <h1 style = "text-align: center;">Recent Posts</h1>
         {{ content }}
-
+  
+        <article class="post-preview">
         <!-- Home Post List -->
         {% for post in site.posts limit : 5 %}
 
         <article class="post-preview">
           <a href="{{ post.url | prepend: site.baseurl | replace: '//', '/' }}">
-            <h2 class="post-title" style="color:#F2F4F3;">{{ post.title }}</h2>
+            <h2 class="post-title" style="color:#F2F4F3;text-align: center;"">{{ post.title }}</h2>
             {% if post.subtitle %}
-            <h3 class="post-subtitle" style="color:#A9927D;">{{ post.subtitle }}</h3>
+            <h3 class="post-subtitle" style="color:#A9927D;text-align: center;"">{{ post.subtitle }}</h3>
             {% else %}
-            <h3 class="post-subtitle" style="color:#22333B;">{{ post.excerpt | strip_html | truncatewords: 15 }}</h3>
+            <h3 class="post-subtitle" style="color:#22333B;text-align: center;"">{{ post.excerpt | strip_html | truncatewords: 15 }}</h3>
             {% endif %}
           </a>
-          <p class="post-meta">Posted by
+          <p class="post-meta" style = "text-align: center;">Posted by
             {% if post.author %}
             {{ post.author }}
             {% else %}
