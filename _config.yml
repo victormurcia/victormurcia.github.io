@@ -17,6 +17,8 @@ linkedin_username:  vmmr5596
 # Add your google-analytics ID here to activate google analytics
 google_analytics:   G-V1261HE8C5 # out your google-analytics code
 
+#Add comment section via staticman
+staticman_url: https://api.staticman.net/v3/entry/github/victormurcia/victormurcia.github.io/master/comments
 # Build settings
 markdown:           kramdown
 paginate:           7
