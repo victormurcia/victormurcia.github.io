@@ -1,7 +1,20 @@
 ---
 layout: default
 ---
+<style>
+.column_tags {
+  float: right;
+  width: 100%;
+  text-align: center;
+}
 
+.row_tag:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+</style>
 <!-- Page Header -->
 {% if page.background %}
 <header class="masthead" style="background-image: url('{{ page.background | prepend: site.baseurl | replace: '//', '/' }}')">
@@ -22,10 +35,19 @@ layout: default
       </div>
     </div>
   </header>
-  
-    <!-- Featured Projects List -->
+
     <div class="container">
+      <!-- List of topics covered in blog -->
+      <h4 style="text-align:center;">Topics</h4>
+        <div class="row">
+          {% for tag in site.tags %}
+            <a href="/tag/{{  tag | first  }}"><code class="highligher-rouge">{{ tag | first }}</code>&nbsp;&nbsp;</a>
+          {% endfor %}
+        </div>
+
+      <!-- Featured Projects List -->
       <div class="row">
+
         <div class="col-lg-8 col-md-10 mx-auto"> 
           <h1 style = "text-align: center;">Featured Projects</h1>
           {% for post in site.tags.featured %}
