@@ -39,9 +39,17 @@ layout: default
     <div class="container">
       <!-- List of topics covered in blog -->
       <h4 style="text-align:center;">Topics</h4>
+        <!--Sort tags alphabetically-->
+        {% assign tags = '' | split: '' %}
+        {% for tag in site.tags %}
+            {% assign tagName = tag | first | split: ' ' %}
+            {% assign tags = tags | concat: tagName %}
+        {% endfor %}
+        {% assign tags = tags | sort %}
+
         <div class="row">
-          {% for tag in site.tags %}
-            <a href="/tag/{{  tag | first  }}"><code class="highligher-rouge">{{ tag | first }}</code>&nbsp;&nbsp;</a>
+          {% for tag in tags %}
+            <a href="/tag/{{  tag  }}"><code class="highligher-rouge">{{ tag }}</code></a>&nbsp;&nbsp;
           {% endfor %}
         </div>
 

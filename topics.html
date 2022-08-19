@@ -6,12 +6,26 @@ background: '/img/home.jpg'
 ---
 
 <div class="container">
-    <div class="column">
+    <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto"> 
-
+            <!--Sort tags alphabetically-->
+            {% assign tags = '' | split: '' %}
+            {% for tag in site.tags %}
+                {% assign tagName = tag | first | split: ' ' %}
+                {% assign tags = tags | concat: tagName %}
+            {% endfor %}
+            {% assign tags = tags | sort %}
+            
+            <!--Place sorted tags into list-->
             <ul>
-                {% for tag in site.tags %}
-                     <li><a href="/tag/{{  tag | first  }}"><code class="highligher-rouge"><nobr>{{ tag | first }}</code></a></li>
+                {% for tag in tags  %}
+                    {% assign postCount = site.tags[tag] | size %}
+                    <li>
+                        <a href="{{ tag | cgi_escape }}" class="tag">
+                            {{ tag }}
+                            <span>({{ postCount }})</span>
+                        </a>
+                    </li>
                 {% endfor %}
             </ul>
 
@@ -21,4 +35,4 @@ background: '/img/home.jpg'
           </div>
         </div>
     </div>
-</div>        
+</div>           
