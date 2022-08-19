@@ -1,0 +1,24 @@
+---
+layout: page
+title: Topics
+description: Topics covered in my posts
+background: '/img/home.jpg'
+---
+
+<div class="container">
+    <div class="column">
+        <div class="col-lg-8 col-md-10 mx-auto"> 
+
+            <ul>
+                {% for tag in site.tags %}
+                     <li><a href="/tag/{{  tag | first  }}"><code class="highligher-rouge"><nobr>{{ tag | first }}</code></a></li>
+                {% endfor %}
+            </ul>
+
+          <!-- Pager -->
+          <div class="clearfix">
+            <a class="btn btn-primary float-right" href="{{"/posts" | relative_url }}">View All Posts &rarr;</a>
+          </div>
+        </div>
+    </div>
+</div>        

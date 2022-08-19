@@ -4,8 +4,8 @@ description:        Data Scientist • Algorithm Developer • Computational Che
 author:             Victor Murcia
 baseurl:            ""
 url:                "https://victormurcia.github.io"
-tag_page_layout: tag
-tag_page_dir: blog/tags
+tag_page_layout: tagpage
+tag_page_dir: blog/tag
 
 # Social Profiles
 twitter_username:   
@@ -28,4 +28,4 @@ plugins:
   - jekyll-paginate
   - jekyll-sitemap ## Uncomment this line to silently generate a sitemaps.org compliant sitemap for your Jekyll site
 gems:
-- jekyll/tagging
+  - jekyll/tagging
