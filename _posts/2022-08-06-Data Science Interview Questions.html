@@ -7,26 +7,80 @@ tags: jekyll blog
 background: '/img/posts/bgp1.jpg'
 ---
 
-<p>This post will serve as a compilation of interview questions with answers that I've found as I prepared for data science interviews.</p>
+<p>This post will serve as a compilation of interview questions with answers that I've found as I prepare for data scientist position interviews.</p>
 
-1. What is Data Science?
+<ol>
+<li> What is Data Science?</li>
 Data Science is an interdisciplinary field that combines elements from scientific processes, mathematics, and programming to extract, process, 
 and visualize information from data that can be used to aid in a variety of scenarios. In other words, data science means analysing data for 
 actionable insights.
 
 
-2. What are the differences between supervised and unsupervised learning?
+<li>What are the differences between supervised and unsupervised learning?</li>
 In supervised learning, the nature of the data is known, the data is labeled, and there is a feedback loop mechanism associated with it. Examples of 
 supervised learning algorithms are decision trees, logistic regression, and support vector machine
 
 In unsupervised learning, the data isn't labeled and there is no feedback loop mechanism. Examples of supervised learning algorithms are 
 k-means clustering, hierarchical clustering, and apriori algorithms.
 
-3. How is logistic regression done?
+<li> How is logistic regression done?</li>
 Logistic regression measures the relationship between the dependent variable and one or more independent variables by estimating probability 
-using its underlying logistic function. The sigmoid is the logistic function used for logistic regression.
+using a sigmoid (logistic function). Basically, you need to have some variable that you want to predict given a threshold value for some property.
 
 Logistic regression is used both for regression and classification tasks. If used for classification tasks then classification needs to be binary. 
-<img src = "https://www.simplilearn.com/ice9/free_resources_article_thumb/logistic-regression.JPG">
-<img src = "https://www.simplilearn.com/ice9/free_resources_article_thumb/sigmoid-function.JPG">
+<p><img src = "https://www.simplilearn.com/ice9/free_resources_article_thumb/logistic-regression.JPG"></p>
+For instance, if you have a set of test scores that were graded on a 0-100
+scale plotted as a function of the number of hours studied and the passing score is 70, then test scores can be classified as passing or failing if 
+the score is above or below the threshold passing score. 
+<p><img src = "https://www.simplilearn.com/ice9/free_resources_article_thumb/sigmoid-function.JPG"></p>
 
+ <li>What are the steps in making a decision tree?</li>
+    Decision trees are essentially a series of questions designed to assign a classification. To build one you need to:
+    <ol>
+        <li>Take entire data set as input</li>
+        <li>Calculate entropy of the target variable, as well as the predictor attributes</li>
+        <li>Calculate your information gain of all attributes</li>
+        <li>Choose the attribute with the highest information gain as the root node </li>
+        <li>Repeat the same procedure on every branch until the decision node of each branch is finalized</li>
+    </ol>
+    <img src = "https://www.simplilearn.com/ice9/free_resources_article_thumb/offer.JPG">
+    <p>The example above shows a decision tree that could be used to determine whether a job offer will be accepted or declined. The more considerations
+    (aka nodes or splits) that must be taken into account, the 'deeper' the tree.  You can think of a node as a classification question.</p>
+ <li>How do you build a random forest model?</li>
+    A random forest is built up of a number of decision trees. If you split the data into different groups and make a decision tree in each of the different
+     groups of data, the random forest brings all of those trees together. To build one you need to:   
+    <ol>
+        <li>Randomly select 'k' features from a total of 'm' features where k << m</li>
+        <li>Among the 'k' features, calculate the node D using the best split point</li>
+        <li>Split the node into daughter nodes using the best split</li>
+        <li>Repeat steps two and three until leaf nodes are finalized </li>
+        <li>Build forest by repeating steps one to four for 'n' times to create 'n' number of trees </li>
+    </ol>
+ <li>How can you avoid overfitting your model?</li>
+     Overfitting is a modeling error in statistics that occurs when a function is too closely aligned to a limited set of data points. 
+    As a result, the model is useful in reference only to its initial data set, and not to any other data sets. To minimize it:
+    <ul>
+        <li>Keep the model simple</li>
+        <li>Use cross-validation techniques</li>
+        <li>Use regularization techniques</li>
+    </ul>
+ <li>Why is cross-validation important?</li>
+ Datasets are often split into train data and test data to develop a machine learning model. The training data is used to 
+ train the model and the same model is tested on independent testing data to evaluate the performance of the model. As the split changes, so does the 
+ accuracy of the model. Therefore, 
+ <li></li>
+ <li></li>
+ <li></li>
+ <li></li>
+ <li></li>
+ <li></li>
+ <li></li>
+ <li></li>
+ <li></li>
+ <li></li>
+ <li></li>
+ <li></li>
+ <li></li>
+ <li></li>
+ <li></li>
+</ol>
