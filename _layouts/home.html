@@ -2,6 +2,18 @@
 layout: archive
 ---
 
+<!-- Featured Projects List -->
+    <h1 style = "text-align: center;">Featured Projects</h1>
+    <p align="justify" style="color:white;">
+    Here are some projects that I think are interesting. They cover a range of data science techniques like regression, classification,
+    NLP, clustering, and neural networks.
+    </p>
+    {% for post in site.tags.featured %}
+        <a href="{{ post.url | prepend: site.baseurl | replace: '//', '/' }}">
+        <h3 class="post-title" style="color:#F2F4F3;text-align: center;">{{ post.title }}</h3>
+      </a>
+     {% endfor %}
+
 {{ content }}
 
 <h3 class="archive__subtitle">{{ site.data.ui-text[site.locale].recent_posts | default: "Recent Posts" }}</h3>
