@@ -1,0 +1,38 @@
+---
+layout: page
+title: Topics
+description: Topics covered in my posts
+background: '/img/home.jpg'
+---
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto"> 
+            <!--Sort tags alphabetically-->
+            {% assign tags = '' | split: '' %}
+            {% for tag in site.tags %}
+                {% assign tagName = tag | first | split: ' ' %}
+                {% assign tags = tags | concat: tagName %}
+            {% endfor %}
+            {% assign tags = tags | sort %}
+            
+            <!--Place sorted tags into list-->
+            <ul>
+                {% for tag in tags  %}
+                    {% assign postCount = site.tags[tag] | size %}
+                    <li>
+                        <a href="{{ tag | cgi_escape }}" class="tag">
+                            {{ tag }}
+                            <span>({{ postCount }})</span>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+
+          <!-- Pager -->
+          <div class="clearfix">
+            <a class="btn btn-primary float-right" href="{{"/posts" | relative_url }}">View All Posts &rarr;</a>
+          </div>
+        </div>
+    </div>
+</div>           
