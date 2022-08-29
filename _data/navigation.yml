@@ -6,11 +6,11 @@ main:
      url: /about/
    - title: "Posts"
      url: /posts/
-   - title: "Certifications"
-     url: /certifications/
    - title: "Topics"
      url: /topics/
    - title: "Publications"
      url: /publications/
    - title: "Contact"
      url: /contact/
+   - title: "Certifications"
+     url: /certifications/
