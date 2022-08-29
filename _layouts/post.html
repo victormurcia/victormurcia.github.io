@@ -30,19 +30,19 @@ layout: default
     <div class="page__inner-wrap">
       {% unless page.header.overlay_color or page.header.overlay_image %}
         <header>
-          {% if page.title %}<h1 id="page-title" class="page__title p-name" itemprop="headline">
-            <a href="{{ page.url | absolute_url }}" class="u-url" itemprop="url">{{ page.title | markdownify | remove: "<p>" | remove: "</p>" }}</a>
+          {% if page.title %}<h1 id="page-title" class="page__title p-name" itemprop="headline" style="text-align: center;">
+            <a href="{{ page.url | absolute_url }}" class="u-url" itemprop="url" style="text-align: center;">{{ page.title | markdownify | remove: "<p>" | remove: "</p>" }}</a>
           </h1>{% endif %}
           {% include page__meta.html %}
+          <span style="text-align: right;"> 
+            {% for tag in page.tags %}
+              {% capture tag_name %}{{ tag }}{% endcapture %}
+              <a href="/tags/{{ tag_name }}"><code class="highligher-rouge"><nobr>{{ tag_name }}</nobr></code>&nbsp;&nbsp;</a>
+            {% endfor %}
+          </span>
         </header>
       {% endunless %}
-
-      <span>[
-        {% for tag in page.tags %}
-          {% capture tag_name %}{{ tag }}{% endcapture %}
-          <a href="/tags/{{ tag_name }}"><code class="highligher-rouge"><nobr>{{ tag_name }}</nobr></code>&nbsp;&nbsp;</a>
-        {% endfor %}
-      ]</span>
+      
       
 
       <section class="page__content e-content" itemprop="text">
@@ -62,7 +62,6 @@ layout: default
         {% if site.data.ui-text[site.locale].meta_label %}
           <h4 class="page__meta-title">{{ site.data.ui-text[site.locale].meta_label }}</h4>
         {% endif %}
-        {% include page__taxonomy.html %}
         {% include page__date.html %}
       </footer>
 
