@@ -264,3 +264,25 @@ You can read more about the pedalboard library <a href = "https://github.com/spo
 <p style="text-align:center;">Nature Song -  Made using A# Harmonic Minor, the 2nd Octave range, and minor 3rd harmony.</p>
 <p style="text-align:center;"><audio controls src="\img\posts\Music From Images\processed-nature_harmony_combined.wav">
 Your browser does not support the<code>audio</code> element.</audio></p>
+
+<h2>Using Librosa For Mapping Other Musical Quantities</h2>
+
+<p>Librosa is a wonderful package that allows one to carry out a variety of operations on sound data. 
+    Here I used it to readily convert frequencies into 'Notes' and 'Midi Numbers'.</p>
+
+<script src="https://gist.github.com/victormurcia/fd7ec2919c4509ef2b75a3dba93a1c85.js"></script>
+<p style="text-align:center;"><img src = "\img\posts\Music From Images\catterina_df_1.JPG"></p>
+
+<h2>Making a MIDI from our Song</h2>
+
+<p>Now that I've generated a dataframe containing frequencies, notes and midi numbers I can make a midi file out of it! I could then use this 
+    MIDI file to generate sheet music for our song :]</p>
+
+<p>To make a MIDI file, I'll make use of the <code>midiutil</code> package. This package allows us to build MIDI files from an array of MIDI numbers. 
+    You can configure your file in a variety of ways by setting up volume, tempos and tracks. For now, I'll just make a single track midi file</p>
+
+<script src="https://gist.github.com/victormurcia/0d51982ea2a7f9c220cf9b3faac702d6.js"></script>   
+
+<h2>Conclusion</h2>
+<p>I showed how music can be made from images and how our songs can be exported into .wav files for subsequent processing. 
+There's tons of experimentation that can be done with this. I had fun making this project and I hope you have using it and building upon it!</p>
