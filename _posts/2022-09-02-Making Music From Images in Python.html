@@ -1,0 +1,172 @@
+---
+layout: splash
+title: "Making Music from Images With Python"
+author: "Victor Murcia"
+subtitle: "Music begins where words end..."
+date: 2022-08-19 05:27:00 -0400
+tags: jupyter_notebook   python fun image_data audio_data portfolio
+background: '/img/posts/hpbg.jpg'
+---
+
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<p>To say that music is an integral component in my life is a massive understatement. I've been a guitar player for over 20 years and not a day 
+    goes by where I don't listen to it. As a matter of fact, before embarking in my academic journey as a physical chemist over the past 12 years
+    I was on the brink of pursuing a career in music.</p>
+    
+<p>Though, I wasn't able to pursue that path, I am still able to enjoy music and do cool things with it and through it. For instance, in this project,
+    I thought it'd be cool to make a program that could make music from images. There have been some pretty neat attempts to generate such a thing in the 
+    past, however, the results are not quite ... musical ... </p>
+
+<p>For the remainder of this article I'll be showing my attempt at generating songs from images that are (in my humble opinion) pretty cool sounding
+    if I say so myself.</p>
+
+<h2>The Basic Idea</h2>
+
+<p>My strategy and thought process to accomplish this is as follows:</p>
+
+<ul>
+    <li>Images are made of pixels</li>
+    <li>Pixels are composed of arrays of numbers that designate color</li>
+    <li>Color is described via color spaces like RGB or HSV</li>
+    <li>The color space could be partitioned into sections</li>
+    <li>Musical scales are subdivided into notes via sound intervals</li>
+    <li>Sound is vibration and so each note is associated with a frequency</li>
+    <li>Therefore, the subdivision of a color space could be mapped to a specific note in a musical scale. This note would then have a 
+        frequency associated with it. </li>
+</ul>
+
+<p>Let's give it a go!</p>
+
+<h2>Using the HSV Color Space</h2>
+
+<p>HSV is color space that is controlled by 3 values. The 3 values are Hue, Saturation, and Brightness.</p>
+<p style="text-align:center;"><img src="https://i.stack.imgur.com/b7V12.png" width = 300 height = 500></p>
+
+<p>Hue is defined as "the degree to which a stimulus can be described as similar to or different from stimuli that are described as red, orange, yellow, green, blue, violet". In other words, Hue represents color.</p>
+
+<p>Saturation is defined as "colorfulness of an area judged in proportion to its brightness". In other words, Saturation represents the amount to which a color is mixed with white.</p>
+
+<p>Brightness is defined as "perception elicited by the luminance of a visual target". In other words, Saturation represents the amount to which a color is mixed with black.</p>
+
+<p>Hue values of basic colors:</p>
+<ul>
+        <li>Orange  0-44</li>
+        <li>Yellow  44- 76</li>
+        <li>Green   76-150</li>
+        <li>Blue    150-260</li>
+        <li>Violet  260-320</li>
+        <li>Red     320-360</li>
+</ul>
+
+<p>I'll work in HSV color space because it already is naturally subdivided which makes the subsequent frequency mapping a bit more intuitive
+    and the hue channel (which is mostly reponsible for color in this space) is defused from the other two channels which simplifies things.</p>
+
+<p>Here's an example of a comparison between color spaces for an image I found online</p>
+<script src="https://gist.github.com/victormurcia/90cfdafe49a355c9dfe9c2bb54686db8.js"></script>
+<p style="text-align:center;"><img src = "\img\posts\Music From Images\color spaces.png"></p>
+
+<h2>Extracting the Hue channel</h2>
+
+<p>Now that we have our image in HSV, let's extract the hue (H) value from every pixel. This can be done via a nested for loop over the 
+    height and width of the image.</p>
+<script src="https://gist.github.com/victormurcia/41187de45fd0da33312eea63ce308460.js"></script>
+
+<p>Now that I have an array containing the H value for each pixel, I'll place that result into a pandas dataframe. Each row in the dataframe 
+    is a pixel and thus each column will contain information about that pixel. I'll call this dataframe <code>pixels_df</code> which can be seen below.</p>
+    
+<p style="text-align:center;"><img src="\img\posts\Music From Images\pixels df.JPG" width = 400 height = 700></p>
+
+<p>The dataframe is currently composed of a single column called 'hues' where each row represents the H-channel for each pixel on the image I loaded.</p>
+
+<h2>Converting hues to frequencies</h2>
+<p>My initial idea at converting a hue value into a frequency involved a mapping between a predetermined set of frequencies to the H value. 
+    The mapping function is shown below. </p>
+
+<script src="https://gist.github.com/victormurcia/e37cd36a8b4cb1b7762373d3f38ca881.js"></script>
+
+<p>The function takes the H value and an array containing frequencies to map H to as inputs. The example uses an array called <code>scale_freqs</code>
+    to define the frequencies. The frequencies used in <code>scale_freqs</code> correspond to the A Harmonic Minor Scale.</p> 
+
+<p>Then, an array of threshold values (called <code>thresholds</code>) for H is defined. This array of thresholds 
+    can then be used to convert H into a frequency from  <code>scale_freqs</code> using a lammbda function. </p>
+
+<script src="https://gist.github.com/victormurcia/8c241c8bb0631438384578360f85d17d.js"></script>
+
+<p style="text-align:center;"><img src="\img\posts\Music From Images\pixels df 2.JPG"></p>
+
+<h2>Converting NumPy Array into Playable Audio</h2>
+<p>Cool! Now, that I have an array of frequencies, I'll convert the <code>notes</code> column into a numpy array called <code>frequencies</code> 
+    since I can then use this to make a playable audio file :] </p>
+
+<script src="https://gist.github.com/victormurcia/797fe458e5a5415eee844a072d5d7bc5.js"></script>
+
+<p>You can hear the song that I made using the first 60 pixels from the image below (I could try using all of the 230,400 pixels that make up that image
+     but that song would end up being several hours long). </p>
+
+<p style="text-align:center;"><audio controls src="\img\posts\Music From Images\ini_song.wav">
+    Your browser does not support the<code>audio</code> element.</audio></p>
+<p style="text-align:center;"><img src = "\img\posts\Music From Images\colors.jpg"></p>
+<p style="text-align:center;">Song 1 - Also known as the song that came before Blur's hit song from 1997 Song 2</p>
+
+<p>That's pretty neat! Let me play with it a bit more. </p>
+
+<h2>Including Octaves</h2>
+
+<p>I decided to include the effect of octaves (i.e., make notes sound higher or lower) into my
+     'song-making' routine. The octave to be used for a given note will be chosen at random from an array.</p>
+
+<script src="https://gist.github.com/victormurcia/d8c43d3738fb6658856c8af522ad319b.js"></script>
+
+<p>Let's give it a listen!</p>
+
+<p style="text-align:center;"><audio style="text-align:center;" controls src="\img\posts\Music From Images\octave_song.wav">
+    Your browser does not support the<code>audio</code> element.</audio></p>
+<p style="text-align:center;">Song of Octaves (the lesser known cousin of Song of Storms)</p>
+
+<p>Awesome! Now we are getting some variety. However... We do have all these pixels, how about we try using them by picking the frequencies 
+    from random pixels?</p>
+
+<script src="https://gist.github.com/victormurcia/f23da41fc5fadca6d8b0260ef895dc5c.js"></script>
+<p style="text-align:center;"><audio style="text-align:center;" controls src="\img\posts\Music From Images\random_song.wav">
+    Your browser does not support the<code>audio</code> element.</audio></p>
+
+<p style="text-align:center;">Calcucore</p>
+
+<p>Sweet! We now basically have a song generator that we can play around with for as long as we wish!</p>
+
+<p>I know it's a bit of a meme, but "Is this math rock?"</p>
+<p style="text-align:center;"><img src = "https://i.redd.it/t5t0pu14pcl61.jpg"></p>
+
+<h2>Generating Other Scales</h2>
+
+<p>So far I've shown how music can be generated from images using the A-Harmonic Minor Scale. As cool as this scale is, it would be nice to be able 
+    to get more variety not only in terms of the starting note (the tonic) of our scale, but also be able to include other intervals besides those
+    defined by the harmonic minor scale structure. This will allow our program to add a lot more flavor and variety to the generated songs.</p>
+
+<p>To do this, I first needed a way to procedurally generate frequencies for whatever tonic note we wish to use. Katie He has a wonderful article 
+    found <a href = "https://towardsdatascience.com/music-in-python-2f054deb41f4">here</a> that has a really neat exploration of python and music. I 
+    adapted one of her functions in my work to map piano notes to frequencies as shown below:</p>
+
+<script src="https://gist.github.com/victormurcia/abefa6eec9e940e3a4c5873e75310572.js"></script>
+
+<p>The function above will serve as the starting point for my song/scale generating routine can be used to generate a dictionary that maps musical
+    notes corresponding to the 88 keys in a standard piano to frequencies in units of Hertz as shown below.</p>
+
+<script src="https://gist.github.com/victormurcia/2a68dedbc2dc69fdc705e73d5b9dde50.js"></script>
+
+<p>Then we need to define the scale intervals in terms of tones so that we can index out notes.</p>
+
+<script src="https://gist.github.com/victormurcia/0732278cae628421e46e37b2a18af183.js"></script>
+
+<p>Having this, we can now find the index of our scale in the list of tones from before. This is needed because I'll then reindex the list so 
+    that it starts with our desired tonic</p>
+
+<script src="https://gist.github.com/victormurcia/f8d7c287963e11ae7be4fd04bdfa7264.js"></script>
+
+<p>After this, I can define a bunch of different scale arrays where each element corresponds to an index from the reindex array I made in the previous 
+    step.</p>
+
+<script src="https://gist.github.com/victormurcia/d946d65217a15eeb16b64b64aea5a928.js"></script>
