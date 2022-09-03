@@ -14,54 +14,43 @@ background: '/img/posts/lit.webp'
     text-align: justify;
   }
 
-  @import url('https://fonts.googleapis.com/css?family=Droid+Sans+Mono|Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Droid+Sans+Mono|Open+Sans');
 
-body .gist .gist-file {
+.gist .gist-file {
   margin-bottom: 0;
   border: 1px dashed #adb5bd;
   border-radius: 0;
 }
 
-body .gist .gist-data {
+.gist .gist-data {
   border-bottom: none;
   border-radius: 0;
   background-color: #f1f3f5;
 }
 
-body .gist .blob-wrapper {
+.gist .blob-wrapper {
   border-radius: 0;
 }
 
-body .gist .highlight {
+.gist .highlight {
   background-color: transparent;
   font-family: 'Droid Sans Mono', monospace;
   font-size: 14px;
 }
 
-body .gist .highlight td {
-  padding: 5px 15px !important;
-  line-height: 1;
-  font-family: inherit;
-  font-size: inherit;
-}
-
-body .gist tr:first-child td {
-  padding-top: 15px !important;
-}
-
-body .gist tr:last-child td {
-  padding-bottom: 15px !important;
-}
-
-body .gist .blob-num {
+.gist .blob-num {
   color: #ced4da;
   background-color: #495057;
   pointer-events: none;
 }
 
-body .gist .gist-meta {
+.gist .gist-meta {
   display: none;
 }
+
+.gist {width:700px !important;}
+.gist-file
+.gist-data {max-height: 500px;max-width: 700px;}
 </style>
 
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
@@ -283,10 +272,10 @@ The models were all initially run using their default values.
     The brighter it is the better the model. The size of the markers represents the standard deviation of the model. Smaller values mean lower variance and
     viceversa.</p>
 
-<center><iframe src="\img\posts\Air Quality\gridsearch1.html" name="targetframe" allowTransparency="true" scrolling="no" frameborder="0" width="75%" height="700"></iframe>
+<center><iframe src="\img\posts\Air Quality\gridsearch1.html" name="targetframe" allowTransparency="true" scrolling="no" frameborder="0" width="750" height="700"></iframe>
 </center>
 
-<p>A brief explanation of the effect of these parameters are shown below.</p>
+<p>A brief explanation of the effect of these parameters are shown below. </p>
 
 <p><code>learning_rate</code> determines the step size per each iteration that is made towards minimizing the value of the loss function. High learning rates can 
     overshoot the minima while low learning rates can lead to unfeasibly long convergence times and finding local minimum instead of the global minimum.</p>
@@ -298,7 +287,7 @@ The models were all initially run using their default values.
     then we start running into issues of overfitting.</p>
 
 Here's a code snippet from the grid search exploration:
-<script src="https://gist.github.com/victormurcia/785fde9613d00edbf63f8872c97c82ea.js"></script>
+<script src="https://gist.github.com/victormurcia/785fde9613d00edbf63f8872c97c82ea.js" width="750" height="700"></script>
 
 <p>Apart from improving the overall performance of the model, I'll be looking to minmize bias (i.e., incorporate fewer assumptions about target function)
     and minimize variance (i.e.,improve agreement between model and measurements).</p>
@@ -316,7 +305,7 @@ Here's a code snippet from the grid search exploration:
 
 <center><img src = "\img\posts\Air Quality\Figure 8.jpg"></center>
 
-<h2>Conclusions</h2>
+<h2>Conclusions and Final Thoughts</h2>
 <p>10 different machine learning regressor models were tested to determine which one predicted the pollutant concentration with th highest accuracy.</p>
 <p>The Gradient Boosting (GB) Classifier had the highest prediction accuracy for all 5 pollutants explored within this data set.</p>
 <p>The GB classifier was then optimized and cross-validated using the k-fold method through variation of the learning_rate, max_depth, and n_estimators hyperparamters.</p>
