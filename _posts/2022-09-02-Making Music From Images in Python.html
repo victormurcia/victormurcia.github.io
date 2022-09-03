@@ -99,7 +99,8 @@ background: '/img/posts/hpbg.jpg'
 
 <h2>Converting NumPy Array into Playable Audio</h2>
 <p>Cool! Now, that I have an array of frequencies, I'll convert the <code>notes</code> column into a numpy array called <code>frequencies</code> 
-    since I can then use this to make a playable audio file :] </p>
+    since I can then use this to make a playable audio file :] To do this I can use the <code>wavfile.write</code> function that is built in 
+scipy and make sure that I use the appropriate data type conversion (for 1D arrays it is np.float32).</p>
 
 <script src="https://gist.github.com/victormurcia/797fe458e5a5415eee844a072d5d7bc5.js"></script>
 
@@ -212,3 +213,54 @@ background: '/img/posts/hpbg.jpg'
 <p style="text-align:center;"><audio controls src="\img\posts\Music From Images\water_song.wav">
     Your browser does not support the<code>audio</code> element.</audio></p>
 <p style="text-align:center;"><img src = "\img\posts\Music From Images\water.jpg"></p>
+
+
+<p style="text-align:center;">Earth Song -  Made using G Melodic Minor and the 3rd Octave range</p>
+<p style="text-align:center;"><audio controls src="\img\posts\Music From Images\earth_song.wav">
+    Your browser does not support the<code>audio</code> element.</audio></p>
+<p style="text-align:center;"><img src = "\img\posts\Music From Images\earth.jpg"></p>
+
+
+<p style="text-align:center;">Catterina Song -  Made using A Harmonic Minor and the 3rd Octave range</p>
+<p style="text-align:center;"><audio controls src="\img\posts\Music From Images\catterina_song.wav">
+    Your browser does not support the<code>audio</code> element.</audio></p>
+<p style="text-align:center;"><img src = "\img\posts\Music From Images\catterina.jpg"></p>
+
+<h2>Including harmony in songs through 2D NumPy arrays</h2>
+<p>The routine I developed allows harmony to be added to our song. The user can define what harmony to use (i.e., perfect fifth, minor 6th, etc.)
+    and then the correct note interval is deduced from that using the routines I showed earlier. Below I'll show an example of the song made from 
+    an image, the corresponding harmony and both of them put together into a single .wav file via a 2D numpy array. </p>
+
+<p>From the documentation for scipy.io.wavfile.write, if I want to write a 2D array into a .wav file, the 2D array must be have dimensions in the 
+    form of (Nsamples, Nchannels). Notice how the shape of our array is currently (2, 264600). This means we have Nchannels = 2 and 
+    Nsamples = 264600. To ensure our numpy array has the correct shape for scipy.io.wavfile.write I'll transpose the array first.</p>
+
+<p style="text-align:center;">Nature Song -  Made using A# Harmonic Minor, the 2nd Octave range, and minor 3rd harmony.</p>
+<p style="text-align:center;"><audio controls src="\img\posts\Music From Images\nature_song1.wav">
+Your browser does not support the<code>audio</code> element.</audio></p>
+<p style="text-align:center;"><audio controls src="\img\posts\Music From Images\nature_song2.wav">
+Your browser does not support the<code>audio</code> element.</audio></p>
+<p style="text-align:center;"><audio controls src="\img\posts\Music From Images\nature_harmony_combined.wav">
+Your browser does not support the<code>audio</code> element.</audio></p>
+<p style="text-align:center;"><img src = "\img\posts\Music From Images\nature1.webp"></p>
+
+<h2>Adding Effects to Our Music with Pedalboard</h2>
+
+<p>Now I'm going to load the .wav files and do some extra manipulation on it using the pedalboard module from Spotify which is awesome. 
+You can read more about the pedalboard library <a href = "https://github.com/spotify/pedalboard">here</a> and 
+<a href = "https://spotify.github.io/pedalboard/reference/pedalboard.html">here</a>.</p>
+
+<script src="https://gist.github.com/victormurcia/e8aa79f0317661662532f53faf553db8.js"></script>
+<p style="text-align:center;">Water Song -  Made using B Lydian and the 2nd Octave range</p>
+<p style="text-align:center;"><audio controls src="\img\posts\Music From Images\processed-water_song.wav">
+    Your browser does not support the<code>audio</code> element.</audio></p>
+
+<script src="https://gist.github.com/victormurcia/660f82af4f0c423438f0810953139477.js"></script>
+<p style="text-align:center;">Catterina Song -  Made using A Harmonic Minor and the 3rd Octave range</p>
+<p style="text-align:center;"><audio controls src="\img\posts\Music From Images\processed-catterina_song.wav">
+    Your browser does not support the<code>audio</code> element.</audio></p>
+
+<script src="https://gist.github.com/victormurcia/144c538dbb3af1d6f89960fab1a35760.js"></script>
+<p style="text-align:center;">Nature Song -  Made using A# Harmonic Minor, the 2nd Octave range, and minor 3rd harmony.</p>
+<p style="text-align:center;"><audio controls src="\img\posts\Music From Images\processed-nature_harmony_combined.wav">
+Your browser does not support the<code>audio</code> element.</audio></p>
