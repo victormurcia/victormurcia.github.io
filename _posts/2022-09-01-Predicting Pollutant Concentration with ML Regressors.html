@@ -270,7 +270,7 @@ by using the default parameters of the GB. There's 21 parameters that this regre
 
 <p>The axes here correspond to the explored values for learning rate, n_estimators, and max_depth. The color scale represents the r2 score value. 
     The brighter it is the better the model. The size of the markers represents the standard deviation of the model. Smaller values mean lower variance and
-    viceversa.</p>
+    viceversa. Therefore, the parameter combination I'm looking for will correspond to the smallest and brightest sphere.</p>
 
 <center><iframe src="\img\posts\Air Quality\gridsearch1.html" name="targetframe" allowTransparency="true" scrolling="no" frameborder="0" width="750" height="700"></iframe>
 </center>
@@ -289,9 +289,6 @@ by using the default parameters of the GB. There's 21 parameters that this regre
 Here's a code snippet from the grid search exploration:
 <script src="https://gist.github.com/victormurcia/785fde9613d00edbf63f8872c97c82ea.js" width="750" height="700"></script>
 
-<p>Apart from improving the overall performance of the model, I'll be looking to minmize bias (i.e., incorporate fewer assumptions about target function)
-    and minimize variance (i.e.,improve agreement between model and measurements).</p>
-
 <p>The results of the grid search exploration determined that the best parameters are:</p>
 <ul>
     <li>learning_rate = 0.1</li>
@@ -305,7 +302,18 @@ Here's a code snippet from the grid search exploration:
 
 <center><img src = "\img\posts\Air Quality\Figure 8.jpg"></center>
 
+<p>The plot shows the measured concentrations of CO as solid lines and the predicted concentrations of CO as dots after evalation on the <strong>entire</strong></p>
+dataset over the course of 1 year. The model follows the data excellently and with high accuracy. This is further evidenced by the plots on the side 
+that show that the residuals are normally distributed, that there is no heteroskedasticity present (i.e., the standard deviation is constant), and that the assumption of normally 
+distributed residuals is correct.</p>
+
+<p>In other words, the generated model has high accuracy (low variance) and since it was able to fit the entire data population available, it also 
+    has low bias. This is the ideal situation.</p>
+
+<p>I didn't show them here but a similar situation can be seen for the other 4 pollutants present in this dataset.</p>
+
 <h2>Conclusions and Final Thoughts</h2>
+
 <p>10 different machine learning regressor models were tested to determine which one predicted the pollutant concentration with th highest accuracy.</p>
 <p>The Gradient Boosting (GB) Classifier had the highest prediction accuracy for all 5 pollutants explored within this data set.</p>
 <p>The GB classifier was then optimized and cross-validated using the k-fold method through variation of the learning_rate, max_depth, and n_estimators hyperparamters.</p>
