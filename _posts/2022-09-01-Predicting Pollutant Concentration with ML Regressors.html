@@ -1,0 +1,330 @@
+---
+layout: splash
+title: "Predicting Pollutant Concentration via Machine Learning Regressor Models"
+author: "Victor Murcia"
+subtitle: "Understanding pollution sources"
+date: 2022-09-01 11:00:00 -0400
+tags: jupyter_notebook  data_science machine_learning database optimization portfolio
+background: '/img/posts/lit.webp'
+---
+
+
+<style>
+.p {
+    text-align: justify;
+  }
+
+  @import url('https://fonts.googleapis.com/css?family=Droid+Sans+Mono|Open+Sans');
+
+body .gist .gist-file {
+  margin-bottom: 0;
+  border: 1px dashed #adb5bd;
+  border-radius: 0;
+}
+
+body .gist .gist-data {
+  border-bottom: none;
+  border-radius: 0;
+  background-color: #f1f3f5;
+}
+
+body .gist .blob-wrapper {
+  border-radius: 0;
+}
+
+body .gist .highlight {
+  background-color: transparent;
+  font-family: 'Droid Sans Mono', monospace;
+  font-size: 14px;
+}
+
+body .gist .highlight td {
+  padding: 5px 15px !important;
+  line-height: 1;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+body .gist tr:first-child td {
+  padding-top: 15px !important;
+}
+
+body .gist tr:last-child td {
+  padding-bottom: 15px !important;
+}
+
+body .gist .blob-num {
+  color: #ced4da;
+  background-color: #495057;
+  pointer-events: none;
+}
+
+body .gist .gist-meta {
+  display: none;
+}
+</style>
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<p>Air pollution is a major concern for the modern world.</p>
+
+<p>Prolonged exposure to low quality air resulting from a variety of sources like vehicle emissions, fumes from chemical production, mold spores, 
+    and wildfires can lead to several adverse health effects.</p> 
+
+<p>Some of the health effects from exposure to poor air quality are irritation of the eyes, nose and throat, shortness of breath, 
+    afflictions on the cardiovascular system and even more serious complications after long periods of time.</p>
+
+<center><img src = "\img\posts\Air Quality\pollution air.png" width="75%" height="75%"></center>
+
+<p>Apart from the impact that low air quality has on human health, the environmental effects of poor air quality are just as severe. 
+    Poor air quality can lead to reduced crop yields as well as increased susceptibility of plants to pests and disease amongst other things.</p>
+
+<p>As such, keeping a close eye on air quality levels is of import to health and the environment.</p>
+
+<p>In this project I'll be exploring the AirQuality Dataset in order to train a set of machine learning (ML) models capable of predicting predicting
+the concentrations of a variety of pollutants like metal oxides and hydrocarbons.</p>
+
+<p>The data was obtained from the UCI Machine Learning Repository here <a href = "https://archive.ics.uci.edu/ml/datasets/Air+Quality">https://archive.ics.uci.edu/ml/datasets/Air+Quality</a>. 
+This dataset covers sensor collection data on a variety of pollutants spanning from March 2004 to February 2005 (1 year)</p>
+
+
+<p>You can look at the code heavy version in my Github repository found <a href = "https://github.com/victormurcia/Predicting-Pollutant-Concentration-with-ML-Regressors">here</a> 
+    or in this post I made <a href = "https://victormurcia.github.io/Predicting-Air-Quality/">here</a>.</p>
+
+<h2>Exploratory Data Analysis - How does the data look like?</h2>
+
+<p>There was a bit of data clean up that needed to be done prior to doing any of the analysis. If you are interested in the process I carried out 
+    to get it nice and tidy, you can check the Github repository or the post I made. Suffice for it to say that there were null sensor readings
+     that had to be dealt with, empty columns, redundant data, and improperly formatted time data. I also added columns containing specific time features (i.e.,
+     Day of The Week, Month, and Hour) to get more detailed information of how the pollutant concentrations behaved in time. The results of my 
+    data clean up can be seen at the end of the <code>pandas_profiling</code> report below.</p>
+
+<center><iframe src="\img\posts\Air Quality\eda.html" name="targetframe" allowTransparency="true" scrolling="yes" frameborder="0" width="75%" height="500"></iframe>
+</center>
+
+<p>In addition to ensuring the dataframe had general tidiness, I also noticed that many of the data attributes exhibited skewedness in their distributions.
+Skewedness in distributions is partially due to the presence of outliers. To deal with this I used the Interquartile Range (IQR) method.</p>
+
+<p>At the end of my data cleanup, I had 6097 measurements left and 13 data features. More specifically, I had 8 features that would end up making it
+    to the subsequent modeling stage.</p>
+
+<p>The features I had to work with from this point on are the following:</p>
+<ul>
+    <li>Date (DD/MM/YYYY)</li>
+    <li>Month</li>
+    <li>Weekday</li>
+    <li>Hour</li>
+    <li>Carbon Monoxide (CO) Concentration</li>
+    <li>Nonmetal Hydorcarbon (NMHC) Concentration</li>
+    <li>Nitrogen Monoxide (NOx) Concentration</li>
+    <li>Nitrogen Dioxide (NO2) Concentration</li>
+    <li>Ozone (O3) Concentration</li>
+    <li>Temperature (T)</li>
+    <li>Relative Humidity (RH)</li>
+    <li>Absolute Humidity (AH)</li>
+</ul>   
+
+<p>From these data attributes I decided to generate a pair plot to visualize the correlations and variable 
+    relationships a bit better which is shown below. </p>
+
+    <center><img src = "\img\posts\Air Quality\pairplot.png" width="75%"></center>
+    <center><img src = "\img\posts\Air Quality\pairplot caption.jpg" width="75%"></center>
+
+<p>Beautiful! There's definitely dependencies between some of the variables.</p> 
+
+<h2>Brief Chemistry Detour</h2>
+<p>From the pair plot above, it can be seen that the pollutant concentrations are related to one another. They seem to increase together with the exception of the Nitrogen Monoxide readings. The chemist in me finds this 
+pretty interesting! Nitrogen Monoxide is a free radical compound (meaning that it is highly unstable and very reactive).
+Perhaps it is reacting with one of the other pollutants thus reducing its concentration?</p>
+
+<p>Something else that I noticed from this pairplot is that the Nitrogen Dioxide appears to be correlated with
+    the Absolute Humidity. This is a behavior that none of the other pollutants show. Why?</p>
+
+<p>Combustion engines burn fuels at high temperatures in order to operate. The temperatures of these engines 
+    are sufficiently elevated so as to cause Nitrogen and Oxygen molecules to react to form Nitrogen Monoxide:</p>
+
+    $$ N_{2}(g) + O_{2}(g) -> 2NO(g) $$
+
+<p>Nitrogen Monoxide can then react with Oxygen molecules in the air to form Nitrogen Dioxide:</p>
+   
+    $$ 2NO(g) + O_{2}(g) -> 2NO_{2}(g) $$
+
+<p>As the Nitrogen Dioxide rises, it can interact with Water molecules to form Nitric and Nitrous Acid.</p>
+    $$ 2NO_{2}(g) + H_{2}O(l) -> HNO_{3}(aq) + HNO_{2}(aq)$$
+
+<p>The set of reactions I have described above is how acid rain forms.</p>
+
+<p>Absolute humidity (AH) is the total mass of water vapor present in a given volume or mass of air. It is independent 
+    of temperature. As AH increases, it would increase the likelihood for Nitrogen Dioxide to react with water.</p>
+
+<h2>Questions to answer</h2>
+
+<p>Some of the questions that I want to answer and/or goals I want to accomplish with this project are the following:</p>
+
+<ul>
+    <li>Can we predict the level of a pollutant based on the concentrations of other pollutants?</li>
+    <li>At what times/days do pollutant levels maximize/minimize?</li>
+    <li>Do all pollutants increase together or do some of them peak/valley at different points?</li>
+    <li>Is there any relationship/trend we can infer/deduce with regards to the humidity/temperature from pollutant concentrations?</li>
+</ul>
+
+<h2>Time Series of CO Concentration</h2>
+<p>To figure out when the CO concentration is highest, we can refer to the plots below. The plots below show 
+the CO concentration as a function of unit of time (i.e., year, month, day, hour). These plots can help elucidate 
+the time periods that maximize pollutant concentration.</p> 
+
+<center><img src = "\img\posts\Air Quality\Figure 1.jpg" width="75%"></center>
+
+<p>For instance, we can see that:</p>
+
+<ul> 
+    <li>October has the highest CO readings while August had the lowest readings. </li>
+    <li>CO levels trend downward from October to August. They start to rise between August to October.</li>
+    <li>CO levels are lowest on Sundays and highest on Friday. </li>
+    <li>CO levels are lowest between 4-5 AM and highest at 8 AM and 7 PM.</li> 
+</ul>
+
+<h2>Building and Assessing the Performance of Regressor Models</h2>
+
+<p>A total of 10 different regressors were used to build models to predict the concentrations of each pollutant. The data was split using the 80/20 Pareto
+principle for each regression model. The 10 regressors that were tested and the basic reasoning for trying them are:</p>
+
+<ul>
+    <li>Linear Regression - Simple</li>
+    <li>Huber Regression - Linear regression but robust to outliers</li>
+    <li>Random Forest - High accuracy, scalable, and interpretable</li>
+    <li>Gradient Boosting -  Minimize bias error</li>
+    <li>Gaussian Process - Non-parametric distribution</li>
+    <li>K-Neighbors - Feature similarity </li>
+    <li>Ada Boost - Powerful ensemble from simple model</li>
+    <li>SVR - Account for non-linearity and highly tunable</li>
+    <li>Decision Tree - Capture non-linearity</li>
+    <li>MLP - Flexible</li>
+</ul>
+
+The models were all initially run using their default values.
+
+<h3>Model Results for CO Concentration</h3> 
+
+<p>The results of the models built for the prediction of CO are shown below.</p>
+
+<img src = "\img\posts\Air Quality\Figure 3.jpg">
+
+<p>The Gradient Boosting regressor performed the best but it was closely followed by the K-Neighbors regressor. The Decision Tree showed the worst performance
+    with the default values. 
+</p>
+
+<h3>Model Results for NMHC Concentration</h3>
+
+<p>The results of the models built for the prediction of NMHC are shown below.</p>
+
+<img src = "\img\posts\Air Quality\Figure 4.jpg">
+
+<p>The Gradient Boosting regressor performed the best once again with an r2 score of 0.95 which is quite good. Huber Regression and Linear Regression 
+    were the next best performers. Decision Tree performed the worst once again.
+</p>
+
+<h3>Model Results for NO Concentration</h3>
+
+<p>The results of the models built for the prediction of NO are shown below.</p>
+
+<img src = "\img\posts\Air Quality\Figure 5.jpg">
+
+<p>Yet again, the Gradient Boosting regressor performed the best with an r2 score of 0.90.  It was closely followed by the K-Neighbors regressor. MLP 
+    performed extremely poorly with an r2 score of 0.24.
+</p>
+
+<h3>Model Results for NO2 Concentration</h3>
+
+<p>The results of the models built for the prediction of NO2 are shown below.</p>
+
+<img src = "\img\posts\Air Quality\Figure 6.jpg">
+
+<p>The Gradient Boosting regressor performed the best (again) with an r2 score of 0.95. Linear Regression and Huber Regression had the next best performance.
+    SVR performed the worst with an r2 of 0.36.
+</p>
+
+<h3>Model Results for O3 Concentration</h3>
+
+<p>The results of the models built for the prediction of O3 are shown below.</p>
+
+<img src = "\img\posts\Air Quality\Figure 7.jpg">
+
+<p>The Gradient Boosting regressor performed the best as has been the case with all the pollutants. MLP and K-Neighbors were the next best models. SVR performed the worst.</p>
+
+<h2>Summary of Models for Each Pollutant</h2>
+<p>The Gradient Boosting regressor model provided the best results based on the r2 score for all pollutants. Hence, I'll select it for further optimization through 
+    a grid-search parameter exploration. </p>
+
+<h2>Optimizing the Gradient Boosting Regressor Via Parameter Grid Search</h2>
+
+<p>Gradient Boosting (GB) is an ensemble model.</p>
+
+<p>There's a few hyperparameters that can be tuned for the GB regressor. The results that I showed in the previous section were obtained
+    by using the default parameters of the GB. There's 21 parameters that this regressor can take. You can see all those parameters here in the documentation 
+    <a href = "https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html">https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingRegressor.html</a>.</p>
+
+<p>The parameters I decided to try to optimize are as follows:</p>
+<ul>
+    <li>learning_rate</li>
+    <li>n_estimators</li>
+    <li>max_depth</li>
+</ul>
+
+<p>I decided to use the Mean Absolute Error (L1 Loss/MAE) as my loss function instead of the default value of Mean Squared Error since MAE is more robust to outliers.</p>
+
+<p>I used a k-value of 5 for k-fold cross-validation. I also ran 8 calculations in parallel (1 for each CPU core in my computer) to expedite things.</p>
+
+<p>You can see the results of the grid search exploration in the 3D scatter plot below. The grid search exploration took an hour and resulted in an 
+    improved r2 value of 0.91. A small increase, but an increase nonetheless. </p>
+
+<p>The axes here correspond to the explored values for learning rate, n_estimators, and max_depth. The color scale represents the r2 score value. 
+    The brighter it is the better the model. The size of the markers represents the standard deviation of the model. Smaller values mean lower variance and
+    viceversa.</p>
+
+<center><iframe src="\img\posts\Air Quality\gridsearch1.html" name="targetframe" allowTransparency="true" scrolling="no" frameborder="0" width="75%" height="700"></iframe>
+</center>
+
+<p>A brief explanation of the effect of these parameters are shown below.</p>
+
+<p><code>learning_rate</code> determines the step size per each iteration that is made towards minimizing the value of the loss function. High learning rates can 
+    overshoot the minima while low learning rates can lead to unfeasibly long convergence times and finding local minimum instead of the global minimum.</p>
+
+<p><code>n_estimators</code> refers to the number of trees used to build the model. In general, the higher this value the better the performance. However, as this value increases, 
+    so does the computational time required for it to converge.</p>
+
+<p><code>max_depth</code> refers to number of nodes in the tree. The deeper the tree, the more splits is has and can thus capture more features in the data. If the number is too high though, 
+    then we start running into issues of overfitting.</p>
+
+Here's a code snippet from the grid search exploration:
+<script src="https://gist.github.com/victormurcia/785fde9613d00edbf63f8872c97c82ea.js"></script>
+
+<p>Apart from improving the overall performance of the model, I'll be looking to minmize bias (i.e., incorporate fewer assumptions about target function)
+    and minimize variance (i.e.,improve agreement between model and measurements).</p>
+
+<p>The results of the grid search exploration determined that the best parameters are:</p>
+<ul>
+    <li>learning_rate = 0.1</li>
+    <li>max_depth = 10</li>
+    <li>n_estimators = 200</li>
+</ul>
+
+<h2>Predicting CO Concentration with Gradient Boosting Model On Entire Dataset</h2>
+
+<p>The plot below shows the final model predictions after evaluating the model on the entire dataset.</p> 
+
+<center><img src = "\img\posts\Air Quality\Figure 8.jpg"></center>
+
+<h2>Conclusions</h2>
+<p>10 different machine learning regressor models were tested to determine which one predicted the pollutant concentration with th highest accuracy.</p>
+<p>The Gradient Boosting (GB) Classifier had the highest prediction accuracy for all 5 pollutants explored within this data set.</p>
+<p>The GB classifier was then optimized and cross-validated using the k-fold method through variation of the learning_rate, max_depth, and n_estimators hyperparamters.</p>
+<p>The model was finally evaluated using the entire dataset which resulted in an r2 score of 1.0 which is excellent.</p>
+
+<p>I had fun working on this project! It had a nice mix of time series analysis, use of statistical tools, model testing and optimization, and even 
+    some cool chemistry to top it off!</p>
+
+<p>Something that I'd like to do in the future is implement this aproach for global data on pollutants to really test the limits of the model predictability.</p>
+
+<p>Thanks for reading this and checking out my work!</p>

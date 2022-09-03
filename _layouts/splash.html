@@ -8,6 +8,34 @@ layout: default
   {% include page__hero_video.html %}
 {% endif %}
 
+{% assign breadcrumbs_enabled = site.breadcrumbs %}
+{% if page.breadcrumbs != null %}
+  {% assign breadcrumbs_enabled = page.breadcrumbs %}
+{% endif %}
+{% if page.url != "/" and breadcrumbs_enabled %}
+  {% unless paginator %}
+    {% include breadcrumbs.html %}
+  {% endunless %}
+{% endif %}
+
+{% unless page.header.overlay_color or page.header.overlay_image %}
+<header>
+  {% if page.title %}<h1 id="page-title" class="page__title p-name" itemprop="headline" style="text-align: center;">
+    <a href="{{ page.url | absolute_url }}" class="u-url" itemprop="url" style="text-align: center;">{{ page.title | markdownify | remove: "<p>" | remove: "</p>" }}</a>
+  </h1>
+  {% endif %}
+  {% include page__meta.html %}
+  <div>
+    <center>
+    {% for tag in page.tags %}
+    {% capture tag_name %}{{ tag }}{% endcapture %}
+    <a href="/tags/{{ tag_name }}"><code class="highligher-rouge"><nobr>{{ tag_name }}</nobr></code>&nbsp;&nbsp;</a>
+    {% endfor %}
+    </center>
+  </div>
+</header>
+{% endunless %}
+
 <div id="main" role="main">
   <article class="splash" itemscope itemtype="https://schema.org/CreativeWork">
     {% if page.title %}<meta itemprop="headline" content="{{ page.title | markdownify | strip_html | strip_newlines | escape_once }}">{% endif %}
