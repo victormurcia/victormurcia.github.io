@@ -33,14 +33,15 @@ categorical and numerical types. This data was collected by the following instit
 <h2>Exploring the Data</h2>
 <p>This dataset has a healthy mixture of numerical and categorical variables. As such, it was necessary to make modifications in order to facilitate 
     their usage in the feature selection and modeling process. If you would like to see my process of preparing the data you can check out my post 
-    <a href ="https://victormurcia.github.io/Predicting-Heart-Disease-with-ML-Classifiers/">here</a> or my repository <a href = "https://github.com/victormurcia/Heart-Disease-Prediction-with-Machine-Learning-Classifiers">here</a>. For now I'll simply include the pandas_profiling report on the cleaned dataframe that
-    would be ultimately used for the model testing process.</p>
+    <a href ="https://victormurcia.github.io/Predicting-Heart-Disease-with-ML-Classifiers/">here</a> or my repository <a href = "https://github.com/victormurcia/Heart-Disease-Prediction-with-Machine-Learning-Classifiers">here</a>. 
+    For now I'll simply include the pandas_profiling report on the cleaned dataframe.</p>
 <center><iframe src="\img\posts\Heart Disease\eda.html" name="targetframe" allowTransparency="true" scrolling="yes" frameborder="0" width="75%" height="500"></iframe>
 </center>
 
-<p>The first thing to note is that these are a lot of variables to work with!  Though adding more features to our model can make them more accurate,
+<p>The first thing to note is that these are a lot of variables to work with!  Though having more features to our model can make them more accurate,
     it also makes them less exaplainable (known as the curse of dimensionality). Machine learning models often suffer from this lack of explainability,
-    and are treated as black-box models which can make it difficult to formulate and convey actionable insights from the model results. </p>
+    and are treated as black-box models which can make it difficult to formulate and convey actionable insights from the model results. In other words, 
+    having too many features in our model makes it less interpretable.</p>
 
 <p>As such, I like to err in the direction of starting my models with less variables/dimensions if a good accuracy score can still be attained since 
     then I can more easily explain what my model is actually doing. The process of eliminating these unwanted and/or redunant features in our data 
@@ -105,7 +106,7 @@ in this case corresponds to the heart rate achieved after exercise. </p>
 <p style="text-align:center;"><img src="\img\posts\Heart Disease\model test initial.JPG" width = 500 height = 500></p>
 
 <p>Very nice! The Random Forest Classifier and the Extreme Gradient Boost (XGBoost) Classifier performed really well straight from the box! They both 
-    achieved accuracy scores of 0.98537 which is excellent. Their sensitivity and specificity are both 0.9714 and 1.0 respectively. Since their performance 
+    achieved accuracy scores of 0.9854 which is excellent. Their sensitivity and specificity are both 0.9714 and 1.0 respectively. Since their performance 
     is equal, I decided to go for XGBoost since it is generally a better performing and efficient algorithm than Random Forest.</p>
 
 <h2>Optimizing and Cross Validating the XGBoost Classifier via Parameter Search Exploration</h2>
@@ -118,23 +119,76 @@ in this case corresponds to the heart rate achieved after exercise. </p>
 <ul>
     <li>learning_rate</li>
     <li>max_depth</li>
-    <li>gamma </li>
+    <li>n_estimators </li>
 </ul>
+
+<p>In addition, to exploring parameter space, I also applied a k-fold cross-validation with k=5. Cross-validation is an important aspect of model testing 
+    and optimization since it can help in the detection of overfitting and selection bias problems. In other words, cross-validation is a good way to 
+    assess how generalizable the model is.</p>
+
+<p>I've included a neat visualization of the grid search exploration results below. The 3D scatter plot below shows the accuracy scores obtained 
+    from the various combinations that I explored through the grid search. The color scale represents the accuracy score (purple is low and light green is high).
+    The size of the spheres represents the standard deviation of the generated model (small sphere means low variance and big sphere means high variance).
+    Therefore, the best model is the sphere with the lightest green color and the smallest size.</p>
 
 <center><iframe src="\img\posts\Heart Disease\gridsearch1.html" name="targetframe" allowTransparency="true" scrolling="yes" frameborder="0" width="750" height="750"></iframe>
 </center>
 
-<h2>Understanding the Classifier Decisions</h2>
+<p>The results of the parameter exploration resulted in an accuracy score of 1.0 which is better than what I had before. In addition to the improvement 
+    in the classification accuracy of the model, this model was also obtained by cross-validation which makes the model performance more reliable. The final parameters are: </p>
+
+<ul>
+    <li>learning_rate = 10</li>
+    <li>max_depth = 11</li>
+    <li>n_estimators = 130</li>
+</ul>
+
+<p>The confusion matrix for this model is shown below. The confusion matrix is a good way to track the number of false/true negatives/positives 
+    classifications that the model is generating. From it we can see that there are 96 true positives, 109 true negatives, 0 false negatives, and 
+0 false positives. This is great! The lack of false negatives is particularly thrilling since in this particular application, a false negative would 
+result in the neglect of the condition which would be bad news for the patient.</p>
+
+<p style="text-align:center;"><img src="\img\posts\Heart Disease\confusion mat.png" width = 500 height = 500></p>
 
 <h3>ROC-AUC Curves of Model</h3>
 
 <p>Let's now look at the Receiver operating characteristic curve (ROC curve) and the area under the curve (AUC) for this model. 
     ROC is a probability curve and AUC represents the degree or measure of separability. 
-    The Higher the AUC, the better the model is at distinguishing between patients with the disease and no disease. 
+    The Higher the AUC, the better the model is at distinguishing between patients with heart disease and no heart disease. 
     An excellent model has AUC near to the 1 which means it has a good measure of separability. 
     A poor model has an AUC near 0 which means it has the worst measure of separability.</p>
 
+<p style="text-align:center;"><img src="\img\posts\Heart Disease\roc_auc.png" width = 500 height = 500></p>
+
+<p>The AUC for this model is 1.0 which means that the model has a high degree of separability which is desired.</p>
+
+<h2>Understanding the Classifier Decisions</h2>
+
+<p>The generated model is performing really well! Let's try to get a better understanding of how our classifier model is making the decision 
+    to diagnose heart disease. I'll be first using the ELI5 package to see the weights that the different features of our model have when 
+    making a heart disease diagnosis.</p>
+
+<p style="text-align:center;"><img src="\img\posts\Heart Disease\eli5.JPG" width = 500 height = 500></p>
+
+<p>Interesting, the top 5 features that contribute towards the heart disease diagnosis decision are as follows:</p>
+
+<ul>
+    <li>cp_typical_angina</li>
+    <li>num_major_vessels</li>
+    <li>st_depression</li>
+    <li>max_heart_rate</li>
+    <li>cholesterol</li>
+</ul>
+
+<p>These all make sense at a glance. Let's look at them deeper to better understand their behavior firstly through Partial Depdence Plots</p>
+
 <h3>Partial Dependence Plots - Feature Effects On Model Prediction</h3>
+
+<p>In PDPs, a single variable is varied in a single row across a range of values in order to see what effect it has on the outcome. 
+    It does this for several rows and plots the average effect. 
+    Let's take a look at the 'num_major_vessels' variable, which was at the top of the permutation importance list</p>
+
+<p style="text-align:center;"><img src="\img\posts\Heart Disease\pdps.jpg" width = 1200 height = 1200></p>
 
 <h3>SHAP Values for Assessment of Contributions of Model Features</h3>
 
