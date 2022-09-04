@@ -164,7 +164,8 @@ result in the neglect of the condition which would be bad news for the patient.<
 
 <h2>Understanding the Classifier Decisions</h2>
 
-<p>The generated model is performing really well! Let's try to get a better understanding of how our classifier model is making the decision 
+<p>The generated model is performing really well! However, does the decision making process that the model is using to make a diagnosis make sense?
+    Let's try to get a better understanding of how our classifier model is making the decision 
     to diagnose heart disease. I'll be first using the ELI5 package to see the weights that the different features of our model have when 
     making a heart disease diagnosis.</p>
 
@@ -185,13 +186,72 @@ result in the neglect of the condition which would be bad news for the patient.<
 <h3>Partial Dependence Plots - Feature Effects On Model Prediction</h3>
 
 <p>In PDPs, a single variable is varied in a single row across a range of values in order to see what effect it has on the outcome. 
-    It does this for several rows and plots the average effect. 
-    Let's take a look at the 'num_major_vessels' variable, which was at the top of the permutation importance list</p>
+    It does this for several rows and plots the average effect. Below are the PDPs for the features with the largest weights towards a 
+    diagnosis of heart disease. Therefore, if the PDP is positive then that feature contributes towards a <strong>positive</strong> heart disease 
+    diagnosis, if it's negative it contributes towards a <strong>negative</strong> heart disease diagnosis.</p>
 
 <p style="text-align:center;"><img src="\img\posts\Heart Disease\pdps.jpg" width = 1200 height = 1200></p>
 
+<p>From the PDPs we can see the following:</p>
+<ul>
+    <li>Having a positive result for typical angina <strong>decreases</strong> the probability of heart disease</li>
+    <li>As the number of major blood vessels increases, the probability of heart disease <strong>decreases</strong>.</li>
+    <li>As the slope of the ST depression in the ECG goes from upsloping to downsloping, the probability of heart disease <strong>decreases</strong></li>
+    <li>The probability of heart disease is <strong>non-linear</strong> based on heart-rate and cholesterol</li>
+</ul>
+    
+<p>The dependence on having a typical angina makes sense. Angina is a type of chest pain caused by reduced blood flow to the heart. 
+    There's different types of angina (stable , unstable, variant and refractory). 
+    Typical angina is common and is generally experienced during periods of physical exertion and usually goes away before long. 
+    The PDP for typical angina shows that when a patient exhibits this condition the likelihood of them having heart disease goes down which 
+    makes sense.</p>
+
+<p>The dependence on increased number of vessels seen in fluoroscopy also makes sense.
+    If more vessels are seen during this measurement, then it is indicative of better blood flow and suggests a healthy heart. This is 
+    indeed what is observed in the PDP plot for this feature.</p>
+
+<p>The dependence seen for the ST-segment depression is tougher to interpret because there are other factors that are needed from the ECG
+    to get a fuller picture of the situation. However, the PDP plot suggests that as the slope of the ST-segment goes from having a postive slope to
+ a negative slope, the probability of heart disease decreases.</p>
+
+<p style="text-align:center;"><img src="\img\posts\Heart Disease\ST-segment-depression.png" width = 600 height = 600></p>
+
+<p>We can also look at 2D-PDP plots to get information about how the interaction between variables contributes to heart disease. The 2D PDP plots
+    below will show the interactions between the typical angina feature and the next top 4 features in the mdoel. The color scale 
+    in the plots below represents the probability of a heart disease diagnosis. Blue colors mean lower probability of heart disease while red 
+    colors represent higher probability of heart disease.</p>
+
+<p style="text-align:center;"><img src="\img\posts\Heart Disease\2dpdps.jpg" width = 600 height = 600></p>
+
+<p>From the plots above we can see the following:</p>
+
+<ol type="a">
+    <li>Having no blood vessels show up in fluoroscopy AND not having a typical angina results in a high chance of heart disease</li>
+    <li>Having a high heart rate AND not not having a typical angina results in a high chance of heart disease</li>
+    <li>Having an upsloping ST-segment AND not having a typical angina results in a high chance of heart disease</li>
+    <li>Having low cholesterol AND not having a typical angina results in a high chance of heart disease</li>
+</ol>
+
+<p>Hmmm, the first three interactions between the typical angina diagnosis with the fluoroscopy results, heart rate measurements and the 
+    ST-segment make sense based on literature reports. However, low cholesterol having a higher probability of heart disease doesn't seem to be in agreement with the 
+    medical consensus of high cholesterol levels being a high-risk factor of heart problems. Why could this be?</p>
+
+<p>This strange behavior could be explained by the fact that the cholesterol levels reported in this work appears to be the TOTAL serum cholesterol levels. Cholesterol actually travels in two
+     different types of lipoproteins known as low-density lipoproteins (LDLs) and high-density lipoproteins (HDLs). High LDL levels are associated 
+     with increased risk of heart disease. High HDL levels on the other hand are associated with lowered risk of heart disease. The data from 
+     this project doesn't separate between those two types of cholesterols which would explain the strange behavior of cholesterol seen here.</p>
+
 <h3>SHAP Values for Assessment of Contributions of Model Features</h3>
 
+<p>Let's look at the Shapley Additive Explanations (SHAP). 
+    SHAP is a method from game theory that can help explain the outputs from a machine learning model. 
+    More specifically, these SHAP values allow us to understand the impact from each feature in our model by breaking down the predictions made by the model. 
+    It's important to note that SHAP values are not a model assessment criteria. 
+    In other words they don't evaluate the quality of the model. 
+    They are here to help us understand the importance/contribution of each feature in our model.</p>
+
+<center><iframe src="\img\posts\Heart Disease\shap1.html" name="targetframe" allowTransparency="true" scrolling="yes" frameborder="0" width="850" height="450"></iframe>
+</center>
 <h2>Final Predictions</h2>
 
 <h2>Conclusions</h2>
