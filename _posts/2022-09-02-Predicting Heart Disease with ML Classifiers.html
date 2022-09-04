@@ -12,18 +12,132 @@ background: '/img/posts/hpbg.jpg'
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-In this post I'll be showing how machine learning models can be trained and used to predict heart disease. The dataset I'll be using here is the 
-Heart Disease Dataset that I extracted from the UC Irvine Machine Learning Repository found here: <a href = "https://archive-beta.ics.uci.edu/ml/datasets/heart+disease">https://archive-beta.ics.uci.edu/ml/datasets/heart+disease</a>. 
-This dataset contains databases from Cleveland, Hungary, Switzerland, and the VA Long Beach with each containing 76 different attributes of 
-categorical and numerical types. This data was collected by the following institutions back in 1988:
-
-1. Hungarian Institute of Cardiology. Budapest
-2. University Hospital, Zurich, Switzerland
-3. University Hospital, Basel, Switzerland
-4. V.A. Medical Center, Long Beach and Cleveland Clinic Foundation
-
-<h2>Motivation for Studying Heart Disease</h2>
-The accurate prediction and diagnosis of diseases is at the forefront of challenges that need to be addressed by medical professionals. 
+<p>The accurate prediction and diagnosis of diseases is at the forefront of challenges that need to be addressed by medical professionals. 
 This is a complicated task due to the myriad of factors that can contribute towards an ailment. In the United States, heart disease is the 
 leading cause of death in the population with 696,962 deaths reported in 2021 (1 in every 5 deaths). <a href = "https://www.cdc.gov/nchs/fastats/heart-disease.htm">https://www.cdc.gov/nchs/fastats/heart-disease.htm</a>. 
-As such, it is imperative to understand the causes and factors that lead to this deadly disease.
+As such, it is imperative to understand the causes and factors that lead to this deadly disease.</p>
+
+<p style="text-align:center;"><img src="\img\posts\Heart Disease\intro pic.jpg" width = 600 height = 800></p>
+
+<p>In this project I'll be showing how machine learning classifier models can be trained and used to predict heart disease. The dataset I'll be using here is the 
+Heart Disease Dataset that I extracted from the UC Irvine Machine Learning Repository found here: <a href = "https://archive-beta.ics.uci.edu/ml/datasets/heart+disease">https://archive-beta.ics.uci.edu/ml/datasets/heart+disease</a>. 
+This dataset contains databases from Cleveland, Hungary, Switzerland, and the VA Long Beach with each containing 76 different attributes of 
+categorical and numerical types. This data was collected by the following institutions back in 1988:</p>
+
+<ul>
+    <li>University Hospital, Zurich, Switzerland</li>
+    <li>University Hospital, Basel, Switzerland</li>
+    <li>V.A. Medical Center, Long Beach and Cleveland Clinic Foundation</li>
+</ul>
+
+<h2>Exploring the Data</h2>
+<p>This dataset has a healthy mixture of numerical and categorical variables. As such, it was necessary to make modifications in order to facilitate 
+    their usage in the feature selection and modeling process. If you would like to see my process of preparing the data you can check out my post 
+    <a href ="https://victormurcia.github.io/Predicting-Heart-Disease-with-ML-Classifiers/">here</a> or my repository <a href = "https://github.com/victormurcia/Heart-Disease-Prediction-with-Machine-Learning-Classifiers">here</a>. For now I'll simply include the pandas_profiling report on the cleaned dataframe that
+    would be ultimately used for the model testing process.</p>
+<center><iframe src="\img\posts\Heart Disease\eda.html" name="targetframe" allowTransparency="true" scrolling="yes" frameborder="0" width="75%" height="500"></iframe>
+</center>
+
+<p>The first thing to note is that these are a lot of variables to work with!  Though adding more features to our model can make them more accurate,
+    it also makes them less exaplainable (known as the curse of dimensionality). Machine learning models often suffer from this lack of explainability,
+    and are treated as black-box models which can make it difficult to formulate and convey actionable insights from the model results. </p>
+
+<p>As such, I like to err in the direction of starting my models with less variables/dimensions if a good accuracy score can still be attained since 
+    then I can more easily explain what my model is actually doing. The process of eliminating these unwanted and/or redunant features in our data 
+    is known as dimensionality reduction.</p>
+
+<h3>Feature Selection through Dimensionality Reduction Via Chi Squared Test</h3>
+
+<p>There are many techniques that can be used to carry out dimensionality reduction that fall into the category of feature selction or feature extraction.
+    feature selection. In this case, I'm interested excluding attributes that are present in the data. I'll do this through the Chi Squared Test which is 
+    type of filter method.</p>
+
+<p>The null hypothesis for the chi2 test is that two categorical variables are independent. Therefore, a higher value of the chi2 statistic means that 
+    two categorical variables are dependent and are thus more useful for classification. In other words, the highest chi squared values will 
+    represent the strongest relationships between our dependent variable (the diagnosis) and our independent variable and should therefore be the 
+    ones that we should focus on during the model development (at least initially). </p>
+
+<p>I applied the Chi Squared Test on the data and chose the best 10 features. The results of this process are shown in the table below.</p>
+
+<p style="text-align:center;"><img src="\img\posts\Heart Disease\chi squared test.JPG" width = 600 height = 800></p>
+
+<p>I will now generate a new dataframe that uses these variables now. These will be the 10 independent variables that I will use to predict 
+    whether there is a positive or negative diagnosis of heart disease.</p>
+
+
+<center><iframe src="\img\posts\Heart Disease\eda2.html" name="targetframe" allowTransparency="true" scrolling="yes" frameborder="0" width="75%" height="500"></iframe>
+</center>
+
+<p>The pairplot below also helps us readily identify trends that I could analyze further between the numerical variables as well as give us an idea of 
+    how certain variables are likely to contribute towards the prediction of heart disease from the model. The colors designate whether a patient will 
+have heart disease (blue = yes, orange = no). </p>
+
+
+<p style="text-align:center;"><img src="\img\posts\Heart Disease\pairplot.png" width = 500 height = 500></p>
+
+<p>For instance we can see that age and max_heart_rate have an approximately negative linear relationship.</p>
+<p>It can also be seen that the lower the max_heart_rate the more likely the patient will have a positive diagnosis of heart disease. There is evidence in the literature for this to be true, since max_heart_rate 
+in this case corresponds to the heart rate achieved after exercise. </p>
+<p>It can also be seen that a positive heart disease diagnosis is more frequent with increased age.</p>
+
+<p>With this understanding of the variables and having reduced the dimensionality of the dataset such that the model will use the most 
+    10 most important features based on the Chi Squared Test, I will now turn my attention to building and testing a set of classifier models.</p>
+
+<h2>Building and Assessing the Performance of the Classifier Models</h2>
+<p>I'll split my data using the 80/20 Pareto principle to start things off. Then, I'll test out the following classifiers with their default 
+    parameters and see how well they perform. </p>
+
+<ul>
+    <li>Linear Perceptron</li>
+    <li>Gaussian Naive Bayes</li>
+    <li>Random Forest</li>
+    <li>Extreme Gradient</li>
+    <li>K-Neighbors</li>
+    <li>Decision Tree</li>
+    <li>Extreme Gradient Boosting</li>
+    <li>Gaussian Process</li>
+    <li>Support Vector</li>
+    <li>MLP</li>
+</ul>
+
+<p>The results of the models are shown below:</p>
+
+<p style="text-align:center;"><img src="\img\posts\Heart Disease\model test initial.JPG" width = 500 height = 500></p>
+
+<p>Very nice! The Random Forest Classifier and the Extreme Gradient Boost (XGBoost) Classifier performed really well straight from the box! They both 
+    achieved accuracy scores of 0.98537 which is excellent. Their sensitivity and specificity are both 0.9714 and 1.0 respectively. Since their performance 
+    is equal, I decided to go for XGBoost since it is generally a better performing and efficient algorithm than Random Forest.</p>
+
+<h2>Optimizing and Cross Validating the XGBoost Classifier via Parameter Search Exploration</h2>
+
+<p>The performance of the XGBoost classifier is already really good. However, it won't hurt to improve it even further through a parameter space 
+    exploration. There's quite a few parameters at our disposal to tune for XGBoost which you can find in the <a href = "https://xgboost.readthedocs.io/en/stable/parameter.html">documentation</a>.</p>
+
+<p>I decided to explore and optimize the following parameters and see if an even better performance can be achieved:</p>
+
+<ul>
+    <li>learning_rate</li>
+    <li>max_depth</li>
+    <li>gamma </li>
+</ul>
+
+<center><iframe src="\img\posts\Heart Disease\gridsearch1.html" name="targetframe" allowTransparency="true" scrolling="yes" frameborder="0" width="750" height="750"></iframe>
+</center>
+
+<h2>Understanding the Classifier Decisions</h2>
+
+<h3>ROC-AUC Curves of Model</h3>
+
+<p>Let's now look at the Receiver operating characteristic curve (ROC curve) and the area under the curve (AUC) for this model. 
+    ROC is a probability curve and AUC represents the degree or measure of separability. 
+    The Higher the AUC, the better the model is at distinguishing between patients with the disease and no disease. 
+    An excellent model has AUC near to the 1 which means it has a good measure of separability. 
+    A poor model has an AUC near 0 which means it has the worst measure of separability.</p>
+
+<h3>Partial Dependence Plots - Feature Effects On Model Prediction</h3>
+
+<h3>SHAP Values for Assessment of Contributions of Model Features</h3>
+
+<h2>Final Predictions</h2>
+
+<h2>Conclusions</h2>
