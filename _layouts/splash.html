@@ -17,14 +17,37 @@ layout: default
     {% include breadcrumbs.html %}
   {% endunless %}
 {% endif %}
-
+<style>
+.greeting h1 {
+  text-align: center;
+  margin: 0
+}
+.greeting h2 {
+  text-align: center;
+  margin: 0
+}
+.greeting h3 {
+  text-align: center;
+  margin: 0
+}
+</style>
 {% unless page.header.overlay_color or page.header.overlay_image %}
 <header>
-  {% if page.title %}<h1 id="page-title" class="page__title p-name" itemprop="headline" style="text-align: center;">
+  {% if page.title %}
+<div class = "greeting">
+  <h1 id="page-title" itemprop="headline" style="text-align: center;">
     <a href="{{ page.url | absolute_url }}" class="u-url" itemprop="url" style="text-align: center;">{{ page.title | markdownify | remove: "<p>" | remove: "</p>" }}</a>
   </h1>
+  <h2 itemprop="headline"style="text-align: center;">
+    {{ page.subtitle | markdownify | remove: "<p>" | remove: "</p>" }}
+  </h2>
+
+  <h3 style="text-align: center;">
+    By: {{ page.author | markdownify | remove: "<p>" | remove: "</p>" }}
+  </h3>
   {% endif %}
   {% include page__meta.html %}
+</div>
   <div>
     <center>
     {% for tag in page.tags %}

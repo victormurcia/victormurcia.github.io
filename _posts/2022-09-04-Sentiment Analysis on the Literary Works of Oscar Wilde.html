@@ -1,0 +1,112 @@
+---
+layout: splash
+title: "Sentiment Analysis on the Literary Works of Oscar Wilde"
+author: "Victor Murcia"
+subtitle: "The truth is rarely pure and never simple."
+date: 2022-08-24 08:33:00 -0400
+tags: jupyter_notebook  data_science natural_language_processing featured portfolio
+background: '/img/posts/lit.webp'
+---
+
+
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<p>Oscar Wilde is one of my favourite authors ever. 'The Picture of Dorian Gray ' published in 1890, remains as one of the stories that has resonated and impacted me the most. The idea of a painting granting you a carte blanche and being the receptacle of ones evil while you live a life devoid of consequences was fascinating to me. In particular, the gradual deterioration of the painting as Dorian Gray committed increasingly terrible acts will always be one of my favorite concepts in literature. </p>
+<p style="text-align:center;"><img src="\img\posts\Oscar Wilde\dorian1.png" width = 800 height = 1000></p>
+
+<p>As such, it's only natural for me to want to investigate them through the lenses of data science and natural language processing (NLP) techniques.</p>
+
+<p>NLP is an amalgam of the concepts and techniques from the fields of linguistics, computer science, and artificial intelligence that seeks to understand how computers process human language. Some common tasks used by NLP are text and speech processing used in Speech recognition applications (i.e., Siri from Apple and Alexa from Amazon) and Higher-level applications like Discourse management (i.e., how can a computer converse with a human) amongst many others. It is an absolutely fascinating field and one that I've been deeply interested in from the moment I learned about it.</p>
+
+<p>Some questions I'd want to answer are: </p>
+
+<ul>
+    <li>What are the most commonly used words used by Oscar Wilde?</li>
+    <li>What is the overall sentiment present in his works?</li>
+    <li>How does the sentiment change (if at all) from chapter to chapter? Is there a particular emotional structure that is present?</li>
+    <li>Are the emotional assessments in agreement with the themes present in the narratives?</li>
+</ul>
+
+<p>Project Gutenberg is a library of over 60,000 free eBooks that one can download or read online. Oscar Wilde is one of the many authors that Project Gutemberg has works readily available for.</p>
+<p style="text-align:center;"><img src="\img\posts\Oscar Wilde\pg.jpg" width = 800 height = 1000></p>
+<p>I'll write some code to download his works from <a href = "https://www.gutenberg.org/">Project Gutenberg</a>. These routines should be readily applicable to get stuff from other authors too!</p>
+
+<p>This project will show more of my code directly since I will be doing a bit of querying and webscraping to get the data I need which I think is 
+    worth showing. If you are interested in seeing the full set of code you can see my post <a href = "https://victormurcia.github.io/Sentiment-Analysis-on-the-Works-of-Oscar-Wilde/">here</a> or my repository <a href = "https://github.com/victormurcia/Sentiment-Analysis-on-the-Literary-Works-of-Oscar-Wilde">here</a>.</p>
+
+<p>In terms of the sentiment/emotion analysis, I'll start by using a Naive Bayes classifier trained on Twitter data to determine whether the sentiments in a chapter are 
+positive, negative or neutral. Then, I'll use VADER to get polarity scores. Finally, I'll use the NRC lexicon to breakdown each chapter into 10 different 
+emotions (joy, positive, anger, disgust, negative, anticipation, surprise, trust, fear, and surprise).</p>
+
+<p>With that said let's dive in!</p>
+
+<h2>Prelude and Exposition - Structuring the Query for Oscar Wilde in Project Gutemberg</h2>
+
+<p>The first thing I'll need is a way to retrieve the contents from the HTML site of Project Gutenberg. This means I'll need to communicate with the site/server which I can readily do with the <code>urlopen</code> function. The URL that I'm trying to connect to is associated with a search query for 'Oscar Wilde' and it looks as follows:</p>
+
+<p><code>https://www.gutenberg.org/ebooks/search/?query=oscar+wilde&submit_search=Search</code></p>
+    
+<p>I'll be replacing the string to make it more general by using a formatted string of the form</p>
+    
+<p><code>f'https://www.gutenberg.org/ebooks/search/?query={first_name}+{last_name}&submit_search=Search'</code></p>
+    
+<p>I should note that Project Gutenberg queries are limited to 25 search results but that should be enough for this initial exploration.  </p>
+
+<p>Now that I know what URL to query, I can start to build the functions required to get the info I need from Project Gutemberg.</p>
+
+<h3>Step 1 - Communicating With the Query URL</h3>
+<p>Now that I know the structure of the URL that I need to query I can write a function that will communicate with the site as shown below:</p>
+<script src="https://gist.github.com/victormurcia/fde61cce600282690e30b90efd4f5e35.js"></script>
+
+<h3>Step 2 - Webscraping the Query URL for ALL URLs in page</h3>
+<script src="https://gist.github.com/victormurcia/5121186f1c59f10bca2c3c0ed816f1d0.js"></script>
+
+<h3>Step 3 - Get Book Identifiers</h3>
+<script src="https://gist.github.com/victormurcia/b47d506791efc576dc16c0ff344b92ae.js"></script>
+
+<h3>Step 4 - Downloading A Single Book from Project Gutemberg</h3>
+<script src="https://gist.github.com/victormurcia/2f463960edc66654daaf605105bc4d80.js"></script>
+
+<p>Let's test it out! The book ID for 'The Picture Of Dorian Gray' is 174. So I'll just pass that into my function and the result is a nice 
+    file in my directory called '174.txt' that contains 'The Portrait Of Dorian Gray'. Awesome!</p>
+
+<p style="text-align:center;"><img src="\img\posts\Oscar Wilde\dl1.png" width = 800 height = 1000></p>
+
+<p>Perfect! Now that I have my base download function I can simply put my routines into a wrapper function that will allow me to download all the books present in our search query page as shown below.</p>
+
+<h2>Rising Action - Downloading Oscar Wilde's Literary Works from Project Gutemberg</h2>
+<p>Here is the wrapper function that will allow me to download all the books in the Oscar Wilde search query page.</p>
+<script src="https://gist.github.com/victormurcia/ea58bbd3321a8efb0b2dfd08b45f0a67.js"></script>
+<p>The results of this running this function are shown below.</p>
+
+<p style="text-align:center;"><img src="\img\posts\Oscar Wilde\all_books.jpg" width = 800 height = 1000></p>
+<p>Our function returned 23 out of the 25 results that were on the search query page. The 2 results that were omitted corresponded to an audio book for the 'The Importance of Being Earnest' and the German version of 'The Portrait of Dorian Gray' which is titled 'Das Bildnis des Dorian Gray'. This is totally okay though since for my work I'm only interested in text data and documents that are in English so I'll proceed with the next stage of the process.</p>
+
+<p>Now that I have the books downloaded, I'm going to write a routine that will split each book into Chapters. This will allow me to process and analyze each 
+    book chapter individually.</p>
+ 
+<script src="https://gist.github.com/victormurcia/5fc5653ea06fb119a61e083c8046f248.js"></script>
+<p>Next I'll load the book chapter files that we have generated to have them accessible</p>
+<script src="https://gist.github.com/victormurcia/249f2941fbc7d3ade7db5dfe31d3f8c5.js"></script>
+
+<p>Finally, I'll  read the contents of the book and place them in memory here. I'll start with Chapter 1 which was saved as a file named '2.txt' since the current book has a Prelude Chapter</p>
+<script src="https://gist.github.com/victormurcia/b9f9d91c7962219efe18aab865de0169.js"></script>
+<p>The output of this routine is shown below:</p>
+<p style="text-align:center;"><img src="\img\posts\Oscar Wilde\ch1.JPG" width = 600 height = 800></p>
+<p>We are ready to roll!</p>
+
+<h2>The Midpoint - Tokenizing, Lemmatizing, and Denoising A Chapter</h2>
+
+
+<h2>The Big Event - Tokenizing, Lemmatizing, and Denoising A Book</h2>
+
+<h2>The Crisis - Naive Bayes Classifier</h2>
+
+<h2>The Climax - VADER and NRC Lexicon</h2>
+<p style="text-align:center;"><img src="\img\posts\Oscar Wilde\cmat_dg.png" width = 800 height = 1000></p>
+<h2>The Realization - Visualization of the Emotional Analysis</h2>
+<p style="text-align:center;"><img src="\img\posts\Oscar Wilde\wordcloud_dg.png" width = 800 height = 1000></p>
+
+<h2>Conclusion</h2>
+<p>Sentiment Analysis and Emotion Recognition was used to analyze 'The Portrait of Dorian Gray' by Oscar Wilde. The results of the routine showcased here elucidated some of the thematic/emotional structure of that book using a Naive Bayes classifier, VADER and NRC lexicons for every chapter in the book. The next steps for this project involve processing the remaining works from Oscar Wilde and seeing if there is a common emotional structure in his books.</p>
