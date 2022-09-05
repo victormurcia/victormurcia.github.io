@@ -236,6 +236,7 @@ result in the neglect of the condition which would be bad news for the patient.<
     ST-segment make sense based on literature reports. However, low cholesterol having a higher probability of heart disease doesn't seem to be in agreement with the 
     medical consensus of high cholesterol levels being a high-risk factor of heart problems. Why could this be?</p>
 
+<p style="text-align:center;"><img src="\img\posts\Heart Disease\cholesterol.jpg" width = 600 height = 600></p>
 <p>This strange behavior could be explained by the fact that the cholesterol levels reported in this work appears to be the TOTAL serum cholesterol levels. Cholesterol actually travels in two
      different types of lipoproteins known as low-density lipoproteins (LDLs) and high-density lipoproteins (HDLs). High LDL levels are associated 
      with increased risk of heart disease. High HDL levels on the other hand are associated with lowered risk of heart disease. The data from 
@@ -250,8 +251,61 @@ result in the neglect of the condition which would be bad news for the patient.<
     In other words they don't evaluate the quality of the model. 
     They are here to help us understand the importance/contribution of each feature in our model.</p>
 
+<p>The plot below shows the summary of the SHAP values for each of the features in our model. The features are arrange in descending order of importance.
+    The colors represent the extent to which each feature contributes towards the heart disease diagnosis (more pink means more contribution towards heart disease 
+    while more blue means more contribution towards no heart disease) for each patient in the test set.</p>
+<p style="text-align:center;"><img src="\img\posts\Heart Disease\shap1.png" width = 600 height = 600></p>
+
+<p>Some of the things we can see from this plot are:</p>
+
+<ul>
+    <li>A high positive contribution is obtained for typical angina when the SHAP values are low. </li>
+    <li>A high positive contribution is obtained for number of major vessels when the SHAP values are low</li>
+    <li>A high positive contribution is obtained for ST-depression when the SHAP values are low</li>
+</ul>
+
+<p>The plot below is a SHAP force plot for the 205 patients that make up our test set. The x-axis is patient ID and the y-axis is the SHAP 
+    score for every patient. It gives you a breakdown of the SHAP values for every patient which allows you to see how the model decided on the 
+    heart diagnosis. It's interactive so give it a look!
+</p>
 <center><iframe src="\img\posts\Heart Disease\shap1.html" name="targetframe" allowTransparency="true" scrolling="yes" frameborder="0" width="850" height="450"></iframe>
 </center>
 <h2>Final Predictions</h2>
 
-<h2>Conclusions</h2>
+<p>Great! Now we have both a model that has high classification accuracy AND have a much better understanding of how our classification model is 
+    working. Now I can apply the model to the entire dataset and see how it performs. The results are shown below for the 1205 patients that make up 
+    this dataset:</p>
+
+<p style="text-align:center;"><img src="\img\posts\Heart Disease\final_metrics.png" width = 300 height = 300></p>
+
+<p>Our model performed excellently over the entire dataset! It correctly diagnosed heart disease for every patient. I've also included the SHAP force plot 
+    for every patient in the dataset below in case you are interested in seeing how the diagnosis was made for every patient.</p>
+
+<center><iframe src="\img\posts\Heart Disease\shap2.html" name="targetframe" allowTransparency="true" scrolling="yes" frameborder="0" width="850" height="450"></iframe>
+</center>
+
+<p>As impressive as these results are, I do want to mention that the dataset I'm working with is quite old (data is from 1988) and a lot of advances have been 
+    made in the field of medicine since the time this was published. In addition to this, the dataset could benefit from additional information for each patient 
+    like demographic information and increased specificity about some of the quantities (like differentiation between LDL and HDL cholesterol). Lastly, 
+    having an even larger sample size would increase the veracity of the model since after all, a model is only as good and useful as the data that we provide it with. </p>
+
+<h2>Conclusions and Final Thoughts</h2>
+<p>The goal of this project was to test, optimize and use machine learning classifiers to predict whether a patient will be diagnosed with 
+heart disease.</p>
+
+<p>The dimensionality of the model was reduced using the chi squared test so as to include 10 features.</p>
+
+<p>The XGBoost Classifier produced the most accurate predictions out of the 10 classifiers that were tested. After a parameter grid search and cross-validation,
+     the accuracy, precision, recall and F1 scores were optimized to obtain 100% classification accuracy which is excellent even after validation on the 
+     entire dataset.</p>
+    
+<p>The ROC curve and the AUC showed that the generated model has high separability which allows it to readily distinguish between the two types of heart disease diagnosis.</p>
+
+<p>The 5 most important factors towards the diagnosis of heart disease from the model were determined to be a typical angina diagnosis, the number of 
+    major blood vessels that show up in fluoroscopy, the slope of the ST-segment depression, the maximum heart acheived after exercise, and the 
+    cholesterol levels.</p>
+
+<p>Partial Dependence Plots and SHAP values were used to better understand the considerations the model is making towards making an assessment of 
+    heart diagnosis</p>
+
+<p>This was an interesting project to tackle and I'm looking forward to the next data question I'll try to address! Thanks for reading!</p>
