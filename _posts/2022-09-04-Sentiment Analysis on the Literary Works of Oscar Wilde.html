@@ -60,12 +60,15 @@ emotions (joy, positive, anger, disgust, negative, anticipation, surprise, trust
 <script src="https://gist.github.com/victormurcia/fde61cce600282690e30b90efd4f5e35.js"></script>
 
 <h3>Step 2 - Webscraping the Query URL for ALL URLs in page</h3>
+<p>Next, I need a way to retrieve the URLs associated with book files from the search query. BeautifulSoup allows us to do this easily since all book links are contained within the <code>'a href'</code> tag. Hence, all that needs to be done is tell BeautifulSoup to find all the tags that begin with 'a' and then get the parts that contain an actual link that's denoted by 'href'. The function below takes care of that. </p>
 <script src="https://gist.github.com/victormurcia/5121186f1c59f10bca2c3c0ed816f1d0.js"></script>
 
 <h3>Step 3 - Get Book Identifiers</h3>
+<p>Now that we have the links present in the search query, I need to get the book identifiers that Project Gutenberg uses. This is done via the function below which will return a list of bookIDs that we can then use to download all the books associated with the results of our search query.</p>
 <script src="https://gist.github.com/victormurcia/b47d506791efc576dc16c0ff344b92ae.js"></script>
 
 <h3>Step 4 - Downloading A Single Book from Project Gutemberg</h3>
+<p>We are almost done with the extraction prep for our books! Now that I have the bookIDs associated with the query results I can write a function that will download the book onto a directory in our computer. This is done with the function below. </p>
 <script src="https://gist.github.com/victormurcia/2f463960edc66654daaf605105bc4d80.js"></script>
 
 <p>Let's test it out! The book ID for 'The Picture Of Dorian Gray' is 174. So I'll just pass that into my function and the result is a nice 
@@ -83,6 +86,7 @@ emotions (joy, positive, anger, disgust, negative, anticipation, surprise, trust
 <p style="text-align:center;"><img src="\img\posts\Oscar Wilde\all_books.jpg" width = 800 height = 1000></p>
 <p>Our function returned 23 out of the 25 results that were on the search query page. The 2 results that were omitted corresponded to an audio book for the 'The Importance of Being Earnest' and the German version of 'The Portrait of Dorian Gray' which is titled 'Das Bildnis des Dorian Gray'. This is totally okay though since for my work I'm only interested in text data and documents that are in English so I'll proceed with the next stage of the process.</p>
 
+<h3>Breaking the Book into Chapters</h3>
 <p>Now that I have the books downloaded, I'm going to write a routine that will split each book into Chapters. This will allow me to process and analyze each 
     book chapter individually.</p>
  
@@ -97,14 +101,78 @@ emotions (joy, positive, anger, disgust, negative, anticipation, surprise, trust
 <p>We are ready to roll!</p>
 
 <h2>The Midpoint - Tokenizing, Lemmatizing, and Denoising A Chapter</h2>
+<p>I now have the entire book at my disposal to work with. However, there's a bit of preparation I need to do on the text data before I can carry out 
+    the sentiment analysis. Before I move on to processing an entire book, I want to ensure that all my routines will work as intended on a chapter. This is how I like to code, learn, design experiments and do research in general. Start with a simple foundation that I can build as much or as little detail and complexity as needed.</p>
+<p>I'll start with Chapter 1 from 'The Picture of Dorian Gray'.</p>
 
+<h3>Tokenizing The Chapter</h3>
+<p>Tokenizing is the process of spliting strings into smaller parts called tokens. A token is the smallest unit of text that can be parsed by the computer (analogues to phonemes and morphemes in human languages). Tokens can be any sequence of words, emojis, hashtags, links, or even an individual character. It is an important part of the preparation of sentiment analysis since it provides the framework from which the computer will try to ascribe meaning.</p>
+<p>Let's start by tokenizing the chapter. I'll use the <code>word_tokenize</code> function from nltk. I'll also remove the first three elements from the tokenized list since those are just the chapter numbers and empty lines.</p>
+<script src="https://gist.github.com/victormurcia/217e740f539ef46c9e0f71043fdd40fb.js"></script>
+<p>The output of this process is shown below where it can be seen that the tokenizer generated an array of words from the chapter:</p>
+<p style="text-align:center;"><img src="\img\posts\Oscar Wilde\token1.JPG" width = 800 height = 1000></p>
 
-<h2>The Big Event - Tokenizing, Lemmatizing, and Denoising A Book</h2>
+<h3>Normalizing the Words in a Chapter Via Lemmatization</h3>
+<p>Words can be expressed in a variety of ways to convey meaning. For instance, ate and eaten are different tenses of the verb eat. An analysis may require these different tenses to be converted into their base, fundamental, canonical form. This process is known as normalization and is commonly achieved via stemming and/or lemmatization algorithms.</p>
+<p>In lemmatization, the algorithm normalizes a word within the context of vocabulary and through the use of morphological analysis in order to produce a lemma. A lemma in morphology is known as the canonical or dictionary form of a set of word forms. This lemmatization process allows different words to be indexed,mapped, or traced back to a single word. For instance, speak, speaks, spoke, spoken and speaking are all forms of speak (known as the lexeme).</p>
+<p>Through lemmatization, I'll be able to tag words and denote them as nouns, verbs, prepositions, and others. This can be readily done with nltk as shown below</p>
+<script src="https://gist.github.com/victormurcia/185870999701b0821e6a621c9af37ffb.js"></script>
+<p>The output of this is shown below:</p>
+<p style="text-align:center;"><img src="\img\posts\Oscar Wilde\lemmatization1.JPG" width = 800 height = 1000></p>
+<p>That worked! Every tokenized word has a tag associated with it now.  Notice how there is a comma token after 'rose'. I'll remove that and other things as part of the denoising/cleanup process.</p>
+
+<h3>Denoising a Chapter</h3>
+<p>I'm almost done preparing the chapter to carry out sentiment analysis. Before I do so however, I need to remove punctuations, stop words, and special characters that are muddying the data before continuing. This process is known as denoising.</p>
+<p>To denoise data, I'll be using regular expressions (regexs) through the function below:</p>
+<script src="https://gist.github.com/victormurcia/6bd5646c69b7c146d5a7cf5f185d5435.js"></script>
+<p>The result of running this function on the chapter is shown below:</p>
+<p style="text-align:center;"><img src="\img\posts\Oscar Wilde\denoise1.JPG" width = 800 height = 1000></p>
+<p>Lovely! Now we are ready to start doing analysis on this chapter!</p>
+
+<h3>Calculating Word Density for Chapter</h3>
+<p>Now that the chapter is tokenized, lemmatized and denoised, let me find out what are the top 20 most frequently occurring words in the chapter.</p>
+<p style="text-align:center;"><img src="\img\posts\Oscar Wilde\wf_ch1.jpg" width = 800 height = 1000></p>
+<p>Looks like the most common word in this chapter is 'say' with 29 instances, followed by the word 'one' with 27 instances. </p>
 
 <h2>The Crisis - Naive Bayes Classifier</h2>
+<p>Now let's train a model! I'll start by using a Naive Bayes Classifier based on the twitter_samples dataset and see how that works out. I've covered this in a previous post so I'll just include the results here. This will allow me to readily classify words as being associated with positive or negative  sentiments. I will later try to classify the words, sentences, chapters and entire book with more detailed emotions like joy, sadness, anger, and such.  </p>
+<p>The results of the classifier are shown below:</p>
+<p style="text-align:center;"><img src="\img\posts\Oscar Wilde\nb_class.JPG" width = 400 height = 400></p>
+<p>The classifier has a 99.2% classification accuracy. Let's run it on the model!</p>
+<p>I'll prepare the chapter to be classified via the Naive Bayes, which requires me to convert the denoised chapter into a dictionary where each word 
+    will be paired with a True/False value using the function below.</p>
+<script src="https://gist.github.com/victormurcia/ea9d81aab50ea704560b14555da4539e.js"></script>
+<p>Then, I can run the classifier on the chapter dictionary I just made and the output will be whether the chapter is considered to be 'Positive' or 'Negative'</p>
+<script src="https://gist.github.com/victormurcia/3448058da259b1c54e61812c46107ab9.js"></script>
+<p>The output of running the Naive Bayes classifier for this chapter turned out to be 'Negative'. This is a sentiment that I think I can agree with, though there 
+    is a lot more to be said about the emotions within this chapter. Regardless, now I'm ready to apply the routines developed so far to the entire book!</p>
+
+<h2>The Big Event - Tokenizing, Lemmatizing, and Denoising A Book</h2>
+<p>Now I'm ready to process the entire book and determine the dominating sentiment present in each chapter using the wrapper function below.</p>
+<script src="https://gist.github.com/victormurcia/ffc243b0c31d53b8af28b101029bda5c.js"></script>
+<p>The results of running this routine are shown below:</p>
+<p style="text-align:center;"><img src="\img\posts\Oscar Wilde\nb_results.JPG" width = 400 height = 400></p>
+<p>Yikes! The classifier determined that every chapter in the book is negative... Though I'm inclined to agree with that sentiment, it is a pretty boring result that oversimplifies the variety of nuances that make the book interesting. As such, I decided to look into the VADER and NRC lexicons to get additional color into the emotions present in the chapter.</p>
 
 <h2>The Climax - VADER and NRC Lexicon</h2>
+<p>VADER will give polarity scores. Even though the sentiment categorization is still set to a simple positive, negative, or neutral, we will get a quantifiable metric for each of those values and start getting a better idea of the sentiment composition from each chapter. I'll first modify my wrapper routine from above so that it returns the chapter contents as part of the output.</p>
+<p>Next, I'll create a pandas dataframe that will hold the contents from each chapter on each row using the code below.</p>
+<script src="https://gist.github.com/victormurcia/9665f8f55b27a9d20d514913ee5da6de.js"></script>
+<p>The resulting dataframe for the book is shown below:</p>
+<p style="text-align:center;"><img src="\img\posts\Oscar Wilde\df_book.JPG" width = 400 height = 400></p>
+<p>And now I'll run the SentimentIntensityAnalyzer with VADER and save the polarity scores for each chapter into the dataframe using the code below:</p>
+<script src="https://gist.github.com/victormurcia/240cb58522748d81741d5c9ea90f6605.js"></script>
+<p>The resulting dataframe is shown below:</p>
+<p style="text-align:center;"><img src="\img\posts\Oscar Wilde\df_vader.JPG" width = 600 height = 600></p>
+<p>Okay, now things are starting to get a bit more interesting. Each chapter has different positive, negative and neutral scores associated with them. Furthermore, the compound scores (which represent the overall sentiment with +1 being the most positive and -1 being the most negative) are also different between chapters. Let me plot them and see how it looks like!</p>
+<p style="text-align:center;"><img src="\img\posts\Oscar Wilde\vader.jpg" width = 600 height = 600></p>
+
+
+
+
 <p style="text-align:center;"><img src="\img\posts\Oscar Wilde\cmat_dg.png" width = 800 height = 1000></p>
+
+
 <h2>The Realization - Visualization of the Emotional Analysis</h2>
 <p style="text-align:center;"><img src="\img\posts\Oscar Wilde\wordcloud_dg.png" width = 800 height = 1000></p>
 
