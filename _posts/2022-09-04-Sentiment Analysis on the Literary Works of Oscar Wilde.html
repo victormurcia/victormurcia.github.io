@@ -166,14 +166,90 @@ emotions (joy, positive, anger, disgust, negative, anticipation, surprise, trust
 <p style="text-align:center;"><img src="\img\posts\Oscar Wilde\df_vader.JPG" width = 600 height = 600></p>
 <p>Okay, now things are starting to get a bit more interesting. Each chapter has different positive, negative and neutral scores associated with them. Furthermore, the compound scores (which represent the overall sentiment with +1 being the most positive and -1 being the most negative) are also different between chapters. Let me plot them and see how it looks like!</p>
 <p style="text-align:center;"><img src="\img\posts\Oscar Wilde\vader.jpg" width = 600 height = 600></p>
+<p>From these plots we can see the following:</p>
+<ul>
+    <li>Negative feelings appear to trend upwards over the course of the book and maximize in the final chapters</li>
+    <li>Positive feelings appear to trend downwards over the course of the book and reach their lowest on Chapter 13</li>
+    <li>Neutral feelings appear to trend upwards over the course of the book.</li>
+    <li>Most chapters have a compound score that is positive with a few noticeable exceptions (Chapters 13, 16, and 18)</li>
+    <li>Neutral feelings have the highest scores out of the 3 types of polarity scores</li>
+</ul>
 
+<p>Hmmm, the sentiment assesment between the Naive Bayes classifier and the VADER polarity scores are opposite to one another. Why? Also, 
+    what happened in chapters 13, 16 and 18 that caused VADER to categorize those chapters as predominantly negative?</p>
 
+<p>Chapter 13 for instance, is one of the most climatic chapters in the book. This is the chapter where Dorian Gray unveils the portrait to Basil after not having seen him for 18 years. The revelation of the shocking state of the portait confirms that all the awful rumours about Dorian Gray that Basil had heard about are indeed true. Upon realizing that Dorian is indeed a terrible person, Basil asks him in what is perhaps the one truly pure act in the book to seek forgiveness from all the bad things that he's done. Finally, the portrait pushes Dorian to murder Basil to which he responds with a chilling sense of calmness and indifference.</p>
 
+<p>Clearly, a negative sentiment is not enough to convey the full extent of negative emotions that are happening in this chapter. Sure, the chapter is negative, but it is the details that make it interesting! This is where the NRC lexicon comes into play.</p>
 
-<p style="text-align:center;"><img src="\img\posts\Oscar Wilde\cmat_dg.png" width = 800 height = 1000></p>
+<h3>NRC Lexicon for Emotion Recognition</h3>
+<p>Now let's try using the NRC lexicon which has 10 different emotions it can categorize text data into. The emotions are: joy, positive, anticipation, sadness, surprise, negative, andger, disgust, trust, and fear. The NRC lexicon is composed of over 27,000 words at the time of writing. </p>
+<p>I'll use a similar strategy to what I used for VADER polarity scores to get the scores for the various emotions for each chapter into the book dataframe. However, I'll normalize the emotion scores by the chapter word count since I noticed that that was inflating the scores.</p>
+<script src="https://gist.github.com/victormurcia/2e09b7c31d842205142480b9c0afc566.js"></script>
+<p>The pandas dataframe now looks like this:</p>
+<p style="text-align:center;"><img src="\img\posts\Oscar Wilde\nrc2.JPG" width = 1200 height = 1200></p>
+<p>Beautiful! Let's start to see how these different emotions interact with one another and progress over the course of the book!</p>
 
+<h4>Correlation Matrix for Emotions in 'The Portrait of Dorian Gray'</h4>
+<p>The correlation matrix below shows the interactions between the word count normalized emotion scores obtained from the NRC lexicon analysis. The colorscale indicates whether the emotions change positively or negatively with respect to one another. Brighter colors indicate positive trends. Darker colors indicate negative trends.</p>
+<p style="text-align:center;"><img src="\img\posts\Oscar Wilde\cmat_dg2.png" width = 800 height = 1000></p>
+<p>From this correlation matrix we can see the following:</p>
+<ul>
+    <li>Joy is mostly correlated with feelings of positive and anticipation and mostly anticorrelated with feelings of fear.</li>
+    <li>Positive is mostly correlated with feelings of joy and mostly anticorrelated with feelings of fear</li>
+    <li>Anticipation is mostly correlated with joy and mostly anticorrelated with disgust and fear</li>
+    <li>Sadness is mostly correlated with feelings of surprise and mostly anticorrelated with feelings of trust</li>
+    <li>Surprise is mostly correlated with feelings of anticipation and mostly anticorrelated with feelings of fear and disgust</li>
+    <li>Negative is mosly correlated with feelings of anger and mostly anticorrelated with feelings of trust</li>
+    <li>Anger is mostly correlated with negative feelings and mostly anticorrelated with feelings of trust</li>
+    <li>Disgust is mostly correlated with feelings of fear and mostly anticorrelated with feelings of positive</li>
+    <li>Trust is mostly correlated with feelings of positive and mostly anticorrelated with feelings of fear</li>
+    <li>Fear is mostly correlated with feelings of negative and mostly anticorrelated with feelings of positive</li>
+</ul>
+
+<p>What do we make of these correlations however? Oscar Wilde did say it best... </p>
+<p style="text-align:center;"><img src="\img\posts\Oscar Wilde\quote.png" width = 300 height = 300></p>
+<p>Here are the definitions for each emotion before continuing further:</p>
+<ul>
+    <li>Joy is defined as 'a feeling of great pleasure and happiness'.</li>
+    <li>Positive sentiments are defined as 'a good, affirmative, or constructive quality or attribute'.</li>
+    <li>Anticipation is defined as 'excitement about something that's going to happen'.</li>
+    <li>Sadness is defined as 'an emotional pain associated with, or characterized by, feelings of disadvantage, loss, despair, grief, helplessness, disappointment and sorrow'.</li>
+    <li>Surprise is defined as 'to cause to feel wonder or amazement because of being unexpected'.</li>
+    <li>Negative is defined as 'marked by absence, withholding, or removal of something positive '.</li>
+    <li>Anger is defined as 'a strong feeling of displeasure or annoyance and often of active opposition to an insult, injury, or injustice'. </li>
+    <li>Disgust is defined as 'a feeling of revulsion or strong disapproval aroused by something unpleasant or offensive'.</li>
+    <li>Trust is defined as the 'firm belief in the reliability, truth, ability, or strength of someone or something'. </li>
+    <li>Fear is defined as 'an unpleasant emotion caused by the belief that someone or something is dangerous, likely to cause pain, or a threat'.</li>
+</ul>
+
+<p>The correlations between these sentiment scores could be seen as the degree or the extent to which an author considers an emotion pair to be similar to one another. At the very least, the emotion correlations could be interpreted as the way a writer intermixes emotions in a particular piece of literatire. The next section will visualize the behavior of each emotion over the course of the book.</p>
 
 <h2>The Realization - Visualization of the Emotional Analysis</h2>
+<p>In the previous section I showed the correlation matrix between all of the emotions that we obtained from the NRC analysis. Let's start seeing how some of those correlations look like!</p>
+<h3>Joy</h3>
+<p style="text-align:center;"><img src="\img\posts\Oscar Wilde\joy.jpg" width = 800 height = 1000></p>
+
+<h3>Positive</h3>
+<p style="text-align:center;"><img src="\img\posts\Oscar Wilde\positive.jpg" width = 800 height = 1000></p>
+
+<h3>Anticipation</h3>
+
+<h3>Sadness</h3>
+
+<h3>Surprise</h3>
+
+<h3>Negative</h3>
+
+<h3>Anger</h3>
+
+<h3>Disgust</h3>
+
+<h3>Trust</h3>
+
+<h3>Fear</h3>
+
+<h3>Word Cloud</h3>
 <p style="text-align:center;"><img src="\img\posts\Oscar Wilde\wordcloud_dg.png" width = 800 height = 1000></p>
 
 <h2>Conclusion</h2>
