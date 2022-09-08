@@ -14,7 +14,7 @@ background: '/img/posts/hpbg.jpg'
 
 <p>In this project, I'll be using the spambase dataset in conjunction with machine learning techniques to develop a model that accurately classifies email as spam or not spam.</p>
 
-<p>If you'd like to see all of my work in this project you can find it in the repository found <a href = "">here</a>.</p>
+<p>If you'd like to see all of my work in this project you can find it in the repository found <a href = "https://github.com/victormurcia/Detecting-Spam-Emails">here</a>.</p>
 
 <h2>Exploratory Data Analysis</h2>
 
@@ -115,7 +115,7 @@ The spambase includes 57 features (columns) and 4601 e-mails (rows). Its feature
 <p style="text-align:center;"><img src="\img\posts\Detecting Spam Email\conf_mat_2.jpg" width = 800 height = 400></p>
 <p>From this matrix we can see the following:</p>
 <ul>
-    <li>The XGB resulted in 26 false positives and 47 false negatives. It also has 541  true positives and 307 true negatives.</li>
+    <li>The XGB resulted in 26 false positives and 47 false negatives. It also has 541 true positives and 307 true negatives.</li>
 </ul>
 
 <p>Even though the number of false positives increased slightly, the accuracy and the precision of the model are much better now.</p>
@@ -158,5 +158,28 @@ Let's see how the model decided how to make a classification for spam. The table
     <li>The proability of an email being spam is highest when the word hp has a low frequency and the frequency of the word remove is high</li>
 </ul>
 
-<p>Let me look at the SHAP values </p>
+<p>Let me look at the SHAP values. SHAP values allow us to understand the impact from each feature in our model by breaking down the predictions made by the model. </p>
 <p style="text-align:center;"><img src="\img\posts\Detecting Spam Email\shap1.jpg" width = 1000 height = 800></p>
+<p>The plot above shows the absolute SHAP value which tells us how much a single feature affected the prediction.The frequency of the word  'hp', the length of sequential capital letters and the frequency of the '!' character were the top 3 factors for this observation.</p>
+<p>From this plot, red values indicate a positive contribution (spam) while blue values indicate a negative contribution (not spam)  to the prediction. From here we can see the following: </p>
+
+<ul>
+    <li>A high positive contribution is obtained for word_freq_hp when the SHAP values are negative. </li>
+    <li>A high negative contribution is obtained for capital_run_length_longest when the SHAP values are negative</li>
+    <li>A high positive contribution is obtained for char_freq_! when the SHAP values are positive</li>
+</ul>
+
+<h2>Applying the Model to the Entire Dataset</h2>
+<p>Let's now see how the model performs over the entire dataset.</p>
+
+<p>The confusion matrix of the model applied over the entire dataset (4601 emails) is shown below. The XGB resulted in 48 false positives and 94 false negatives. It also has 2740 true positives and 1719 true negatives. This represents a 1% error in classfying a non-spam email as spam, a 2% error in classifying a spam email as non-spam, and an overall 97% classification accuracy which is pretty good!</p>
+<p style="text-align:center;"><img src="\img\posts\Detecting Spam Email\final conf mat.png" width = 600 height = 600></p>
+
+<p>The interactive visualization below shows the SHAP values for ALL the emails in the dataset which allows you too see how the model decided to classify each email as spam or not spam.</p>
+<center><iframe src="\img\posts\Detecting Spam Email\Detecting Spam.html" name="targetframe" allowTransparency="true" scrolling="yes" frameborder="0" width="75%" height="500"></iframe>
+</center>
+
+<h2>Conclusions</h2>
+<p>The spambase dataset was used to train a machine learning model capable of classifying emails as spam with 97% accuracy using the XGBoost Classifier. The model was optimized to have an AUC of 0.91, a sensitivity of 0.92, and a specificity of 0.94.</p>
+
+<p>Thanks for reading!</p>
