@@ -1,0 +1,162 @@
+---
+layout: splash
+title: "Detecting Spam with Machine Learning Classifiers"
+author: "Victor Murcia"
+subtitle: "Dealing with one of the inconveniences of the modern world"
+date: 2022-09-03 05:27:00 -0400
+tags: jupyter_notebook  machine_learning classifier data_science grid_search optimization
+background: '/img/posts/hpbg.jpg'
+---
+
+<p>Spam is annoying and over time, it also serves as incremental waste of time. Even if it only takes a few seconds to delete a spam email, if left unchecked, spam will rapidly flood your inbox which can make the time spend handling spam add up fast.</p> 
+    
+<p>In addition to the time-wasting component, spam can be dangerous since they are often embedded with fraudulent links and riddled with viruses than can do some serious damage to our computers, finances, and identity. As such, having a reliable way to deal with it is extremely important.</p>
+
+<p>In this project, I'll be using the spambase dataset in conjunction with machine learning techniques to develop a model that accurately classifies email as spam or not spam.</p>
+
+<p>If you'd like to see all of my work in this project you can find it in the repository found <a href = "">here</a>.</p>
+
+<h2>Exploratory Data Analysis</h2>
+
+The spambase includes 57 features (columns) and 4601 e-mails (rows). Its features are characterized as follows:
+<ul>
+    <li>word_freq_WORD - percentage of words in the e-mail that match WORD.</li>
+    <li>char_freq_CHAR - percentage of characters in the e-mail that match the symbol CHAR.</li>
+    <li>capital_run_length_average - average lenth of uninterrupted sequences of capital letters.</li>
+    <li>capital_run_length_longest - length of longest uninterrupted sequence of catipal letters.</li>
+    <li>capital_run_length_total - total number of capital letters in the email.</li>
+    <li>class - denotes whether the e-mail was considered spam (1) or not (0)</li>
+</ul>
+
+<p>The features are all numerical (54 are continuous real and 3 are continuous integer). The target variable is categorical and nominal. Given this, ANOVA is likely the best suited feature selection method to carry out dimensionality reduction.</p>
+
+<p>This is a binary classification problem so I want to ensure that the class distribution is evenly split before continuing in order to determine how to proceed further. The plot below shows the counts, frequency, and percent of the spam class. </p>
+<p style="text-align:center;"><img src="\img\posts\Detecting Spam Email\class dist.png" width = 600 height = 800></p>
+<p>As can be seen above, 60% of the emails in the dataset are classified as non-spam while 40% are classified as spam. This is not an extremely inbalanced dataset but it means that cross-validation will be necessary for accurate sampling.</p>
+
+<h2>Dimensionality Reduction Through ANOVA</h2>
+<p>The process of simplifying a model through dimensionality reduction can help in facilitating the explainability of the model and minimizing over-fitting. The spambase dataset contains 57 features, however, I'd like to start with a much smaller number of features and see how accurate of a model I can generate. To accomplish this initial reduction in dimensionality I will use the ANOVA test since my features are continuous numerical and my dependent variable is nominal.</p>
+<p>F-Scores are a measure of how informative a feature is for a dataset as calculated from the ANOVA test. The higher the F-Score the more informative the feature is. The results for this first ANOVA test are shown below.</p>
+<p style="text-align:center;"><img src="\img\posts\Detecting Spam Email\anova1.jpg" width = 600 height = 800></p>
+<p>As can be seen from the plots above, over 50% of the features have F-scores between 0-100 which are low. The features with the highest F-scores are located in the last 3 bins which have values ranging between 300-800. The number of features that match this criteria are 8. Therefore, I'll use those 8 features as my initial set of features for the model and see how it performs.</p>
+
+<p>Below we can see the pandas_profiling report for initial reduced dataset.</p>
+<center><iframe src="\img\posts\Detecting Spam Email\eda.html" name="targetframe" allowTransparency="true" scrolling="yes" frameborder="0" width="75%" height="500"></iframe>
+</center>
+
+<h2>Testing Different Classification Models</h2>
+<p>I'll test out 11 different classification models to see which one performs best. The data will be split using an 80/20 split and the models will be run using their default parameters to start off.</p>
+
+<p>The models I'll be testing are shown below</p>
+<ul>
+    <li>Linear Perceptron</li>
+    <li>Gaussian Naive Bayes</li>
+    <li>Random Forest</li>
+    <li>Bagging Classifier</li>
+    <li>Extreme Gradient</li>
+    <li>K-Neighbors</li>
+    <li>Decision Tree</li>
+    <li>Extreme Gradient Boosting</li>
+    <li>Gaussian Process</li>
+    <li>Support Vector</li>
+    <li>MLP</li>
+</ul>
+
+<p>The results are shown in the tables below
+
+</p>
+<p>The first table has the results from each of the models sorted in order of descending accuracy score. The Random Forest, XGBoost, and Gradient Boosting Classifiers were the top 3 performers.</p>
+<p style="text-align:center;"><img src="\img\posts\Detecting Spam Email\model_comp1a.jpg" width = 600 height = 800></p>
+
+<p>The second table has the results from each of the models sorted in order of descending sensitivity score. The Perceptron, Gaussian Naive Bayes, and SVC Classifiers were the top 3 performers.</p>
+<p style="text-align:center;"><img src="\img\posts\Detecting Spam Email\model_comp1b.jpg" width = 600 height = 800></p>
+
+<p>The third table has the results from each of the models sorted in order of descending specificity score. The Gaussian Naive Bayes, XGBoost and Gradient Boosting Classifiers were the top 3 performers.</p>
+<p style="text-align:center;"><img src="\img\posts\Detecting Spam Email\model_comp1c.jpg" width = 600 height = 800></p>
+
+<p>Which model should I choose is going to be based on whether I want to maximize sensitivity or specificity. The equations specificity and sensitivity are shown below</p>
+<p>Specificity is known as the True Negative Rate. When the value of specificity is high then the model is good at predicting true negatives.</p>
+<p style="text-align:center;"><img src="\img\posts\Detecting Spam Email\specificity.png" width = 400 height = 400></p>
+
+<p>Sensitivity is known as the True Positive Rate. When the value of sensitivity is high then the model is good at predicting true positives.</p>
+<p style="text-align:center;"><img src="\img\posts\Detecting Spam Email\sensitivity.png" width = 400 height = 400></p>
+
+<p>A false positive in this case entails a non-spam email being classified as spam.</p>
+<p>A false negative in this case entails a spam email not being classified as spam.</p>
+
+<p>From the scenarios above, it is clear that classifiying a non-spam email as spam is worse than classifying a spam email as non-spam. Therefore, I'll need to maximize specificity.</p>
+
+<p>The models with the highest specificity are the Gaussian Naive Bayes (GNB) and the XGBoost (XGB) classifiers.</p>
+
+<p>The confusion matrices for the GNB (left) and the XGB (right) classifiers are show below.</p>
+<p style="text-align:center;"><img src="\img\posts\Detecting Spam Email\conf_mat_1.jpg" width = 800 height = 400></p>
+<p>From these matrices we can see the following:</p>
+<ul>
+    <li>The GNB resulted in 23 false positives and 131 false negatives</li>
+    <li>The XGB resulted in 21 false positives and 71 false negatives</li>
+</ul>
+
+<p>Hmm, the XGB classifier has a better distribution of false positives/negatives so I'll refine it further through cross-validation and a parameter grid-search.</p>
+
+<h2>Optimizing the XGB Classifier</h2>
+<p>The performance of the XGBoost classifier is already quite good. However, it could certainly be improved through a parameter space 
+    exploration. There's quite a few parameters at our disposal to tune for XGBoost which you can find in the <a href = "https://xgboost.readthedocs.io/en/stable/parameter.html">documentation</a>.</p>
+
+<p>I decided to explore and optimize the following parameters and see if an even better performance can be achieved:</p>
+
+<ul>
+    <li>learning_rate</li>
+    <li>max_depth</li>
+    <li>n_estimators</li>
+</ul>
+
+<p>For this grid search I used a k-fold cross-validation set to k=10 and optimized via the accuracy, precision, and recall scores.</p>
+<p>The parameter space exploration improved the accuracy and specificity scores of the XGB Classifier. The accuracy score increased to 0.98 which is a marked improvement from the 0.91 score I started off with. The sensitivity remained the same (0.92) while the specificity increased to 0.92 from 0.89. The confusion matrix is shown below.</p>
+<p style="text-align:center;"><img src="\img\posts\Detecting Spam Email\conf_mat_2.jpg" width = 800 height = 400></p>
+<p>From this matrix we can see the following:</p>
+<ul>
+    <li>The XGB resulted in 26 false positives and 47 false negatives. It also has 541  true positives and 307 true negatives.</li>
+</ul>
+
+<p>Even though the number of false positives increased slightly, the accuracy and the precision of the model are much better now.</p>
+<p>Let me look at the separability of the model by checking the ROC-AUC curve as shown below.</p>
+<p style="text-align:center;"><img src="\img\posts\Detecting Spam Email\roc1.png" width = 800 height = 400></p>
+<p>Hmm, the AUC of this model is 0.89 which isn't terrible but could and should be improved. If the separability of the model is improved then, the number of false positive/negative classifications should also go down since more separability is indicative of better distinction between the target classes.</p>
+<p>I ran another grid-search where I sought to improve the AUC score and the accuracy score, but I didn't obtain the improvement I was looking for. The AUC improved to 0.91 but the accuracy dropped a bit. For this reason, I decided to increase the size of the model and see if I get better results this way.</p>
+<p>I also tried to incorporate more features into the model and carried out the same analysis as shown above but did not obtain much improvement. I'll be using the larger model for the rest of the analysis.</p>
+<center><iframe src="\img\posts\Detecting Spam Email\gridsearch1.html" name="targetframe" allowTransparency="true" scrolling="yes" frameborder="0" width="75%" height="500"></iframe>
+</center>
+
+<h2>Explaining the Model</h2>
+Let's see how the model decided how to make a classification for spam. The table below shows the weights of each feature present in the model. As can be seen, The word_freq_hp,word_freq_remove and the capital_run_length_longset were the top 3 features contributing to the final classification of spam.
+<p style="text-align:center;"><img src="\img\posts\Detecting Spam Email\eli5.PNG" width = 300 height = 300></p>
+<p>From the partial dependence plots below we can see how each of these features contributed towards assessing whether an email is spam or not.</p>
+<p style="text-align:center;"><img src="\img\posts\Detecting Spam Email\pdps.jpg" width = 800 height = 400></p>
+<p>From the PDPs we can see the following:</p>
+
+<ul>
+    <li>The probability of an email being spam decreases if the frequency of the word 'hp' in the email increases</li>
+    <li>The probability of an email being spam increases if the frequency of the word 'remove' in the email increases</li>
+    <li>The probability of an email being spam increases if the length of longest uninterrupted sequence of capital letters in the email increases</li>
+</ul>
+
+<p>The data comes from a Hewlett-Packard Technical Report. Hence, the frequent presence of 'hp' in the email could be considered a good sign that the email is not spam since it could be indicative of an internal company email. 
+    A higher frequency of the word remove leading to a more likely spam email can also make sense since a spammer/hacker could be asking the users to remove things like an antivirus or a firewall which is generally a bad idea. 
+    Lastly, having more capital letters stringed together is usually a sign of spam emails since these emails often have little to no proofreading and are riddled with all sorts of orthographic mistakes.</p>
+<p>These, decisions all make sense to me and if I were the one trying to decide whether an email is spam, those are certainly things that I would strongly consider towards classifying an email as spam.</p>
+
+<p>Let's look at the 2D PDPs to see how these features interact to produce the classification. The 2D PDP plots
+    below will show the interactions of the top 3 features in the mdoel. The color scale 
+    in the plots below represents the probability of an email being classified as spam. Blue colors mean lower probability of spam while red 
+    colors represent higher probability of spam.</p>
+
+<p style="text-align:center;"><img src="\img\posts\Detecting Spam Email\2dpdps.jpg" width = 1000 height = 800></p>
+<p>From the 2D PDP plots we can see the following:</p>
+<ul>
+    <li>The probability of an email being spam is highest when the word remove is in the email for all lengths of sequential capital letters</li>
+    <li>The proability of an email being spam is highest when the word hp has a low frequency and the lengths of sequential capital letters is long</li>
+    <li>The proability of an email being spam is highest when the word hp has a low frequency and the frequency of the word remove is high</li>
+</ul>
+
+<p>Let me look at the SHAP values </p>
+<p style="text-align:center;"><img src="\img\posts\Detecting Spam Email\shap1.jpg" width = 1000 height = 800></p>
