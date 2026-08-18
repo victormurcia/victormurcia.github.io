@@ -38,6 +38,9 @@ strong { font-weight: 600; }
 
 // Reading measure
 .measure { max-width: var(--measure); }
+// Wider measure — for prose on wide pages that would otherwise look cramped
+// beside full-width graphics; still capped so serif lines stay readable.
+.measure-wide { max-width: 92ch; }
 
 // A larger intro paragraph
 .lede {

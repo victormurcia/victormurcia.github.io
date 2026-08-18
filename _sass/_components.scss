@@ -516,3 +516,126 @@ a.eng-repo__name:hover { color: var(--accent-ink); text-decoration: underline; t
 .hero__signal { margin: clamp(1.6rem, 4vw, 2.6rem) 0 0.5rem; }   // overrides .spectrum margin for hero spacing
 .spec__bar  { fill: var(--accent); opacity: 0.16; }
 .spec__comp { fill: none; stroke: var(--accent); stroke-width: 1.2; opacity: 0.5; stroke-dasharray: 5 4; }
+
+// ---------------------------------------------------------------------------
+// Research — RSoXS signal caption, featured paper, method pipeline, themes
+// ---------------------------------------------------------------------------
+.research-signal { margin-top: clamp(1.4rem, 4vw, 2.4rem); }   // extra lead space below the page head
+.spec-cap {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin: 0.4rem 0 0;
+  text-align: right;
+}
+
+// Featured paper block
+.feat { border-top: 2px solid var(--ink); padding-top: 1.4rem; margin: 1.6rem 0 0; }
+.feat__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 0.7rem;
+}
+.feat__title {
+  font-size: clamp(1.3rem, 2.6vw, 1.7rem);
+  line-height: 1.22;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.7rem;
+  max-width: 32ch;
+}
+.feat__title a {
+  color: var(--ink);
+  text-decoration: none;
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-size: 0 2px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size 0.25s ease;
+}
+.feat__title a:hover { background-size: 100% 2px; }
+.feat__meta {
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--muted);
+  margin: 0 0 1rem;
+  line-height: 1.5;
+}
+.feat__meta a { color: var(--accent); }
+.feat__quote {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: var(--ink);
+  border-left: 2px solid var(--accent);
+  padding-left: 1rem;
+  margin: 0;
+  max-width: 60ch;
+}
+
+// Method pipeline — a genuine sequence, rendered horizontally on wide viewports
+.pipeline {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  position: relative;
+  margin: 1.8rem 0;
+}
+.pipeline::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 6px;
+  height: 1px;
+  background: var(--hairline);
+}
+.pstep { position: relative; padding-right: 0.9rem; }
+.pstep::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0;
+  width: 13px; height: 13px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 2px solid var(--accent);
+}
+.pstep--end::before { background: var(--accent); }
+.pstep__n {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: var(--faint);
+  margin: 1.5rem 0 0.3rem;
+}
+.pstep__t {
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--ink);
+}
+
+// Medical-AI themes — two-column register (mirrors .eng-areas)
+.themes { display: grid; grid-template-columns: 1fr 1fr; margin: 1.2rem 0; }
+.theme { padding: 1.1rem 1.5rem; border-top: 1px solid var(--hairline); }
+.theme:nth-child(odd)  { padding-left: 0; }
+.theme:nth-child(even) { border-left: 1px solid var(--hairline); padding-right: 0; }
+.theme h4 { margin: 0 0 0.35rem; font-size: 0.98rem; }
+.theme p {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 720px) {
+  .pipeline, .themes { grid-template-columns: 1fr; }
+  .pipeline::before { display: none; }
+  .pstep { padding: 0 0 0 1.6rem; margin-bottom: 1.1rem; }
+  .pstep::before { top: 2px; }
+  .pstep__n { margin-top: 0; }
+  .theme:nth-child(even) { border-left: 0; padding-left: 0; }
+}
