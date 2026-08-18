@@ -506,3 +506,13 @@ a.eng-repo__name:hover { color: var(--accent-ink); text-decoration: underline; t
   .eng-repo:nth-last-child(-n+2) { border-bottom: 0; }
   .eng-repo:last-child { border-bottom: 1px solid var(--hairline); }
 }
+
+// ---------------------------------------------------------------------------
+// Home — hero signal (Gaussian-mixture profile).
+// Reuses .spectrum + .spec__line (draw-in animation and reduced-motion guard
+// are inherited from the Signal & Spectrum block above). Adds two statistical
+// primitives: histogram bars and dashed mixture-component curves.
+// ---------------------------------------------------------------------------
+.hero__signal { margin: clamp(1.6rem, 4vw, 2.6rem) 0 0.5rem; }   // overrides .spectrum margin for hero spacing
+.spec__bar  { fill: var(--accent); opacity: 0.16; }
+.spec__comp { fill: none; stroke: var(--accent); stroke-width: 1.2; opacity: 0.5; stroke-dasharray: 5 4; }
