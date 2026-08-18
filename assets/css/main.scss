@@ -1,9 +1,9 @@
 ---
-# Only the main Sass file needs front matter (the dashes are enough)
-search: false
+# Front matter required so Jekyll compiles this SCSS entry point to /assets/css/main.css
 ---
-
-@charset "utf-8";
-
-@import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
-@import "minimal-mistakes"; // main partials
+@import "tokens";
+@import "base";
+@import "typography";
+@import "layout";
+@import "nav";
+@import "components";

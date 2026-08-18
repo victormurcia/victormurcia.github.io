@@ -1,0 +1,102 @@
+// ---------------------------------------------------------------------------
+// Typography
+// Sans (Plex Sans) for headings + UI. Serif (system) for long-form reading.
+// Mono (Plex Mono) for eyebrows, labels, and data.
+// ---------------------------------------------------------------------------
+
+h1, h2, h3, h4 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0 0 0.5em;
+  text-wrap: balance;
+}
+
+h1 { font-size: clamp(2.1rem, 5.2vw, 3.35rem); }
+h2 { font-size: clamp(1.5rem, 3.2vw, 2.05rem); letter-spacing: -0.015em; }
+h3 { font-size: clamp(1.15rem, 2vw, 1.3rem); letter-spacing: -0.01em; }
+h4 { font-size: 1rem; }
+
+p { margin: 0 0 1.15em; }
+p:last-child { margin-bottom: 0; }
+
+strong { font-weight: 600; }
+
+// Mono eyebrow / label — the utility voice
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+  margin: 0 0 1.1rem;
+}
+.eyebrow--accent { color: var(--accent); }
+
+// Reading measure
+.measure { max-width: var(--measure); }
+
+// A larger intro paragraph
+.lede {
+  font-family: var(--font-serif);
+  font-size: clamp(1.2rem, 2.2vw, 1.4rem);
+  line-height: 1.55;
+  color: var(--ink);
+  max-width: 60ch;
+}
+
+// Long-form reading column — serif body, sans headings retained
+.reading {
+  font-family: var(--font-serif);
+  font-size: 1.14rem;
+  line-height: 1.72;
+
+  h2 { margin-top: 2.4em; }
+  h3 { margin-top: 2em; }
+
+  p, li { font-family: var(--font-serif); }
+
+  // Prose links are underlined for clarity
+  a {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2.5px;
+    text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+  a:hover { text-decoration-color: var(--accent); }
+
+  ul, ol { padding-left: 1.3em; margin: 0 0 1.15em; }
+  li { margin-bottom: 0.5em; }
+
+  blockquote {
+    margin: 1.6em 0;
+    padding-left: 1.1em;
+    border-left: 2px solid var(--accent);
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.86em;
+    background: var(--accent-soft);
+    padding: 0.12em 0.36em;
+    border-radius: 3px;
+  }
+  pre {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    line-height: 1.55;
+    background: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: 6px;
+    padding: 1rem 1.1rem;
+    overflow-x: auto;
+  }
+  pre code { background: none; padding: 0; }
+
+  img { border-radius: 4px; }
+}

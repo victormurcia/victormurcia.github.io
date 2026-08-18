@@ -1,0 +1,57 @@
+// ---------------------------------------------------------------------------
+// Design tokens
+// Light "paper" is the default. Dark mode applies via prefers-color-scheme
+// (unless the reader forced light) and via an explicit [data-theme] toggle.
+// Every color is defined on bare :root first so nothing depends on a media
+// block for its only definition.
+// ---------------------------------------------------------------------------
+
+:root {
+  // Surfaces & ink
+  --paper:      #fbfbfa;
+  --surface:    #ffffff;
+  --ink:        #16161a;
+  --muted:      #5c5c66;
+  --faint:      #8a8a94;
+  --hairline:   #e7e6e1;
+
+  // Accent — a restrained deep indigo, nodding to the high-energy /
+  // short-wavelength end of the spectrum (soft-X-ray / synchrotron work).
+  --accent:     #2f37be;
+  --accent-ink: #242aa0;   // hover / pressed
+  --accent-soft:#ececf7;   // faint accent wash
+
+  // Type roles: two web fonts (Plex Sans + Plex Mono) + a system serif
+  --font-sans:  "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono:  "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  --font-serif: "Iowan Old Style", "Palatino Linotype", "Charter", Georgia, "Times New Roman", serif;
+
+  // Measure & rhythm
+  --measure:    66ch;
+  --container:  min(92vw, 1080px);
+
+  color-scheme: light;
+}
+
+// Dark palette — shared by auto (system) and explicit toggle.
+@mixin dark-tokens {
+  --paper:      #0f0f12;
+  --surface:    #16161a;
+  --ink:        #ececef;
+  --muted:      #9a9aa4;
+  --faint:      #6f6f79;
+  --hairline:   #28282f;
+  --accent:     #8f9bff;
+  --accent-ink: #aab4ff;
+  --accent-soft:#1b1b2e;
+  color-scheme: dark;
+}
+
+// Auto: honor system dark, but only when the reader hasn't forced light.
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { @include dark-tokens; }
+}
+
+// Explicit toggle wins in both directions.
+:root[data-theme="dark"]  { @include dark-tokens; }
+:root[data-theme="light"] { color-scheme: light; }
