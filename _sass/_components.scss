@@ -639,3 +639,98 @@ a.eng-repo__name:hover { color: var(--accent-ink); text-decoration: underline; t
   .pstep__n { margin-top: 0; }
   .theme:nth-child(even) { border-left: 0; padding-left: 0; }
 }
+
+// ---------------------------------------------------------------------------
+// About — career arc, era tags, education/recognition register
+// ---------------------------------------------------------------------------
+.arc-cap {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 1.8rem 0 1.3rem;
+}
+.arc {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  position: relative;
+  margin: 0 0 1.8rem;
+}
+.arc::before {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 6px;
+  height: 1px;
+  background: var(--hairline);
+}
+.astep { position: relative; padding-right: 1rem; }
+.astep::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0;
+  width: 13px; height: 13px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 2px solid var(--accent);
+}
+.astep--now::before { background: var(--accent); }
+.astep__era {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  color: var(--faint);
+  margin: 1.5rem 0 0.3rem;
+}
+.astep__name {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--ink);
+  margin: 0;
+}
+.astep__where {
+  font-family: var(--font-sans);
+  color: var(--muted);
+  font-size: 0.8rem;
+  margin: 0.2rem 0 0;
+}
+
+// Era tag on section headings
+.yr {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-left: 0.7rem;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+// Education / recognition register
+.cv { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin: 1.2rem 0; }
+.cv__col + .cv__col { border-left: 1px solid var(--hairline); padding-left: 2rem; }
+.cv h4 {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 0.9rem;
+}
+.cv-item { padding: 0.6rem 0; border-top: 1px solid var(--hairline); }
+.cv-item:first-of-type { border-top: 0; }
+.cv-item b { display: block; font-family: var(--font-sans); font-size: 0.96rem; color: var(--ink); }
+.cv-item span { font-family: var(--font-mono); color: var(--muted); font-size: 0.82rem; }
+
+@media (max-width: 720px) {
+  .arc, .cv { grid-template-columns: 1fr; }
+  .arc::before { display: none; }
+  .astep { padding: 0 0 0 1.6rem; margin-bottom: 1.1rem; }
+  .astep::before { top: 2px; }
+  .astep__era { margin-top: 0; }
+  .cv__col + .cv__col { border-left: 0; padding-left: 0; margin-top: 1.5rem; }
+}
