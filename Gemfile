@@ -2,6 +2,11 @@ source "https://rubygems.org"
 
 gem "jekyll", "~> 4.3"
 
+# Use sassc / libsass (2.x) rather than the Dart-Sass-based 3.x converter.
+# libsass matches GitHub Pages' (non-Dart) Sass behavior and avoids the
+# sass-embedded "broken pipe" crash on musl/Alpine containers.
+gem "jekyll-sass-converter", "~> 2.0"
+
 group :jekyll_plugins do
   gem "jekyll-sitemap"
   gem "jekyll-feed"

@@ -18,9 +18,10 @@ minimal_mistakes_skin    : "dark" # "air", "aqua", "contrast", "dark", "dirt", "
 locale                   : "en-US"
 title                    : "Victor Murcia"
 title_separator          : "-"
-subtitle                 : "Data Scientist • Algorithm Developer • Computational Chemist/Physicist •  Materials Scientist and Engineer" # site tagline that appears below site title in masthead
+tagline                  : "AI Engineering, Scientific Computing & Technical Leadership"
+subtitle                 : "AI Engineering · Scientific Computing · Technical Leadership"
 name                     : "Victor Murcia"
-description              : "Data Scientist • Algorithm Developer • Computational Chemist/Physicist • Materials Scientist and Engineer"
+description              : "Victor Murcia, PhD — AI engineering leader and computational scientist. I build and lead production AI systems for complex scientific and enterprise problems, spanning LLM systems, scientific computing, computational physics, and machine-learning research."
 url                      : "https://victormurcia.github.io" # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "victormurcia/victormurcia.github.io" # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
@@ -163,6 +164,7 @@ include:
   - .htaccess
   - _pages
 exclude:
+  - KICKOFF_PROMPT.md
   - "*.sublime-project"
   - "*.sublime-workspace"
   - vendor
@@ -279,14 +281,9 @@ compress_html:
 
 # Defaults
 defaults:
-  # _posts
+  # _posts — archived earlier-work articles
   - scope:
       path: ""
       type: posts
-      values:
-      layout: single
-      author_profile: true
-      read_time: true
-      comments: # true
-      share: true
-      related: true
+    values:
+      layout: post

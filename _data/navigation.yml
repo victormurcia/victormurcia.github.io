@@ -1,16 +1,14 @@
-# main links
+# Primary navigation
 main:
-  #- title: "Quick-Start Guide"
-  #  url: https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/
-   - title: "About"
-     url: /about/
-   - title: "Posts"
-     url: /posts/
-   - title: "Topics"
-     url: /topics/
-   - title: "Publications"
-     url: /publications/
-   - title: "Contact"
-     url: /contact/
-   - title: "Certifications"
-     url: /certifications/
+  - title: "About"
+    url: /about/
+  - title: "Engineering"
+    url: /engineering/
+  - title: "Research"
+    url: /research/
+  - title: "Publications"
+    url: /publications/
+  - title: "Writing"
+    url: /writing/
+  - title: "Archive"
+    url: /archive/

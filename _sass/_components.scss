@@ -1,1 +1,156 @@
-// Hero, axis divider, pillars, links, publication + archive lists — filled in Task 5+.
+// ---------------------------------------------------------------------------
+// Components: hero, axis signature, pillars, arrow links, highlight, page bodies
+// ---------------------------------------------------------------------------
+
+// ---- Hero ----
+.hero {
+  padding-top: clamp(3rem, 8vw, 6rem);
+  padding-bottom: clamp(1.5rem, 4vw, 2.5rem);
+}
+.hero__name {
+  font-size: clamp(2.6rem, 8vw, 4.75rem);
+  margin: 0 0 0.35rem;
+  letter-spacing: -0.03em;
+}
+.hero__deg {
+  color: var(--muted);
+  font-weight: 400;
+}
+.hero__role {
+  font-family: var(--font-mono);
+  font-size: clamp(0.8rem, 1.6vw, 0.95rem);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  margin: 0 0 1.8rem;
+}
+.hero__statement {
+  margin-bottom: 1.9rem;
+}
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin: 0;
+}
+
+// ---- Arrow link ----
+.arrow-link {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  display: inline-flex;
+  align-items: baseline;
+}
+.arrow-link span { transition: transform 0.18s ease; display: inline-block; }
+.arrow-link:hover { color: var(--accent-ink); }
+.arrow-link:hover span { transform: translateX(3px); }
+
+// ---- Axis signature ----
+// A scientific plot axis used as a scene break — hairline baseline + evenly
+// spaced ticks + a mono label. Encodes the "measurement / quantification"
+// theme that runs through the research.
+.axis {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-block: clamp(1.25rem, 3vw, 2rem);
+}
+.axis__label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--muted);
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+.axis__line {
+  position: relative;
+  flex: 1 1 auto;
+  height: 9px;
+}
+.axis__line::before {          // baseline
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: 100%;
+  height: 1px;
+  background: var(--hairline);
+}
+.axis__line::after {           // ticks hanging above the baseline
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 9px;
+  background-image: repeating-linear-gradient(90deg, var(--hairline) 0 1px, transparent 1px 42px);
+}
+
+// ---- Pillars (grid comes from _layout.scss) ----
+.pillar__label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  margin: 0 0 0.9rem;
+}
+.pillar__title {
+  font-size: 1.2rem;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.7rem;
+}
+.pillar__desc {
+  color: var(--muted);
+  font-size: 0.96rem;
+  margin: 0 0 1.2rem;
+}
+
+// ---- Featured highlight ----
+.highlight {
+  border-top: 2px solid var(--ink);
+  padding-top: 1.6rem;
+  max-width: 52ch;
+}
+.highlight__title {
+  font-size: clamp(1.3rem, 2.6vw, 1.7rem);
+  line-height: 1.2;
+  margin: 0 0 0.9rem;
+}
+.highlight__title a {
+  color: var(--ink);
+  text-decoration: none;
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-size: 0% 2px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size 0.25s ease;
+}
+.highlight__title a:hover { background-size: 100% 2px; }
+.highlight__meta {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin: 0 0 0.9rem;
+}
+.highlight__meta a { color: var(--accent); }
+.highlight__desc {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  color: var(--ink);
+  margin: 0;
+}
+
+// ---- Content page bodies ----
+.page-body { max-width: 74ch; }
+.page-body.reading { max-width: var(--measure); }
+
+// Post framing
+.post__note {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-top: 0.4rem;
+}
+.post__back { font-family: var(--font-mono); font-size: 0.85rem; }

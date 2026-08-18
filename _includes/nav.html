@@ -1,0 +1,30 @@
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="wordmark" href="{{ '/' | relative_url }}">
+      <span class="wordmark__name">Victor&nbsp;Murcia</span>
+    </a>
+
+    <nav class="site-nav" aria-label="Primary">
+      <ul class="site-nav__list">
+        {%- for item in site.data.navigation.main -%}
+        <li>
+          <a href="{{ item.url | relative_url }}"{% if page.url == item.url %} aria-current="page"{% endif %}>{{ item.title }}</a>
+        </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+
+    <div class="site-header__meta">
+      <a class="icon-link" href="https://github.com/victormurcia" aria-label="GitHub" rel="me noopener" target="_blank">
+        <svg viewBox="0 0 16 16" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+      </a>
+      <a class="icon-link" href="https://www.linkedin.com/in/vmmr5596/" aria-label="LinkedIn" rel="me noopener" target="_blank">
+        <svg viewBox="0 0 16 16" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M13.63 0H2.37A2.35 2.35 0 0 0 0 2.32v11.36A2.35 2.35 0 0 0 2.37 16h11.26A2.35 2.35 0 0 0 16 13.68V2.32A2.35 2.35 0 0 0 13.63 0ZM4.9 13.5H2.5V6h2.4v7.5ZM3.7 4.9a1.4 1.4 0 1 1 0-2.8 1.4 1.4 0 0 1 0 2.8Zm9.8 8.6h-2.4V9.6c0-.9-.02-2-1.23-2-1.23 0-1.42.96-1.42 1.94v3.96H6.05V6h2.3v1.02h.03c.32-.6 1.1-1.24 2.27-1.24 2.43 0 2.88 1.6 2.88 3.68v4.04Z"/></svg>
+      </a>
+      <button class="theme-toggle icon-link" type="button" data-theme-toggle aria-label="Toggle dark mode" title="Toggle dark mode">
+        <svg class="theme-toggle__sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></g></svg>
+        <svg class="theme-toggle__moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false"><path fill="currentColor" d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+      </button>
+    </div>
+  </div>
+</header>

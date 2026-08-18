@@ -124,20 +124,20 @@ git commit -m "chore: plain Jekyll Gemfile + ignore build artifacts"
 - [ ] **Step 2: Create `_sass/_tokens.scss`** with light defaults on `:root`, dark under `@media (prefers-color-scheme: dark)` guarded by `:root:not([data-theme="light"])`, and an explicit `:root[data-theme="dark"]` block so the manual toggle wins both ways. Use the spec §6 palette:
 ```scss
 :root {
-  --paper:#fbfbf9; --surface:#ffffff; --ink:#17171a; --muted:#5b5b63;
-  --hairline:#e6e5e0; --accent:#1f4fb0; --accent-ink:#173a80;
-  --font-sans:"Space Grotesk", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  --paper:#fbfbfa; --surface:#ffffff; --ink:#16161a; --muted:#5c5c66;
+  --hairline:#e7e6e1; --accent:#2f37be; --accent-ink:#242aa0;
+  --font-sans:"IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --font-mono:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --font-serif:"Iowan Old Style", "Charter", Georgia, "Times New Roman", serif;
   --measure:66ch; --container:min(92vw, 1080px);
 }
 :root:not([data-theme="light"]) { @media (prefers-color-scheme: dark) {
-  --paper:#101013; --surface:#17171b; --ink:#ececef; --muted:#a1a1ab;
-  --hairline:#2a2a30; --accent:#7aa2ff; --accent-ink:#9db9ff; }
+  --paper:#0f0f12; --surface:#16161a; --ink:#ececef; --muted:#9a9aa4;
+  --hairline:#28282f; --accent:#8f9bff; --accent-ink:#aab4ff; }
 }
 :root[data-theme="dark"] {
-  --paper:#101013; --surface:#17171b; --ink:#ececef; --muted:#a1a1ab;
-  --hairline:#2a2a30; --accent:#7aa2ff; --accent-ink:#9db9ff;
+  --paper:#0f0f12; --surface:#16161a; --ink:#ececef; --muted:#9a9aa4;
+  --hairline:#28282f; --accent:#8f9bff; --accent-ink:#aab4ff;
 }
 ```
 - [ ] **Step 3: Create `_sass/_base.scss`** — modern reset (`box-sizing:border-box`, `margin:0`), `html{color-scheme:light dark}`, `body{background:var(--paper);color:var(--ink);font-family:var(--font-sans);line-height:1.6;-webkit-font-smoothing:antialiased}`, `img{max-width:100%;height:auto}`, links use `--accent`, visible `:focus-visible` outline (2px `--accent`), `@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}`, skip-link styles.
@@ -175,7 +175,7 @@ git commit -m "chore: plain Jekyll Gemfile + ignore build artifacts"
   - Twitter: `summary_large_image`, title/description/image.
   - JSON-LD `Person`: name, url (`site.url`), jobTitle "AI Engineering Leader" [refine], worksFor Datacor, alumniOf (WSU, RIT), `sameAs` = `site.social.links`.
   - Verification: `{% if site.google_site_verification %}<meta name="google-site-verification" content="{{ site.google_site_verification }}">{% endif %}`.
-- [ ] **Step 3: Create `_includes/head.html`** — `<meta charset>`, viewport, `{% include seo.html %}`, favicon link, Google Fonts `preconnect` + one stylesheet link for Space Grotesk + IBM Plex Mono (`display=swap`), `<link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">`, atom feed link, then the **no-flash theme init** inline script:
+- [ ] **Step 3: Create `_includes/head.html`** — `<meta charset>`, viewport, `{% include seo.html %}`, favicon link, Google Fonts `preconnect` + one stylesheet link for IBM Plex Sans + IBM Plex Mono (`display=swap`), `<link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">`, atom feed link, then the **no-flash theme init** inline script:
 ```html
 <script>(function(){try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 ```
@@ -250,11 +250,11 @@ if (btn) btn.addEventListener('click', () => {
 
 - [ ] **Step 1: `_layouts/home.html`** extends default via `layout: default` front matter; structure: `<section class="hero">` (eyebrow "Victor Murcia, PhD", `<h1>` positioning name, role line `AI Engineering · Scientific Computing · Technical Leadership`, 2–3 sentence statement, primary links GitHub/LinkedIn/Research), then `{{ content }}` for pillars, then a compact research/work highlight block.
 - [ ] **Step 2: `index.html`** — front matter `layout: home`, `title: Victor Murcia`, description (identity keywords, natural). Body = three pillars markup:
-  1. **AI Systems & Engineering** → `/engineering/`
-  2. **Scientific Research** → `/research/`
-  3. **Technical Leadership** → `/about/`
-  Each: mono eyebrow number (`01`), heading, 1–2 sentence description, arrow link. Plus a one-line research highlight linking the PRL work.
-- [ ] **Step 3: `_sass/_components.scss`** — `.hero` spacing, `.pillars` grid (uses layout grid), `.pillar` with hairline top rule + eyebrow number, `.cta`/`.arrow-link` styles, `.highlight` block.
+  - **AI Systems & Engineering** → `/engineering/`
+  - **Scientific Research** → `/research/`
+  - **Technical Leadership** → `/about/`
+  Each: mono **category label** (`SYSTEMS` / `RESEARCH` / `LEADERSHIP` — categorical, NOT `01/02/03` sequence numbers), heading, 1–2 sentence description, arrow link. Plus a one-line research highlight linking the PRL work.
+- [ ] **Step 3: `_sass/_components.scss`** — `.hero` spacing, the axis/tick divider (`.axis` with mono micro-label), `.pillars` grid (uses layout grid), `.pillar` separated by hairline rules + mono category label, `.cta`/`.arrow-link` styles, `.highlight` block.
 - [ ] **Step 4: Build + browser QA.** Home renders; check mobile (pillars stack) + desktop, light + dark. Screenshot both.
 - [ ] **Step 5: Commit.** `git add _layouts/home.html index.html _sass/_components.scss && git commit -m "feat: bespoke homepage (hero + pillars + highlight)"`
 

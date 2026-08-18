@@ -64,9 +64,9 @@ strong { font-weight: 600; }
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 2.5px;
-    text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent);
+    text-decoration-color: var(--accent);
   }
-  a:hover { text-decoration-color: var(--accent); }
+  a:hover { color: var(--accent-ink); }
 
   ul, ol { padding-left: 1.3em; margin: 0 0 1.15em; }
   li { margin-bottom: 0.5em; }

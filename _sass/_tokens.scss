@@ -9,6 +9,7 @@
 :root {
   // Surfaces & ink
   --paper:      #fbfbfa;
+  --paper-80:   rgba(251, 251, 250, 0.85);   // translucent header
   --surface:    #ffffff;
   --ink:        #16161a;
   --muted:      #5c5c66;
@@ -28,7 +29,7 @@
 
   // Measure & rhythm
   --measure:    66ch;
-  --container:  min(92vw, 1080px);
+  --container:  #{"min(92vw, 1080px)"};   // interpolated so Sass emits CSS min() verbatim
 
   color-scheme: light;
 }
@@ -36,6 +37,7 @@
 // Dark palette — shared by auto (system) and explicit toggle.
 @mixin dark-tokens {
   --paper:      #0f0f12;
+  --paper-80:   rgba(15, 15, 18, 0.85);
   --surface:    #16161a;
   --ink:        #ececef;
   --muted:      #9a9aa4;

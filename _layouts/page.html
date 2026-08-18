@@ -1,0 +1,13 @@
+---
+layout: default
+---
+<article class="container page">
+  <header class="page-head">
+    {% if page.eyebrow %}<p class="eyebrow eyebrow--accent">{{ page.eyebrow }}</p>{% endif %}
+    <h1>{{ page.title }}</h1>
+    {% if page.lede %}<p class="lede">{{ page.lede }}</p>{% endif %}
+  </header>
+  <div class="page-body{% if page.reading %} reading measure{% endif %}">
+    {{ content }}
+  </div>
+</article>

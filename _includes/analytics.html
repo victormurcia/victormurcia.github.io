@@ -1,14 +1,10 @@
 {% if jekyll.environment == 'production' and site.analytics.provider and page.analytics != false %}
-
-{% case site.analytics.provider %}
-{% when "google" %}
-  {% include /analytics-providers/google.html %}
-{% when "google-universal" %}
-  {% include /analytics-providers/google-universal.html %}
-{% when "google-gtag" %}
-  {% include /analytics-providers/google-gtag.html %}
-{% when "custom" %}
-  {% include /analytics-providers/custom.html %}
-{% endcase %}
-
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ site.analytics.google.tracking_id }}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '{{ site.analytics.google.tracking_id }}', { 'anonymize_ip': {{ site.analytics.google.anonymize_ip | default: false }}});
+</script>
 {% endif %}
