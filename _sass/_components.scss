@@ -142,6 +142,183 @@
   margin: 0;
 }
 
+// ---- Figures ----
+.figure { margin: 2.2rem 0; }
+.figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--hairline);
+  border-radius: 4px;
+}
+figcaption {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  color: var(--muted);
+  margin-top: 0.65rem;
+}
+
+// ---- Definition list (areas of work) ----
+.deflist { margin: 1.6rem 0; }
+.deflist dt {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--ink);
+  margin-top: 1.5rem;
+}
+.deflist dt:first-of-type { margin-top: 0; }
+.deflist dd {
+  margin: 0.3rem 0 0;
+  color: var(--muted);
+  font-size: 1.02rem;
+}
+
+// ---- Repo list (selected work) ----
+.repolist { list-style: none; padding: 0; margin: 1.6rem 0; }
+.repolist li {
+  padding: 1rem 0;
+  border-top: 1px solid var(--hairline);
+}
+.repolist li:last-child { border-bottom: 1px solid var(--hairline); }
+.repolist a {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--accent);
+  text-decoration: none;
+}
+.repolist a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.repolist__lang {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--faint);
+  margin-left: 0.6rem;
+}
+.repolist__desc {
+  display: block;
+  color: var(--muted);
+  font-size: 1rem;
+  margin-top: 0.35rem;
+}
+
+.note {
+  font-size: 0.9rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+// ---- Paper meta line ----
+.paper-meta {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--muted);
+  margin: 0 0 1.2rem;
+}
+.paper-meta a { color: var(--accent); }
+
+// ---- Flow (a genuine sequence: DFT -> ... -> quantitative tensors) ----
+.flow {
+  list-style: none;
+  counter-reset: step;
+  padding: 0;
+  margin: 1.6rem 0;
+}
+.flow li {
+  counter-increment: step;
+  display: flex;
+  gap: 0.9rem;
+  align-items: baseline;
+  font-family: var(--font-sans);
+  font-size: 0.98rem;
+  color: var(--ink);
+  padding: 0.6rem 0;
+  border-bottom: 1px dashed var(--hairline);
+}
+.flow li:last-child { border-bottom: 0; }
+.flow li::before {
+  content: counter(step, decimal-leading-zero);
+  flex: 0 0 auto;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+}
+
+// ---- Publications list ----
+.pubs { list-style: none; padding: 0; margin: 1.3rem 0 2.6rem; }
+.pubs li {
+  padding: 1.1rem 0;
+  border-top: 1px solid var(--hairline);
+}
+.pubs li:last-child { border-bottom: 1px solid var(--hairline); }
+.pubs__title {
+  display: block;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 1.05rem;
+  line-height: 1.32;
+  color: var(--ink);
+  text-decoration: none;
+}
+.pubs__title:hover { color: var(--accent); }
+.pubs__meta {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.73rem;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  margin-top: 0.5rem;
+}
+
+// ---- Archive ----
+.archive-intro { max-width: 66ch; color: var(--muted); }
+.archive-list { list-style: none; padding: 0; margin: 1.2rem 0 2.6rem; }
+.archive-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: baseline;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--hairline);
+}
+.archive-list a { font-family: var(--font-sans); font-weight: 500; color: var(--ink); text-decoration: none; }
+.archive-list a:hover { color: var(--accent); }
+.archive-list__date {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--faint);
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+.topic-cloud { display: flex; flex-wrap: wrap; gap: 0.5rem 0.6rem; max-width: 66ch; margin: 1rem 0 2.4rem; }
+.topic {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--muted);
+  border: 1px solid var(--hairline);
+  padding: 0.2rem 0.55rem;
+  border-radius: 3px;
+}
+.topic__count { color: var(--faint); }
+.cert-list { list-style: none; padding: 0; margin: 1.1rem 0; max-width: 66ch; }
+.cert-list li {
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--hairline);
+  font-size: 0.92rem;
+  color: var(--muted);
+}
+.cert-list a { color: var(--accent); }
+
+// ---- 404 ----
+.error-page { padding-block: clamp(4rem, 12vw, 8rem); }
+.error-page .lede { margin-top: 1rem; }
+
 // ---- Content page bodies ----
 .page-body { max-width: 74ch; }
 .page-body.reading { max-width: var(--measure); }

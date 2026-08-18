@@ -1,0 +1,38 @@
+---
+layout: page
+title: Archive
+permalink: /archive/
+eyebrow: Archive
+lede: "Earlier work — foundational machine-learning and data-science projects, and coursework. Kept for the record."
+description: "Archive of Victor Murcia's earlier machine-learning and data-science projects, blog posts, and coursework (2019–2022)."
+---
+
+<p class="archive-intro">These are hands-on projects from an earlier phase — learning the craft of machine learning and data science in the open. They don't represent my current work (see <a href="{{ '/engineering/' | relative_url }}">AI&nbsp;&amp;&nbsp;Engineering</a> and <a href="{{ '/research/' | relative_url }}">Research</a>), but they're part of how I got here.</p>
+
+<h2>Projects &amp; posts</h2>
+<ol class="archive-list">
+  {% for post in site.posts %}
+  <li>
+    <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+    <span class="archive-list__date">{{ post.date | date: "%b&nbsp;%Y" }}</span>
+  </li>
+  {% endfor %}
+</ol>
+
+<h2>Earlier training</h2>
+<p>Introductory data-science and programming coursework, plus a deep-learning specialization. Listed for completeness.</p>
+<ul class="cert-list">
+  <li>Deep Learning Specialization · Coursera · 2023<!-- VERIFY: add the public certificate URL if you'd like it linked --></li>
+  <li>Data Manipulation with pandas · DataCamp · 2022</li>
+  <li>Introduction to Data Visualization with Seaborn · DataCamp · 2022</li>
+  <li>Intermediate Data Visualization with Seaborn · DataCamp · 2022</li>
+  <li>Introduction to NumPy · DataCamp · 2022</li>
+  <li>Joining Data with pandas · DataCamp · 2022</li>
+  <li>Introduction to Importing Data in Python · DataCamp · 2019</li>
+  <li>Intermediate Importing Data in Python · DataCamp · 2019</li>
+  <li>Introduction to SQL · DataCamp · 2019</li>
+  <li>Introduction to TensorFlow in Python · DataCamp · 2019</li>
+  <li>Python Fundamentals Track · DataCamp · 2019</li>
+  <li>Statistical Thinking in Python (Part 1) · DataCamp · 2019</li>
+  <li>Intermediate Python · DataCamp · 2019</li>
+</ul>

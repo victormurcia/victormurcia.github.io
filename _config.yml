@@ -88,13 +88,16 @@ facebook:
   username               :
   app_id                 :
   publisher              :
-og_image                 : # Open Graph/Twitter default site image
+og_image                 : "/img/og-card.jpg" # Open Graph/Twitter default site image
 # For specifying social profiles
 # - https://developers.google.com/structured-data/customize/social-profiles
 social:
-  type                   : # Person or Organization (defaults to Person)
-  name                   : # If the user or organization name differs from the site's name
-  links: # An array of links to social media profiles
+  type                   : Person
+  name                   : Victor Murcia
+  links: # feeds JSON-LD sameAs
+    - "https://github.com/victormurcia"
+    - "https://www.linkedin.com/in/vmmr5596/"
+    - "https://arxiv.org/abs/2509.01734"
 
 # Analytics
 analytics:
@@ -107,10 +110,12 @@ analytics:
 # Site Author
 author:
   name             : "Victor Murcia"
-  avatar           : "/img/me.PNG" # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "Boundlessly curious"
+  job_title        : "Lead AI Engineer" # VERIFY: exact current title
+  employer         : "Datacor"
+  avatar           : "/img/victor-portrait.jpg"
+  bio              : "AI engineering leader and computational scientist."
   location         : "Jersey City, NJ"
-  email            : "victor.murcia@wsu.edu"
+  email            :  # pending — old @wsu.edu removed; add a public contact address if desired
   links:
     - label: "Email"
       icon:  "fas fa-fw fa-envelope-square"
@@ -226,8 +231,6 @@ sass:
 
 # Outputting
 permalink: /:categories/:title/
-paginate: 5 # amount of posts to show
-paginate_path: /page:num/
 timezone: # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 
