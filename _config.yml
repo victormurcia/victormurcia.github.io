@@ -170,6 +170,8 @@ include:
   - _pages
 exclude:
   - KICKOFF_PROMPT.md
+  - Victor_Murcia_CV-8.pdf
+  - "*.pdf"
   - "*.sublime-project"
   - "*.sublime-workspace"
   - vendor
