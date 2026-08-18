@@ -19,7 +19,7 @@ description: "Production AI engineering by Victor Murcia — LLM systems, docume
   </svg>
 </div>
 
-<p class="measure">My work sits where modern AI meets real technical and scientific software — where "it runs in a notebook" is the start of the problem, not the end of it. The interesting part is everything after: reliability, evaluation, architecture, and the judgment to know when a system is actually good enough to put in front of people.</p>
+<p class="measure-wide">My work sits where modern AI meets real technical and scientific software — where "it runs in a notebook" is the start of the problem, not the end of it. The interesting part is everything after: reliability, evaluation, architecture, and the judgment to know when a system is actually good enough to put in front of people.</p>
 
 <h2>Areas of work</h2>
 
@@ -38,7 +38,7 @@ description: "Production AI engineering by Victor Murcia — LLM systems, docume
 
 <h2>Selected production work</h2>
 
-<p class="measure">A sample of production AI I've led at Datacor. The metrics are from real deployments.</p>
+<p class="measure-wide">A sample of production AI I've led at Datacor. The metrics are from real deployments.</p>
 
 <div class="prodwork">
   <div class="prod">
@@ -69,7 +69,7 @@ description: "Production AI engineering by Victor Murcia — LLM systems, docume
 
 <h2>Selected public work</h2>
 
-<p class="measure">A few open repositories that reflect the technical range — scientific computing, clinical NLP, and document intelligence.</p>
+<p class="measure-wide">A few open repositories that reflect the technical range — scientific computing, clinical NLP, and document intelligence.</p>
 
 <ul class="eng-repos">
   <li class="eng-repo">
