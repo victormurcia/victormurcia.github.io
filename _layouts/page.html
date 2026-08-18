@@ -7,7 +7,7 @@ layout: default
     <h1>{{ page.title }}</h1>
     {% if page.lede %}<p class="lede">{{ page.lede }}</p>{% endif %}
   </header>
-  <div class="page-body{% if page.reading %} reading measure{% endif %}">
+  <div class="page-body{% if page.reading %} reading{% endif %}{% if page.wide %} page-body--wide{% elsif page.reading %} measure{% endif %}">
     {{ content }}
   </div>
 </article>
