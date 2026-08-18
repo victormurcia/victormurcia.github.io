@@ -60,7 +60,9 @@ strong { font-weight: 600; }
   h2 { margin-top: 2.4em; }
   h3 { margin-top: 2em; }
 
-  p, li { font-family: var(--font-serif); }
+  // :where() keeps this at (0,1,0) so component classes (.prod__fig, .pstep__n,
+  // .astep__era, …) win the font-family cascade; plain prose still gets serif.
+  :where(p, li) { font-family: var(--font-serif); }
 
   // Prose links are underlined for clarity
   a {
