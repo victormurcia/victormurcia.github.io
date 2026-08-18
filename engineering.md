@@ -38,7 +38,25 @@ My work sits where modern AI meets real technical and scientific software — wh
   <dd>Working directly with the people who use these systems, and shipping against their real problems rather than a proxy for them.</dd>
 </dl>
 
-<p class="note">I don't publish confidential Datacor or customer details here. This describes capabilities and the kinds of problems I work on.</p>
+<p class="note">I keep confidential Datacor and customer details out of public writing. The below describes capabilities and impact, not customer data.</p>
+
+## Selected production work
+
+A sample of production AI I've led at Datacor. The metrics are from real deployments.
+
+<dl class="deflist">
+  <dt>AI cash-application platform</dt>
+  <dd>A multimodal document-intelligence system — OCR, layout-aware parsing, and LLM ensembles with judge-model validation — reaching 92%+ schema-level accuracy on complex financial documents, cutting manual review by ~70% and raising end-to-end throughput 8–12×.</dd>
+
+  <dt>AI knowledge copilot</dt>
+  <dd>A hybrid RAG + knowledge-graph platform over engineering software and technical documentation, improving retrieval relevance 30–50% and reducing support burden ~40%.</dd>
+
+  <dt>Enterprise AI architecture</dt>
+  <dd>A unified data model plus reusable RAG, agent, evaluation, and governance components that let AI features share infrastructure across business units — with organizational standards for LLM evaluation, observability, and human-in-the-loop validation.</dd>
+
+  <dt>Agentic code modernization</dt>
+  <dd>AI-assisted refactoring of multi-million-line legacy C++/C# engineering codebases, using a strangler-fig strategy, static-analysis mapping, and CI/CD parity gates to preserve behavior.</dd>
+</dl>
 
 ## Selected public work
 

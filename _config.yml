@@ -110,12 +110,12 @@ analytics:
 # Site Author
 author:
   name             : "Victor Murcia"
-  job_title        : "Lead AI Engineer" # VERIFY: exact current title
+  job_title        : "Lead Forward Deployed AI Engineer"
   employer         : "Datacor"
   avatar           : "/img/victor-portrait.jpg"
   bio              : "AI engineering leader and computational scientist."
   location         : "Jersey City, NJ"
-  email            :  # pending — old @wsu.edu removed; add a public contact address if desired
+  email            : "victor.murcia@wsu.edu"
   links:
     - label: "Email"
       icon:  "fas fa-fw fa-envelope-square"

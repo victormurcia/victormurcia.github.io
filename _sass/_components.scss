@@ -267,6 +267,7 @@ figcaption {
   text-decoration: none;
 }
 .pubs__title:hover { color: var(--accent); }
+.pubs__title--plain:hover { color: var(--ink); }   // non-linked titles don't imply interactivity
 .pubs__meta {
   display: block;
   font-family: var(--font-mono);

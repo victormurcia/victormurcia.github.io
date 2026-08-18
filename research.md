@@ -31,12 +31,14 @@ A hard first-principles problem is compressed into an interpretable representati
 
 ## Medical &amp; clinical AI
 
-I've also applied the same instinct — extracting reliable structure from messy, high-stakes data — to medicine and healthcare.
+From 2022 to 2025 I applied the same instinct — extracting reliable structure from messy, high-stakes data — to medicine, as a Data Scientist (MAVERIC) and AI Researcher (National Artificial Intelligence Institute) at the U.S. Department of Veterans Affairs in Boston, and with Dr. Marco Zenati's Harvard MRCAS laboratory.
 
-- **U.S. Department of Veterans Affairs** — clinical natural-language-processing research through MAVERIC and the National Artificial Intelligence Institute.<!-- VERIFY: role title, dates, one-line contribution -->
-- **Harvard MRCAS laboratory** — medical AI and robotics research.<!-- VERIFY: role title, dates, one-line contribution -->
+- **Clinical trial matching** — NLP and transformer systems that match patients to trials from electronic health records and eligibility criteria, including *Molecular Consult* for the National Precision Oncology Program; presented at AMIA.
+- **Medical imaging** — deep-learning pipelines on DICOM imaging for liver-cancer screening (the PREMIUM trial) and ARDS classification from chest X-rays, with Grad-CAM / SHAP interpretability.
+- **Research impact &amp; trustworthy AI** — NLP for bibliometric analysis of VA research, and fairness / bias audits on clinical models; released *PyUMLS-Similarity*, a UMLS semantic-similarity tool. This work earned the VA's highest federal performance rating.
+- **Surgical safety** — with Harvard MRCAS, multimodal models (EKG, audio, transcribed speech) assessing cognitive load and communication in cardiac surgery, including GANs for synthetic physiological data.
 
-That work is reflected in open tools such as [PyUMLS_Similarity](https://github.com/victormurcia/PyUMLS_Similarity2) (semantic similarity over the UMLS medical ontology) and a [clinical-trial concept visualizer](https://github.com/victormurcia/Clinical-Trial-Semantic-Structure-Visualizer).
+Some of this is open source — [PyUMLS_Similarity](https://github.com/victormurcia/PyUMLS_Similarity2) (semantic similarity over the UMLS ontology) and a [clinical-trial concept visualizer](https://github.com/victormurcia/Clinical-Trial-Semantic-Structure-Visualizer).
 
 ## Earlier work — organic electronics &amp; X-ray spectroscopy
 
